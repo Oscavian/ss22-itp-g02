@@ -1,7 +1,5 @@
 <?php
 
-use LDAP\Result;
-
 require_once("models/assignment.php");
 require_once("models/chat.php");
 require_once("models/groups.php");
@@ -25,8 +23,20 @@ class Database {
         $this->connection->close();
     }
     
+    public function checkUserNameAvailable($username){
+        if(!isset($username) || $username == ""){
+            return false;
+        }
+
+        $result = $this->getUserData($username);
+        if(isset($result)){
+            return false;
+        }
+
+        return true;
+    }
+
     function getUserData($username){
-        $result = array();
         $stmt = $this->connection->prepare("SELECT * FROM user WHERE username=?");
         $stmt->bind_param("s", $username);
         $stmt->execute();        
@@ -34,6 +44,18 @@ class Database {
         $stmt->close();
         
         return $result->fetch_assoc();
+    }
+
+    function registerUser($username, $password, $first_name, $last_name, $user_type){
+
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+        $stmt = $this->connection->prepare("INSERT INTO user (fk_user_type, first_name, last_name, username, password) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("issss", $user_type, $first_name, $last_name, $username, $password_hash);
+        $stmt->execute();        
+        $stmt->close();
+        
+        return;
     }
 }
 

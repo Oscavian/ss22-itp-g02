@@ -4,7 +4,6 @@ include("logic/mainLogic.php");
 session_start();
 
 $method = "";
-
 isset($_POST["method"]) ? $method = $_POST["method"] : false;
 
 $logic = new MainLogic();
