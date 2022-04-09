@@ -10,7 +10,7 @@ class Database {
     
     private $connection;
     public function __construct(){
-        include("db/dbaccess.php");
+        include("dbaccess.php");
         
         $this->connection = new mysqli($db_servername, $db_username, $db_password, $db_name);
 
