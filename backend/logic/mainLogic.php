@@ -165,7 +165,7 @@ class MainLogic {
 
         $res["success"] = false;
         $res["unknownError"] = true;
-        return $res;
+        return $res; 
     }
 
 

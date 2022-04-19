@@ -133,7 +133,7 @@ function checkPw(allIsOk){
 }
 
 function submitInput() {
-    $.post("backend/requestHandler.php", {
+    $.post("/ss22-itp-g02/backend/requestHandler.php", {
         method: "registerTeacher",
         first_name: $("#first_name").val(),
         last_name: $("#last_name").val(),
