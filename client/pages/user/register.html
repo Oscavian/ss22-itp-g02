@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--nur zum Testen auf dieser Seite, ebenfalls auf pages/register.html, wird wieder gelöscht-->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="../../js/register.js"></script>
+  <title>Register</title>
+  <!--provisorischer head-->
+</head>
+
+<body>
+  <h2>Register Form</h2>
+  <div>Please fill out the form below</div>
+  <div>All fields are mandatory</div>
+  <hr>
+  <form id="register-form">
+    <label for="first_name">First Name*</label>
+    <input type="text" id="first_name" name="first_name">
+    <div id="first_name_error" class="register_error"></div>
+    <br>
+    <label for="last_name">Last Name*</label>
+    <input type="text" id="last_name" name="last_name">
+    <div id="last_name_error" class="register_error"></div>
+    <br>
+    <label for="user">Username*</label>
+    <input type="text" id="user" name="user">
+    <div id="user_error" class="register_error"></div>
+    <br>
+    <label for="password">Password*</label>
+    <input type="password" id="password" name="password">
+    <input type="checkbox" id="showPw"><span id="showPwText">Show</span>
+    <div id="password_error" class="register_error"></div>
+    <br>
+    <label for="confirmPassword">Confirm Password*</label>
+    <input type="password" id="confirmPassword" name="confirmPassword">
+    <input type="checkbox" id="showConf"><span id="showConfText">Show</span>
+    <div id="confirm_password_error" class="register_error"></div>
+    <br>
+    <button type="button" id="submit" name="submit" value="submit">Submit</button>
+  </form>
+  <br>
+  <div id="post-response"></div>
+
+</body>
+</html>
