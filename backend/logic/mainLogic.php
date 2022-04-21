@@ -2,16 +2,22 @@
 
 
 include "db/database.php";
+include "hub.php";
 
 class MainLogic {
 
     private $db;
+    private $hub;
 
-    function __construct() {
+    public function __construct() {
         $this->db = new Database();
+        $this->hub = new Hub();
     }
 
-    function handleRequest($method) {
+    public function handleRequest($method): ?array {
+
+        $this->sanitizePostArray();
+
         switch ($method) {
             case "login":
                 return $this->login();
@@ -37,6 +43,7 @@ class MainLogic {
                 break;
             case "getAssignmentById":
                 return $this->getAssignmentById();
+                //$this->hub->getAssignments()->storeNewAssignment();
             case "createAssignment":
                 return $this->createAssignment();
             case "getMessages":
@@ -49,6 +56,12 @@ class MainLogic {
                 return null;
         }
         return null;
+    }
+
+    private function sanitizePostArray(){
+        foreach ($_POST as $key => $value){
+            $_POST[$key] = $this->test_input($value);
+        }
     }
 
     private function getAssignmentById(){
