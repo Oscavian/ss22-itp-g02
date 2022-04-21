@@ -167,30 +167,6 @@ function submitInput() {
 
         }
     });
-    /*
-    $.post("/ss22-itp-g02/backend/requestHandler.php", {
-        method: "registerTeacher",
-        first_name: $("#first_name").val(),
-        last_name: $("#last_name").val(),
-        user: $("#user").val(),
-        password: $("#password").val(),
-    }, 
-    function(response) {
-        if(response["userNameUnavailable"] === true){
-            $("#post-response").text("The username chosen is unavailable");
-        }
-        if(response["unknownError"] === true){
-            $("#post-response").text("An error occurred while processing the request");
-        }
-        if(response["success"] === true){
-            $("#post-response").text("Your account was successfully created");
-            $('#register-form')[0].reset();
-        }
-        if(response["formDataInvalid"] === true){
-            $("#post-response").text("The data entered is invalid");
-        }
-        
-    });*/
 }
 
 function emptyErrors(){
