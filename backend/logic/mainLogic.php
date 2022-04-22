@@ -43,7 +43,7 @@ class MainLogic {
 
             /* ASSIGNMENTS */
             case "getAssignmentById":
-                return $this->hub->getAssignments()->getBaseDataById();
+                return $this->hub->getAssignments()->getBaseData();
             case "createAssignment":
                 return $this->hub->getAssignments()->createAssignment();
             case "uploadAssignments":
