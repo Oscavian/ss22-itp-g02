@@ -5,6 +5,7 @@ require_once "db/database.php";
 class Assignment {
 
     private $db;
+    private $hub;
     private $assignment_id;
     private $creator_id;
     private $group_id;
@@ -13,67 +14,40 @@ class Assignment {
     private $title;
     private $text;
     private $file_path;
+    private $submissions = [];
 
     private $isExpired;
 
-    public function __construct() {
-        $this->db = new Database();
-    }
+    public function __construct(Hub $hub, $id = null) {
+        $this->hub = $hub;
+        $this->db = $this->hub->getDb();
+        $this->assignment_id = null;
+        if (isset($id)){
+            $query = "SELECT pk_assignment_id as assignment_id, fk_user_id as creator_id, username as creator_name, fk_group_id as group_id, time, due_time, title, text, file_path FROM assignment JOIN  user u ON assignment.fk_user_id = u.pk_user_id where pk_assignment_id = ?";
+            $result = $this->db->select($query, [$id], "i");
 
-    public function storeNewAssignment($creator_id, $group_id, $due_time, $title, $text = null, $file_path = null): bool {
-        $this->creator_id = $creator_id;
-        $this->group_id = $group_id;
-        $this->due_time = date("Y-m-d H:i:s", strtotime($due_time));
-        $this->title = $title;
-        $this->file_path = $file_path;
-        $this->text = $text;
+            $this->assignment_id = $result["assignment_id"];
+            $this->creator_id = $result["creator_id"];
+            $this->group_id = $result["group_id"];
+            $this->creation_time = $result["time"];
+            $this->due_time = date("Y-m-d H:i:s", strtotime($result["due_time"]));
+            $this->title = $result["title"];
+            $this->text = $result["text"];
+            $this->file_path = $result["file_path"];
 
-        if (strtotime($this->creation_time) > strtotime($this->due_time)){
-            $this->isExpired = true;
-        } else {
-            $this->isExpired = false;
+            if (strtotime($this->creation_time) > strtotime($this->due_time)){
+                $this->isExpired = true;
+            } else {
+                $this->isExpired = false;
+            }
         }
-
-        $query = "INSERT INTO assignment (fk_user_id, fk_group_id, due_time, title, text, file_path) VALUES (?,?,?,?,?,?)";
-        if ($this->db->insert($query, [$creator_id, $group_id, $due_time, $title, $text, $file_path], "iissss")){
-            $this->assignment_id = $this->db->select("SELECT pk_assignment_id from assignment order by pk_assignment_id desc limit 1")["pk_assignment_id"];
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public function initById($id){
-        $query = "SELECT pk_assignment_id as assignment_id, fk_user_id as creator_id, username as creator_name, fk_group_id as group_id, time, due_time, title, text, file_path FROM assignment JOIN  user u ON assignment.fk_user_id = u.pk_user_id where pk_assignment_id = ?";
-        $result = $this->db->select($query, [$id], "i");
-
-        if ($result == null) {
-            return false;
-        }
-
-        $this->assignment_id = $result["assignment_id"];
-        $this->creator_id = $result["creator_id"];
-        $this->group_id = $result["group_id"];
-        $this->creation_time = $result["time"];
-        $this->due_time = date("Y-m-d H:i:s", strtotime($result["due_time"]));
-        $this->title = $result["title"];
-        $this->text = $result["text"];
-        $this->file_path = $result["file_path"];
-
-        if (strtotime($this->creation_time) > strtotime($this->due_time)){
-            $this->isExpired = true;
-        } else {
-            $this->isExpired = false;
-        }
-
-        return true;
     }
 
     public function getAssignmentData(): array {
-        return ["assignment_id" => $this->assignment_id, "title" => $this->title, "creator_id" => $this->creator_id, "group_id" => $this->group_id, "creation_time" => $this->creation_time, "due_time" => $this->due_time, "text" => $this->text, "file_path" => $this->file_path, "isExpired" => $this->isExpired];
+        return get_object_vars($this);
     }
 
-    public function getAssignmentId() {
+    public function getId() {
         return $this->assignment_id;
     }
 

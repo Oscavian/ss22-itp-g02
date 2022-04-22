@@ -1,8 +1,8 @@
 <?php
 
 
-include "db/database.php";
-include "hub.php";
+require_once "db/database.php";
+require_once "hub.php";
 
 class MainLogic {
 
@@ -19,6 +19,7 @@ class MainLogic {
         $this->sanitizePostArray();
 
         switch ($method) {
+            /* USERS */
             case "login":
                 return $this->hub->getUsers()->login();
             case "logout":
@@ -29,28 +30,29 @@ class MainLogic {
                 return $this->checkUserNameAvailable();
             case "registerTeacher":
                 return $this->registerTeacher();
+
+            /* GROUPS */
             case "createGroup":
                 return $this->createGroup();
-                break;
             case "getUserGroups":
                 return $this->getUserGroups();
-                break;
             case "getGroupName":
                 return $this->getGroupName();
-                break;
             case "getGroupChatId":
                 return $this->getGroupChatId();
-                break;
+
+            /* ASSIGNMENTS */
             case "getAssignmentById":
-                return $this->getAssignmentById();
-                //$this->hub->getAssignments()->storeNewAssignment();
+                return $this->hub->getAssignments()->getBaseDataById();
             case "createAssignment":
-                return $this->createAssignment();
+                return $this->hub->getAssignments()->createAssignment();
+            case "uploadAssignments":
+                break;
+
+            /* CHATS */
             case "getMessages":
                 break;
             case "sendMessage":
-                break;
-            case "uploadAssignments":
                 break;
             default:
                 return null;
@@ -62,49 +64,6 @@ class MainLogic {
         foreach ($_POST as $key => $value){
             $_POST[$key] = $this->test_input($value);
         }
-    }
-
-    private function getAssignmentById(){
-        if (empty($_POST["assignment_id"])){
-            return null;
-        } else {
-            $id = $this->test_input($_POST["assignment_id"]);
-        }
-
-        $assignment = new Assignment();
-
-        if ($assignment->initById($id)){
-            return $assignment->getAssignmentData();
-        } else {
-            return ["success" => false, "inputInvalid" => true];
-        }
-    }
-
-
-    public function createAssignment() {
-        if (empty($_POST["user_id"]) ||
-            empty($_POST["group_id"]) ||
-            empty($_POST["due_time"]) ||
-            empty($_POST["title"])) {
-            return null;
-        }
-        $creator_id = $this->test_input($_POST["user_id"]);
-        $group_id = $this->test_input($_POST["group_id"]);
-        $due_time = date("Y-m-d H:i:s", strtotime($this->test_input($_POST["due_time"])));
-        $title = $this->test_input($_POST["title"]);
-
-        isset($_POST["text"]) ? $text = $this->test_input($_POST["text"]) : $text = null;
-        isset($_POST["file_path"]) ? $file_path = $this->test_input($_POST["file_path"]): $file_path = null;
-
-        $new_assignment = new Assignment();
-
-        if ($new_assignment->storeNewAssignment($creator_id, $group_id, $due_time, $title, $text, $file_path)){
-            return ["success" => true, "assignment_id" => $new_assignment->getAssignmentId()];
-        } else {
-            return ["success" => false];
-        }
-
-
     }
 
     public function test_input($data) {

@@ -1,10 +1,5 @@
 <?php
 
-require_once "assignments.php";
-require_once "users.php";
-require_once "groups.php";
-
-
 class Hub {
 
     private $db;
@@ -17,7 +12,7 @@ class Hub {
 
     public function getDb(): Database {
         if ($this->db == null) {
-            require_once "../db/database.php";
+            require_once "db/database.php";
             return $this->db = new Database();
         }
         return $this->db;
@@ -26,7 +21,7 @@ class Hub {
     public function getChats(): Chats {
         if ($this->db == null) {
             require_once "chats.php";
-            return $this->chats = new Chats();
+            return $this->chats = new Chats($this);
         }
         return $this->chats;
     }
@@ -35,7 +30,7 @@ class Hub {
     {
         if ($this->db == null) {
             require_once "assignments.php";
-            return $this->assignments = new Assignments();
+            return $this->assignments = new Assignments($this);
         }
         return $this->assignments;
     }
@@ -43,7 +38,7 @@ class Hub {
     public function getUsers(): Users {
         if ($this->users == null) {
             require_once "users.php";
-            return $this->users = new Users();
+            return $this->users = new Users($this);
         }
         return $this->users;
     }
@@ -51,7 +46,7 @@ class Hub {
     public function getGroups(): Groups {
         if ($this->groups == null) {
             require_once "groups.php";
-            return $this->groups = new Groups();
+            return $this->groups = new Groups($this);
         }
         return $this->groups;
     }

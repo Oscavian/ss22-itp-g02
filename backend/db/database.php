@@ -1,10 +1,10 @@
 <?php
 
-require_once("models/assignment.php");
-require_once("models/chat.php");
-require_once("models/groups.php");
-require_once("models/message.php");
-require_once("models/user.php");
+require_once "models/assignment.php";
+require_once "models/chat.php";
+require_once "models/group.php";
+require_once "models/message.php";
+require_once "models/user.php";
 
 class Database {
 
