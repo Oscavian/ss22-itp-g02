@@ -14,20 +14,22 @@ class Assignments {
         $this->users = $this->hub->getUsers();
     }
 
+    public function getById(int $id) : ?Assignment{
+        return new Assignment($this->hub, $id);
+    }
 
     public function getBaseDataById() : ?array {
-        if (empty($_POST["assignment_id"] ||
-            !is_numeric($_POST["assignment_id"]))){
+        if (empty($_POST["assignment_id"])){
             return null;
         } else {
             $id = $_POST["assignment_id"];
         }
 
-        $assignment = new Assignment($this->hub, $id);
-        if ($assignment->getId() != null){
-            return $assignment->getAssignmentData();
-        } else {
+        $assignment = $this->getById($id);
+        if ($assignment == null){
             return ["success" => false, "inputInvalid" => true];
+        } else {
+            return $assignment->getAssignmentData();
         }
     }
 
@@ -38,6 +40,7 @@ class Assignments {
             empty($_POST["title"])) {
             return null;
         }
+
         $creator_id = $_POST["user_id"];
         $group_id = $_POST["group_id"];
         $due_time = date("Y-m-d H:i:s", strtotime($_POST["due_time"]));
@@ -63,19 +66,9 @@ class Assignments {
         $this->file_path = $file_path;
         $this->text = $text;
 
-        if (strtotime($this->creation_time) > strtotime($this->due_time)){
-            $this->isExpired = true;
-        } else {
-            $this->isExpired = false;
-        }
-
         $query = "INSERT INTO assignment (fk_user_id, fk_group_id, due_time, title, text, file_path) VALUES (?,?,?,?,?,?)";
-        if ($this->db->insert($query, [$creator_id, $group_id, $due_time, $title, $text, $file_path], "iissss")){
-            $this->assignment_id = $this->db->select("SELECT pk_assignment_id from assignment order by pk_assignment_id desc limit 1")["pk_assignment_id"];
-            return true;
-        } else {
-            return false;
-        }
-    }
+        $new_id = $this->db->insert($query, [$creator_id, $group_id, $due_time, $title, $text, $file_path], "iissss");
 
+
+    }
 }
