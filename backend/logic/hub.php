@@ -23,23 +23,36 @@ class Hub {
         return $this->db;
     }
 
-    public function getChats() {
+    public function getChats(): Chats {
         if ($this->db == null) {
-            require_once "../db/database.php";
+            require_once "chats.php";
             return $this->chats = new Chats();
         }
         return $this->chats;
     }
 
-    public function getAssignments() {
+    public function getAssignments(): Assignments
+    {
         if ($this->db == null) {
-            require_once "../models/assignment.php";
-            return $this->assignments = new Assignment();
+            require_once "assignments.php";
+            return $this->assignments = new Assignments();
         }
         return $this->assignments;
     }
 
-    public function getUsers() {
+    public function getUsers(): Users {
+        if ($this->users == null) {
+            require_once "users.php";
+            return $this->users = new Users();
+        }
         return $this->users;
+    }
+
+    public function getGroups(): Groups {
+        if ($this->groups == null) {
+            require_once "groups.php";
+            return $this->groups = new Groups();
+        }
+        return $this->groups;
     }
 }

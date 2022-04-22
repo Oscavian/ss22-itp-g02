@@ -82,7 +82,7 @@ class Database {
 
         if ($stmt->execute()){
             $stmt->close();
-            return true;
+            return $this->connection->insert_id;
         } else {
             $stmt->close();
             return false;

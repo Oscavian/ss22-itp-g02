@@ -20,11 +20,11 @@ class MainLogic {
 
         switch ($method) {
             case "login":
-                return $this->login();
+                return $this->hub->getUsers()->login();
             case "logout":
-                return $this->logout();
+                return $this->hub->getUsers()->logout();
             case "getLoginStatus":
-                return $this->getLoginStatus();
+                return $this->hub->getUsers()->getLoginStatus();
             case "checkUserNameAvailable":
                 return $this->checkUserNameAvailable();
             case "registerTeacher":
