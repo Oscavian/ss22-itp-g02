@@ -1,5 +1,5 @@
 <?php
-include "../models/user.php";
+require_once "models/user.php";
 
 class Users {
     private $db;
@@ -10,8 +10,11 @@ class Users {
         $this->db = $this->hub->getDb();
     }
 
+    public function getById($user_id){
 
-    public function login() {
+    }
+
+    public function login(): ?array {
         if (empty($_POST["user"]) || empty($_POST["password"])) {
             return null;
         }
@@ -30,13 +33,13 @@ class Users {
         return $res;
     }
 
-    public function logout() {
+    public function logout(): array {
         session_destroy();
         $res["success"] = true;
         return $res;
     }
 
-    private function registerTeacher() {
+    public function registerTeacher() {
 
         if (empty($_POST["user"]) || empty($_POST["password"]) || empty($_POST["first_name"]) || empty($_POST["last_name"])) {
             return null;
@@ -98,7 +101,7 @@ class Users {
         return $res;
     }
 
-    public function getLoginStatus() {
+    public function getLoginStatus(): array {
         if (!empty($_SESSION['username']) && !empty($_SESSION['userId']) && !empty($_SESSION['userType'])) {
             $res["isLoggedIn"] = true;
             $res["username"] = $_SESSION['username'];
@@ -109,5 +112,20 @@ class Users {
 
         $res["isLoggedIn"] = false;
         return $res;
+    }
+
+    public function checkUserNameAvailable() : ?array {
+        if (!isset($_POST["user"]) || $_POST["user"] == "") {
+            return null;
+        }
+
+        if ($this->db->checkUserNameAvailable(($_POST["user"]))) {
+            $res["userNameAvailable"] = true;
+            return $res;
+        }
+
+        $res["userNameAvailable"] = false;
+        return $res;
+
     }
 }
