@@ -27,7 +27,7 @@ class Assignments {
         }
     }
 
-    public function getBaseData() : ?array {
+    public function getAssignmentById() : ?array {
         if (empty($_POST["assignment_id"])){
             return null;
         } else {
@@ -42,7 +42,7 @@ class Assignments {
             return ["success" => false, "msg" => "Assignment with ID $id does not exist!", "inputInvalid" => true];
         }
 
-        return $assignment->getAssignmentData();
+        return $assignment->getBaseData();
     }
 
     public function createAssignment(): ?array {

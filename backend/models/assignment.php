@@ -29,7 +29,7 @@ class Assignment {
         }
     }
 
-    public function getAssignmentData(): array {
+    public function getBaseData(): array {
         $query = "SELECT pk_assignment_id as assignment_id, fk_user_id as creator_id, username as creator_name, fk_group_id as group_id, time, due_time, title, text, file_path FROM assignment JOIN  user u ON assignment.fk_user_id = u.pk_user_id where pk_assignment_id = ?";
         $result = $this->db->select($query, [$this->assignment_id], "i");
 
@@ -108,6 +108,15 @@ class Assignment {
         return $this->title;
     }
 
+    public function isExpired() : bool {
+        if ($this->isExpired){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //TODO: add submission methods
     public function getSubmissions(): array {
         if (empty($this->submissions)){
             //fetch submissions by Ass Id
