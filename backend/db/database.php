@@ -53,7 +53,7 @@ class Database {
         } else if ($result->num_rows == 0){
             return null;
         } else if ($result->num_rows > 1){
-            foreach ($result->fetch_assoc() as $row){
+            while ($row = $result->fetch_assoc()){
                 $rows[] = $row;
             }
             return $rows;
