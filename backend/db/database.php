@@ -17,23 +17,11 @@ class Database {
     /**
      * @param string $query
      * @param array|null $params
-     * @param string|null $param_types
+     * @param string|null $param_types - for bind_param(), e.g. "ii" for 2 int params
+     * @param bool|null $singleRow - if explicitly one row is expected, returns a single assoc arr if true
      * @return array|bool
      */
-    public function select(string $query, array $params = null, string $param_types = null){
-
-        /* -- not really necessary --
-        //count & check param amount
-        $param_count = substr_count($query, '?');
-        $param_letter_count = 0;
-        foreach (count_chars($param_types, 1) as $i){
-            $param_letter_count++;
-        }
-
-        if ($param_count != $param_letter_count){
-            //remove later for security reasons
-            return ["invalidQuery" => true, "msg" => "Param count doesn't match param types in prepared stmt.", "query" => $query];
-        } */
+    public function select(string $query, array $params = null, string $param_types = null, bool $singleRow = null){
 
         $stmt = $this->connection->prepare($query);
         if (isset($params)) {
@@ -45,20 +33,19 @@ class Database {
         }
 
         $result = $stmt->get_result();
-        $rows = [];
+        $rows = array();
         $stmt->close();
 
-        if ($result->num_rows == 1){
+        if (isset($singleRow) && $singleRow){
             return $result->fetch_assoc();
         } else if ($result->num_rows == 0){
             return null;
-        } else if ($result->num_rows > 1){
+        } else {
             while ($row = $result->fetch_assoc()){
                 $rows[] = $row;
             }
+
             return $rows;
-        } else {
-            return null;
         }
     }
 

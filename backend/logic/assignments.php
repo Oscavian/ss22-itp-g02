@@ -14,13 +14,12 @@ class Assignments {
         $this->users = $this->hub->getUsers();
     }
 
-
     public function getById(int $id) : ?Assignment{
         return new Assignment($this->hub, $id);
     }
 
     public function exists(int $id) : bool {
-        if ($this->db->select("SELECT * from assignment where pk_assignment_id=?", [$id], "i") == null){
+        if ($this->db->select("SELECT * from assignment where pk_assignment_id=?", [$id], "i", true) == null){
             return false;
         } else {
             return true;
