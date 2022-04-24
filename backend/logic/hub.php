@@ -19,7 +19,7 @@ class Hub {
     }
 
     public function getChats(): Chats {
-        if ($this->db == null) {
+        if ($this->chats == null) {
             require_once "chats.php";
             return $this->chats = new Chats($this);
         }
@@ -28,7 +28,7 @@ class Hub {
 
     public function getAssignments(): Assignments
     {
-        if ($this->db == null) {
+        if ($this->assignments == null) {
             require_once "assignments.php";
             return $this->assignments = new Assignments($this);
         }
