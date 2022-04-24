@@ -1,9 +1,5 @@
 <?php
 
-use LDAP\Result;
-
-require_once("models/assignment.php");
-
 class User {
     private $user_id;
     private $user_type;

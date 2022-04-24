@@ -5,6 +5,7 @@ require_once "db/database.php";
 class Assignment {
 
     private $db;
+    private $hub;
     private $assignment_id;
     private $creator_id;
     private $group_id;
@@ -13,45 +14,25 @@ class Assignment {
     private $title;
     private $text;
     private $file_path;
+    private $submissions = [];
 
     private $isExpired;
 
-    public function __construct() {
-        $this->db = new Database();
-    }
-
-    public function storeNewAssignment($creator_id, $group_id, $due_time, $title, $text = null, $file_path = null): bool {
-        $this->creator_id = $creator_id;
-        $this->group_id = $group_id;
-        $this->due_time = date("Y-m-d H:i:s", strtotime($due_time));
-        $this->title = $title;
-        $this->file_path = $file_path;
-        $this->text = $text;
-
-        if (strtotime($this->creation_time) > strtotime($this->due_time)){
-            $this->isExpired = true;
+    public function __construct(Hub $hub, $id = null) {
+        $this->hub = $hub;
+        $this->db = $this->hub->getDb();
+        $this->assignment_id = null;
+        if ($this->db->select("SELECT * FROM assignment where pk_assignment_id=?", [$id], "i") == null){
+            return null;
         } else {
-            $this->isExpired = false;
-        }
-
-        $query = "INSERT INTO assignment (fk_user_id, fk_group_id, due_time, title, text, file_path) VALUES (?,?,?,?,?,?)";
-        if ($this->db->insert($query, [$creator_id, $group_id, $due_time, $title, $text, $file_path], "iissss")){
-            $this->assignment_id = $this->db->select("SELECT pk_assignment_id from assignment order by pk_assignment_id desc limit 1")["pk_assignment_id"];
-            return true;
-        } else {
-            return false;
+            $this->assignment_id = $id;
         }
     }
 
-    public function initById($id){
+    public function getBaseData(): array {
         $query = "SELECT pk_assignment_id as assignment_id, fk_user_id as creator_id, username as creator_name, fk_group_id as group_id, time, due_time, title, text, file_path FROM assignment JOIN  user u ON assignment.fk_user_id = u.pk_user_id where pk_assignment_id = ?";
-        $result = $this->db->select($query, [$id], "i");
+        $result = $this->db->select($query, [$this->assignment_id], "i");
 
-        if ($result == null) {
-            return false;
-        }
-
-        $this->assignment_id = $result["assignment_id"];
         $this->creator_id = $result["creator_id"];
         $this->group_id = $result["group_id"];
         $this->creation_time = $result["time"];
@@ -66,48 +47,81 @@ class Assignment {
             $this->isExpired = false;
         }
 
-        return true;
+        $result["due_time"] = $this->due_time;
+        $result["isExpired"] = $this->isExpired;
+
+        return $result;
     }
 
-    public function getAssignmentData(): array {
-        return ["assignment_id" => $this->assignment_id, "title" => $this->title, "creator_id" => $this->creator_id, "group_id" => $this->group_id, "creation_time" => $this->creation_time, "due_time" => $this->due_time, "text" => $this->text, "file_path" => $this->file_path, "isExpired" => $this->isExpired];
-    }
-
-    public function getAssignmentId() {
+    public function getId() {
         return $this->assignment_id;
     }
 
-
     public function getCreationTime() {
+        if (empty($this->creation_time)){
+            return $this->creation_time = $this->db->select("SELECT time from assignment where pk_assignment_id=?", [$this->assignment_id], "i")["time"];
+        }
+        return $this->creation_time;
+    }
+
+    public function getCreatorId() {
+        if (empty($this->creator_id)){
+            return $this->creator_id = $this->db->select("SELECT fk_user_id from assignment where pk_assignment_id=?", [$this->assignment_id], "i")["user_id"];
+        }
+        return $this->creator_id;
+    }
+
+    public function getDueTime() {
+        if (empty($this->creation_time)){
+            return $this->creation_time = $this->db->select("SELECT time from assignment where pk_assignment_id=?", [$this->assignment_id], "i")["due_time"];
+        }
         return $this->creation_time;
     }
 
 
-    public function getCreatorId() {
-        return $this->creator_id;
-    }
-
-
-    public function getDueTime() {
-        return $this->due_time;
-    }
-
-
     public function getFilePath() {
+        if (empty($this->file_path)){
+            return $this->file_path = $this->db->select("SELECT file_path from assignment where pk_assignment_id=?", [$this->assignment_id], "i")["file_path"];
+        }
         return $this->file_path;
     }
 
 
     public function getGroupId() {
+        if (empty($this->group_id)){
+            return $this->group_id = $this->db->select("SELECT fk_group_id from assignment where pk_assignment_id=?", [$this->assignment_id], "i")["fk_group_id"];
+        }
         return $this->group_id;
     }
 
-
     public function getText() {
+        if (empty($this->text)){
+            return $this->text = $this->db->select("SELECT text from assignment where pk_assignment_id=?", [$this->assignment_id], "i")["text"];
+        }
         return $this->text;
     }
 
     public function getTitle() {
+        if (empty($this->title)){
+            return $this->title = $this->db->select("SELECT title from assignment where pk_assignment_id=?", [$this->assignment_id], "i")["title"];
+        }
         return $this->title;
+    }
+
+    public function isExpired() : bool {
+        if ($this->isExpired){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //TODO: add submission methods
+    public function getSubmissions(): array {
+        if (empty($this->submissions)){
+            //fetch submissions by Ass Id
+            //return ...
+        }
+        return $this->submissions;
     }
 }

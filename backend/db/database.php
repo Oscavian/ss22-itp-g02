@@ -1,13 +1,6 @@
 <?php
 
-require_once("models/assignment.php");
-require_once("models/chat.php");
-require_once("models/groups.php");
-require_once("models/message.php");
-require_once("models/user.php");
-
 class Database {
-
 
     private $connection;
 
@@ -73,16 +66,16 @@ class Database {
      * @param string $query
      * @param array|null $params
      * @param string|null $param_types
-     * @return array|bool
+     * @return bool
      */
-    public function insert(string $query, array $params, string $param_types){
+    public function insert(string $query, array $params, string $param_types): bool {
 
         $stmt = $this->connection->prepare($query);
         $stmt->bind_param($param_types, ...$params);
 
         if ($stmt->execute()){
             $stmt->close();
-            return true;
+            return $this->connection->insert_id;
         } else {
             $stmt->close();
             return false;
@@ -152,6 +145,7 @@ class Database {
         return;
     }
 
+    //TODO: move to groups class
     function createGroup($groupName){
 
         
@@ -170,6 +164,7 @@ class Database {
         return $newGroupId = $this->connection->insert_id;
     }
 
+    //TODO: move to groups class
     function assignUserGroup($groupId, $userId){
 
         $stmt = $this->connection->prepare("INSERT INTO user_group (fk_group_id, fk_user_id) VALUES (?, ?)");
@@ -180,6 +175,7 @@ class Database {
         return;
     }
 
+    //TODO: move to groups class
     function getUserGroups($userId){
 
         $stmt = $this->connection->prepare("SELECT * FROM user_group WHERE fk_user_id = ?");
@@ -209,7 +205,7 @@ class Database {
         return $res; 
     }
 
-
+    //TODO: move to groups class
     function userIsInGroup($userId, $groupId){
 
         foreach($this->getUserGroups($userId) as $user_group){
@@ -221,6 +217,7 @@ class Database {
         return false;
     }
 
+    //TODO: move to groups class
     function getGroupName($groupId){
         
         $stmt = $this->connection->prepare("SELECT * FROM groups WHERE pk_group_id=?");
@@ -232,6 +229,7 @@ class Database {
         return $result->fetch_assoc()["name"];
     }
 
+    //TODO: move to groups class
     function getGroupChatId($groupId){
         
         $stmt = $this->connection->prepare("SELECT * FROM groups WHERE pk_group_id=?");
