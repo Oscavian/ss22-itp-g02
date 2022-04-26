@@ -53,9 +53,9 @@ class Database {
      * @param string $query
      * @param array|null $params
      * @param string|null $param_types
-     * @return bool
+     * @return int|null - returns the id of the inserted row as int, returns null if stmt failed
      */
-    public function insert(string $query, array $params, string $param_types): bool {
+    public function insert(string $query, array $params, string $param_types): ?int {
 
         $stmt = $this->connection->prepare($query);
         $stmt->bind_param($param_types, ...$params);
@@ -65,7 +65,7 @@ class Database {
             return $this->connection->insert_id;
         } else {
             $stmt->close();
-            return false;
+            return null;
         }
     }
 
