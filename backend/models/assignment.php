@@ -41,7 +41,7 @@ class Assignment {
         $this->text = $result["text"];
         $this->file_path = $result["file_path"];
 
-        if (strtotime($this->creation_time) > strtotime($this->due_time)){
+        if (strtotime("now") > strtotime($this->due_time)){
             $this->isExpired = true;
         } else {
             $this->isExpired = false;

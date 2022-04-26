@@ -21,7 +21,7 @@ class Database {
      * @param bool|null $singleRow - if explicitly one row is expected, returns a single assoc arr if true
      * @return array|bool
      */
-    public function select(string $query, array $params = null, string $param_types = null, bool $singleRow = null){
+    public function select(string $query, array $params = null, string $param_types = null, bool $singleRow = null) : array{
 
         $stmt = $this->connection->prepare($query);
         if (isset($params)) {
@@ -39,7 +39,7 @@ class Database {
         if (isset($singleRow) && $singleRow){
             return $result->fetch_assoc();
         } else if ($result->num_rows == 0){
-            return null;
+            return [];
         } else {
             while ($row = $result->fetch_assoc()){
                 $rows[] = $row;
