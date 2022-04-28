@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    $("#submit").click(function () {
-        checkInput();
+    $("#submitRegistry").click(function () {
+        checkRegisterInput();
     }); 
     $("#showPw").change(function(){
         if($(this).is(':checked')){
@@ -28,7 +28,7 @@ $(document).ready(function() {
     });
 })
 
-function checkInput() {
+function checkRegisterInput() {
 
     emptyErrors();
     var allOk = true;
@@ -39,7 +39,7 @@ function checkInput() {
     allOk = checkPw(allOk);
 
     if(allOk === true) {
-        submitInput();
+        submitRegisterInput();
     }
 }
 
@@ -132,7 +132,7 @@ function checkPw(allIsOk){
     return allOk;
 }
 
-function submitInput() {
+function submitRegisterInput() {
     $.ajax({
         type: "POST",
         url: "../../../backend/requestHandler.php",
