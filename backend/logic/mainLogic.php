@@ -6,11 +6,9 @@ require_once "hub.php";
 
 class MainLogic {
 
-    private $db;
     private $hub;
 
     public function __construct() {
-        $this->db = new Database();
         $this->hub = new Hub();
     }
 
@@ -30,12 +28,12 @@ class MainLogic {
                 return $this->hub->getUsers()->checkUserNameAvailable();
             case "registerTeacher":
                 return $this->hub->getUsers()->registerTeacher();
+            case "getUserGroups":
+                return $this->hub->getUsers()->getUserGroups();
 
             /* GROUPS */
             case "createGroup":
                 return $this->hub->getGroups()->createGroup();
-            case "getUserGroups":
-                return $this->hub->getGroups()->getUserGroups();
             case "getGroupName":
                 return $this->hub->getGroups()->getGroupName();
             case "getGroupChatId":

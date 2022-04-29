@@ -12,4 +12,7 @@ class Chats {
         $this->db = $this->hub->getDb();
     }
 
+    public function getById(int $id): Chat {
+        return new Chat($this->hub, $id);
+    }
 }
