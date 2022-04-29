@@ -6,12 +6,10 @@ require_once "models/submission.php";
 class Assignments {
     private $hub;
     private $db;
-    private $users;
 
     public function __construct(Hub $hub){
         $this->hub = $hub;
         $this->db = $this->hub->getDb();
-        $this->users = $this->hub->getUsers();
     }
 
     public function getById(int $id) : ?Assignment{
@@ -26,6 +24,11 @@ class Assignments {
         }
     }
 
+    /**
+     * method: getAssignmentById
+     * assignment_id: int $id
+     * @return array|null
+     */
     public function getAssignmentById() : ?array {
         if (empty($_POST["assignment_id"])){
             return null;
@@ -44,8 +47,17 @@ class Assignments {
         return $assignment->getBaseData();
     }
 
+    /**
+     * method: createAssignment
+     * group_id: int
+     * due_time: string (datetime)
+     * title: string
+     * text*: string
+     * file_path*: string
+     * @return array|null
+     */
     public function createAssignment(): ?array {
-        if (/*empty($_SESSION["user_id"]) ||*/
+        if (empty($_SESSION["userId"]) ||
             empty($_POST["group_id"]) ||
             !is_numeric($_POST["group_id"]) ||
             empty($_POST["due_time"]) ||
@@ -53,13 +65,19 @@ class Assignments {
             return null;
         }
 
-        //TODO: perm check
-        //check if user in group
+        //TODO: centralise perm check
+        if(!isset($_SESSION['username']) && !isset($_SESSION['userType'])){ //cecks wheter user is logged in and is teacher
+            return ["success" => false, "noPermission" => true, "msg" => "Not logged in!"];
+        }
+        if ($_SESSION['userType'] != 1) {
+            return ["success" => false, "noPermission" => true];
+        }
 
-        //TODO: change to session value
-        //$creator_id = $_SESSION["user_id"];
-        $creator_id = 1;
+        if (!$this->hub->getGroups()->getById($_POST["group_id"])->isMember($this->hub->getUsers()->getById($_SESSION["userId"]))){
+            return ["success" => false, "userNotInGroup" => true];
+        }
 
+        $creator_id = $_SESSION["userId"];
         $group_id = $_POST["group_id"];
         $due_time = date("Y-m-d H:i:s", strtotime($_POST["due_time"]));
         $title = $_POST["title"];
@@ -70,8 +88,8 @@ class Assignments {
         $query = "INSERT INTO assignment (fk_user_id, fk_group_id, due_time, title, text, file_path) VALUES (?,?,?,?,?,?)";
         $new_id = $this->db->insert($query, [$creator_id, $group_id, $due_time, $title, $text, $file_path], "iissss");
 
-        if ($new_assignment = new Assignment($this->hub, $new_id)){
-            return ["success" => true, "msg" => "Assignment successfully created!", "assignment_id" => $new_assignment->getId()];
+        if (isset($new_id)){
+            return ["success" => true, "msg" => "Assignment successfully created!", "assignment_id" => $new_id];
         } else {
             return ["success" => false, "msg" => "Error creating assignment."];
         }
