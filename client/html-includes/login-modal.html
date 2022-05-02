@@ -1,0 +1,32 @@
+<div class="modal" id="loginModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Login</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="login-form">
+                    <label for="user">Username*</label>
+                    <input type="text" id="user" name="user">
+                    <div id="user_error" class="login_error"></div>
+                    <br>
+                    <label for="password">Password*</label>
+                    <input type="password" id="password" name="password">
+                    <input type="checkbox" id="showPw"><span id="showPwText" onchange="showHidePw()">Show</span>
+                    <div id="password_error" class="login_error"></div>
+                    <br>
+                  </form>
+                  <div id="post-response"></div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <!--works as confirmation, activates "leaving" in startTerm-->
+                <button type="button" class="btn btn-success" id="submitLogin" name="submit" value="submit" onclick="checkLoginInput()">Log in</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zurück</button>
+            </div>
+        </div>
+    </div>
+</div>

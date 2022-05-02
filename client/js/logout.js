@@ -8,7 +8,7 @@ $(document).ready(function() {
 function logoutUser() {
     $.ajax({
         type: "POST",
-        url: "../../../backend/requestHandler.php",
+        url: "/ss22-itp-g02/backend/requestHandler.php",
         data: jQuery.param({
             method: "logout",  
         }),
@@ -17,15 +17,16 @@ function logoutUser() {
         success: function (response) {
             //$("#success").append(response);
             if(response["success"] === true){
-                $("#post-response").append("You were logged out successfully<br>");
+                alert("You were logged out successfully");
+                checkLoginStatus();
             }
             else{
-                $("#post-response").text("The Logout was unsuccessful, please try again later.");
+                alert("The Logout was unsuccessful, please try again later.");
             }
 
         },
-        error: function(error){//wtf ist error eigentlich
-            $("#post-response").text("An error happened while trying to log you out.");
+        error: function(error){
+            alert("An error happened while trying to log you out.");
 
         }
     });

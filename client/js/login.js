@@ -1,23 +1,4 @@
-$(document).ready(function() {
-    $("#submitLogin").click(function () {
-        checkLoginInput();
-    }); 
-    $("#showPw").change(function(){
-        if($(this).is(':checked')){
-         $("#password").attr("type","text");
-         $("#showPwText").text("Hide");
-        }else{
-         // Changing type attribute
-         $("#password").attr("type","password");
-        
-         // Change the Text
-         $("#showPwText").text("Show");
-        }  
-    });
-})
-
 function checkLoginInput() {
-
     emptyLoginErrors();
     var allOk = true;
     allOk = checkIfEmptyLogin(allOk);
@@ -57,7 +38,7 @@ function checkLengthLogin(allIsOk){
 function submitLoginInput() {
     $.ajax({
         type: "POST",
-        url: "../../../backend/requestHandler.php",
+        url: "/ss22-itp-g02/backend/requestHandler.php",
         data: jQuery.param({
             method: "login",
             user: $("#user").val(),
@@ -70,6 +51,9 @@ function submitLoginInput() {
             if(response["success"] === true){
                 $("#post-response").append("The Login was successful.<br>");
                 $('#login-form')[0].reset();
+                setTimeout(function(){
+                    $("#loginModal").modal("hide");
+                }, 2000);
                 checkLoginStatus();
             }
             else if(response["success"] === false){
@@ -84,32 +68,6 @@ function submitLoginInput() {
     });
 }
 
-function checkLoginStatus() {
-    $.ajax({
-        type: "POST",
-        url: "../../../backend/requestHandler.php",
-        data: jQuery.param({
-            method: "getLoginStatus", 
-        }),
-        cache: false,
-        dataType: "json",
-        success: function (response) {
-            //$("#success").append(response);
-            if(response["isLoggedIn"] === true){
-                $("#post-response").append("You are now logged in with username " + response["username"] + ".");
-                $('#login-form')[0].reset();
-            }
-            else if(response["isLoggedIn"] === false){
-                $("#post-response").append("Your Login-Data was not saved in this session!<br> Some functions may be unavailable. For the best user experience, please try again to log in.");
-            }
-
-        },
-        error: function(error){
-            $("#post-response").text("Oops, something went wrong. Please try again!");
-
-        }
-    });
-}
 
 
 function emptyLoginErrors(){
