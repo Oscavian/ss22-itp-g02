@@ -80,7 +80,7 @@ class User {
      * @return bool
      */
     public function isInGroup(Group $group) : bool {
-        if(empty($this->db->select("SELECT * FROM user_group WHERE fk_group_id = ? AND fk_user_id = ?", [$this->user_id, $group->getId()], "ii"))){
+        if(empty($this->db->select("SELECT * FROM user_group WHERE fk_user_id = ? AND fk_group_id = ?", [$this->user_id, $group->getId()], "ii"))){
             return false;
         }
         return true;
@@ -92,7 +92,7 @@ class User {
      * @return bool
      */
     public function isInGroupWith(User $otherUser): bool {
-        $query = "SELECT u1.fk_user_id, u2.fk_user_id FROM user_group u1 INNER JOIN user_group u2 ON u1.fk_group_id = u2.fk_group_id AND u1.fk_user_id != u2.fk_user_id WHERE u2.fk_user_id = ? ANDu1.fk_user_id = ?";
+        $query = "SELECT u1.fk_user_id, u2.fk_user_id FROM user_group u1 INNER JOIN user_group u2 ON u1.fk_group_id = u2.fk_group_id AND u1.fk_user_id != u2.fk_user_id WHERE u2.fk_user_id = ? AND u1.fk_user_id = ?";
         if(empty($this->db->select($query, [$this->user_id, $otherUser->getId()], "ii"))){
             return false;
         }

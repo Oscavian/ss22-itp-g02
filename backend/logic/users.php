@@ -141,7 +141,7 @@ class Users {
      */
     public function getLoginStatus(): array {
         
-        if($this->hub->getPermissions()->isLoggedIn()){
+        if(!$this->hub->getPermissions()->isLoggedIn()){
             return ["isLoggedIn" => false];
         }
 
