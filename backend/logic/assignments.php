@@ -5,11 +5,9 @@ require_once "models/submission.php";
 
 class Assignments {
     private $hub;
-    private $db;
 
     public function __construct(Hub $hub){
         $this->hub = $hub;
-        $this->db = $this->hub->getDb();
     }
 
     public function getById(int $id) : ?Assignment{
@@ -17,11 +15,12 @@ class Assignments {
     }
 
     public function exists(int $id) : bool {
-        if ($this->db->select("SELECT * from assignment where pk_assignment_id=?", [$id], "i", true) == null){
-            return false;
-        } else {
+        $assignment = $this->getById($id);
+
+        if ($assignment->exists()){
             return true;
         }
+        return false;
     }
 
     /**
@@ -57,8 +56,7 @@ class Assignments {
      * @return array|null
      */
     public function createAssignment(): ?array {
-        if (empty($_SESSION["userId"]) ||
-            empty($_POST["group_id"]) ||
+        if (empty($_POST["group_id"]) ||
             !is_numeric($_POST["group_id"]) ||
             empty($_POST["due_time"]) ||
             empty($_POST["title"])) {
@@ -66,12 +64,12 @@ class Assignments {
         }
 
         //TODO: centralise perm check
-        if(!isset($_SESSION['username']) && !isset($_SESSION['userType'])){ //cecks wheter user is logged in and is teacher
+        if(!isset($_SESSION['userId'])){ //cecks wheter user is logged in and is teacher
             return ["success" => false, "noPermission" => true, "msg" => "Not logged in!"];
         }
-        if ($_SESSION['userType'] != 1) {
-            return ["success" => false, "noPermission" => true];
-        }
+        // if ($_SESSION['userId'] != 1) {
+        //     return ["success" => false, "noPermission" => true];
+        // }
 
         if (!$this->hub->getGroups()->getById($_POST["group_id"])->isMember($this->hub->getUsers()->getById($_SESSION["userId"]))){
             return ["success" => false, "userNotInGroup" => true];
@@ -85,13 +83,13 @@ class Assignments {
         isset($_POST["text"]) ? $text = $_POST["text"] : $text = null;
         isset($_POST["file_path"]) ? $file_path = $_POST["file_path"] : $file_path = null;
 
-        $query = "INSERT INTO assignment (fk_user_id, fk_group_id, due_time, title, text, file_path) VALUES (?,?,?,?,?,?)";
-        $new_id = $this->db->insert($query, [$creator_id, $group_id, $due_time, $title, $text, $file_path], "iissss");
+        $assignment = new Assignment($this->hub);
+        $assignment->createAssignment($creator_id, $group_id, $due_time, $title, $text, $file_path);
 
-        if (isset($new_id)){
-            return ["success" => true, "msg" => "Assignment successfully created!", "assignment_id" => $new_id];
-        } else {
+        if (!$assignment->exists()){
             return ["success" => false, "msg" => "Error creating assignment."];
         }
+
+        return ["success" => true, "msg" => "Assignment successfully created!", "assignment_id" => $assignment->getId()];
     }
 }

@@ -28,11 +28,16 @@ class Group {
         return $result;
     }
 
-
     public function getId() : int{
         return $this->group_id;
     }
 
+    public function exists(){   
+        if(empty($this->group_id)){
+            return false;
+        };
+        return true;
+    }
 
     public function getChat(): Chat {
         if (empty($this->chat)){
@@ -88,6 +93,20 @@ class Group {
         
         $this->db->insert("INSERT INTO user_group (fk_group_id, fk_user_id) VALUES (?, ?)", [$this->group_id, $user->getUserId()], "ii");
         $this->members[] = $user;
+    }
+
+    /**
+     * adds Group to database
+     * sets $this->group_id to new group id
+     * also creates Group chat and links it to group
+     * @return void
+     */
+    public function createGroup($groupName){
+        
+        //TODO: create chat as part of chat class
+        $newChatId = $this->db->insert("INSERT INTO chat (name) VALUES (?)", [$groupName], "s");
+        $this->group_id = $this->db->insert("INSERT INTO `groups` (name, fk_chat_id) VALUES (?, ?)", [$groupName, $newChatId], "si");
+        return;
     }
 
     /**

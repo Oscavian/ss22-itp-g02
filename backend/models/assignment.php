@@ -21,12 +21,8 @@ class Assignment {
     public function __construct(Hub $hub, $id = null) {
         $this->hub = $hub;
         $this->db = $this->hub->getDb();
-        $this->assignment_id = null;
-        if ($this->db->select("SELECT * FROM assignment where pk_assignment_id=?", [$id], "i", true) == null){
-            return null;
-        } else {
-            $this->assignment_id = $id;
-        }
+
+        empty($this->db->select("SELECT * FROM assignment where pk_assignment_id=?", [$id], "i", true)) ? $this->assignment_id = null : $this->assignment_id = $id;
     }
 
     public function getBaseData(): array {
@@ -55,6 +51,13 @@ class Assignment {
 
     public function getId() {
         return $this->assignment_id;
+    }
+
+    public function exists(){   
+        if(empty($this->assignment_id)){
+            return false;
+        };
+        return true;
     }
 
     public function getCreationTime() {
@@ -113,6 +116,13 @@ class Assignment {
         } else {
             return false;
         }
+    }
+
+    public function createAssignment($creator_id, $group_id, $due_time, $title, $text, $file_path){
+        
+        $query = "INSERT INTO assignment (fk_user_id, fk_group_id, due_time, title, text, file_path) VALUES (?,?,?,?,?,?)";
+        $this->assignment_id = $this->db->insert($query, [$creator_id, $group_id, $due_time, $title, $text, $file_path], "iissss");
+        return;
     }
 
     //TODO: add submission methods

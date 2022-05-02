@@ -2,16 +2,18 @@
 require_once "models/user.php";
 
 class Users {
-    private $db;
     private $hub;
 
     public function __construct(Hub $hub){
         $this->hub = $hub;
-        $this->db = $this->hub->getDb();
     }
 
     public function getById($user_id): User {
         return new User($this->hub, $user_id);
+    }
+
+    public function getLoggedInUser(): User {
+        return new User($this->hub, $_SESSION["userId"]);
     }
 
     public function exists(int $id) : bool {

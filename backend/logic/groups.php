@@ -2,12 +2,10 @@
 require_once "models/group.php";
 
 class Groups {
-    private $db;
     private $hub;
 
     public function __construct(Hub $hub){
         $this->hub = $hub;
-        $this->db = $this->hub->getDb();
     }
 
     public function getById(int $id): Group {
@@ -15,14 +13,17 @@ class Groups {
     }
 
     public function exists(int $id) : bool {
-        if ($this->db->select("SELECT * from group where pk_group_id=?", [$id], "i", true) == null){
-            return false;
-        } else {
+        $group = $this->getById($id);
+
+        if ($group->exists()){
             return true;
         }
+        return false;
     }
 
     /**
+     * creates new group and adds currently logged in user to group
+     * 
      * method: create group
      * groupName: string
      * @return array|null
@@ -37,19 +38,17 @@ class Groups {
         if(!isset($_SESSION['userId'])){ //cecks wheter user is logged in and is teacher
             return ["success" => false, "noPermission" => true, "msg" => "Not logged in!"];
         }
-        if ($_SESSION['userType'] != 1){
-            return ["success" => false, "noPermission" => true];
-        }
 
-        //create chat for group
-        //TODO: create chat with method of chat class
-        $newChatId = $this->db->insert("INSERT INTO chat (name) VALUES (?)", [$_POST["groupName"]], "s");
+        //TODO: centralize perm check
+        // if ($_SESSION['userType'] != 1){
+        //     return ["success" => false, "noPermission" => true];
+        // }
 
-        //create new group
-        $newGroupId = $this->db->insert("INSERT INTO `groups` (name, fk_chat_id) VALUES (?, ?)", [$_POST["groupName"], $newChatId], "si");
-        $this->db->insert("INSERT INTO user_group (fk_group_id, fk_user_id) VALUES (?, ?)", [$newGroupId, $_SESSION["userId"]], "ii");
+        $group = new Group($this->hub);
+        $group->createGroup($_POST["groupName"]);
+        $group->addMember($this->hub->getUsers()->getLoggedInUser());
 
-        return ["success" => true, "newGroupId" => $newGroupId];
+        return ["success" => true, "newGroupId" => $group->getId()];
     }
 
     /**
