@@ -17,20 +17,6 @@ class User {
         empty($this->db->select("SELECT * FROM user WHERE pk_user_id = ?", [$id], "i")) ? $this->user_id = null : $this->user_id = $id;
     }
 
-    public function getBaseData(): array {
-
-        $query = "SELECT pk_user_id as user_id, fk_user_type as user_type, first_name, last_name, username, password where pk_user_id = ?"; 
-        $result = $this->db->select($query, [$this->user_id], "i", true);
-        
-        $this->user_id = $result["user_id"];
-        $this->user_type = $result["user_type"];
-        $this->username = $result["username"];
-        $this->first_name =  $result["first_name"];
-        $this->last_name = $result["last_name"];
-
-        return $result;
-    }
-
     /**
      * initializes user with  username
      * returns true if user with username exists
@@ -47,6 +33,32 @@ class User {
         $this->user_id = $user["pk_user_id"];
         return true;
     }
+
+    public function exists(){   
+        if(empty($this->user_id)){
+            return false;
+        };
+        return true;
+    }
+    
+    public function getUserId(){
+        return $this->user_id;
+    }
+
+    public function getBaseData(): array {
+
+        $query = "SELECT pk_user_id as user_id, fk_user_type as user_type, first_name, last_name, username, password where pk_user_id = ?"; 
+        $result = $this->db->select($query, [$this->user_id], "i", true);
+        
+        $this->user_id = $result["user_id"];
+        $this->user_type = $result["user_type"];
+        $this->username = $result["username"];
+        $this->first_name =  $result["first_name"];
+        $this->last_name = $result["last_name"];
+
+        return $result;
+    }
+
 
     /**
      * fetches and returns all group objects the user belongs to
@@ -84,9 +96,6 @@ class User {
         return $this->username;
     }
 
-    public function getUserId(){
-            return $this->user_id;
-    }
 
     public function getUserType(){
         if(empty($this->user_type)){

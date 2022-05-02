@@ -15,11 +15,12 @@ class Users {
     }
 
     public function exists(int $id) : bool {
-        if ($this->db->select("SELECT * from user where pk_user_id=?", [$id], "i", true) == null){
-            return false;
-        } else {
+        $user = $this->getById($id);
+
+        if ($user->exists()){
             return true;
         }
+        return false;
     }
 
     /**
@@ -129,9 +130,10 @@ class Users {
         }
 
         
-        if ((new User($this->hub))->initializeByUserName($_POST["user"])) {
+        if (!$this->checkUserNameAvailable($username)["userNameAvailable"]) {
             return ["success" => false, "userNameUnavailable" => true];
         }
+
         // --- End of form validation ---
         
         $user = new User($this->hub);

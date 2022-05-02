@@ -3,6 +3,7 @@
 class Hub {
 
     private $db;
+    private $permissions;
 
     private $assignments;
     private $chats;
@@ -16,6 +17,14 @@ class Hub {
             return $this->db = new Database();
         }
         return $this->db;
+    }
+
+    public function getPermissions(): Permissions {
+        if ($this->permissions == null) {
+            require_once "permissions.php";
+            return $this->permissions = new Permissions($this);
+        }
+        return $this->permissions;
     }
 
     public function getChats(): Chats {
