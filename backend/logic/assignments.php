@@ -24,15 +24,16 @@ class Assignments {
             return null;
         }
 
-        //TODO: perm check
-
         $assignment = $this->getById($_POST["assignment_id"]);
-
-        if ($assignment->exists()){
-            return $assignment->getBaseData();
+        if (!$assignment->exists()){
+            return ["success" => false, "msg" => "Assignment with ID" . $_POST["assignment_id"] . " does not exist!", "inputInvalid" => true];
         }
-
-        return ["success" => false, "msg" => "Assignment with ID" . $_POST["assignment_id"] . " does not exist!", "inputInvalid" => true];
+        
+        if(!$this->hub->getPermissions()->canAccessAssignment($assignment)){
+            return ["success" => false, "userNotInGroup" => true];
+        }
+        
+        return $assignment->getBaseData();    
     }
 
     /**
@@ -52,15 +53,12 @@ class Assignments {
             return null;
         }
 
-        //TODO: centralise perm check
-        if(!isset($_SESSION['userId'])){ //cecks wheter user is logged in and is teacher
-            return ["success" => false, "noPermission" => true, "msg" => "Not logged in!"];
+        if(!$this->hub->getPermissions()->isTeacher()){
+            return ["success" => false, "noPermission" => true];
         }
-        // if ($_SESSION['userId'] != 1) {
-        //     return ["success" => false, "noPermission" => true];
-        // }
 
-        if (!$this->hub->getGroups()->getById($_POST["group_id"])->isMember($this->hub->getUsers()->getLoggedInUser())){
+        $group = $this->hub->getGroups()->getById($_POST["group_id"]);
+        if(!$this->hub->getPermissions()->isInGroup($group)){
             return ["success" => false, "userNotInGroup" => true];
         }
 

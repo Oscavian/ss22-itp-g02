@@ -29,7 +29,7 @@ class Users {
 
         $user = new User($this->hub);
         if ($user->verifyLogin($_POST["user"], $_POST["password"])){
-            $_SESSION['userId'] = $user->getUserId();
+            $_SESSION['userId'] = $user->getId();
             return ["success" => true];
         }
         return ["success" => false];
@@ -50,25 +50,22 @@ class Users {
      */
     public function getUserGroups(): array {
 
-        //TODO new Permissions system
-        if(empty($_SESSION['userId'])){ //cecks whether user is logged in
-            $res["success"] = false;
-            $res["notLoggedIn"] = true;
-            return $res;
+        if(!$this->hub->getPermissions()->isLoggedIn()){
+            return ["success" => false, "notLoggedIn" => true];
         }
 
-        $res = [];
-        foreach ($this->getById($_SESSION["userId"])->getGroups() as $group){
-            $item = new stdClass();
-            $item->groupName = $group->getName();
-            $item->groupId = $group->getId();
-            $res[] = $item;
+        $resultGroups = [];
+        foreach ($this->getLoggedInUser()->getGroups() as $group){
+            $item["groupName"] = $group->getName();
+            $item["groupId"] = $group->getId();
+            $resultGroups[] = $item;
         }
-
-        if(empty($res)){
+        
+        if(empty($resultGroups)){
             return ["success" => true, "noGroups" => true];
         }
 
+        $res["groups"] = $resultGroups;
         $res["success"] = true;
         $res["noGroups"] = false;
         return $res;
@@ -133,7 +130,7 @@ class Users {
         $user_type = 1; // = teacher
         
         $user->storeNewUser($username, $password, $first_name, $last_name, $user_type);
-        $_SESSION['userId'] = $user->getUserId();
+        $_SESSION['userId'] = $user->getId();
 
         return ["success" => true, "msg" => "User successfully created!"];
     }
@@ -144,15 +141,15 @@ class Users {
      */
     public function getLoginStatus(): array {
         
-        if(empty($_SESSION['userId'])){
+        if($this->hub->getPermissions()->isLoggedIn()){
             return ["isLoggedIn" => false];
         }
 
-        $user = $this->getById($_SESSION['userId']);
+        $user = $this->getLoggedInUser();
 
         $res["isLoggedIn"] = true;
         $res["username"] = $user->getUsername();
-        $res["userId"] = $user->getUserId();
+        $res["userId"] = $user->getId();
         $res["userType"] = $user->getUserType();
         return $res;
     }

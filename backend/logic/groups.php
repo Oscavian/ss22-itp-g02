@@ -25,15 +25,9 @@ class Groups {
             return null;
         }
 
-        //TODO: centralise perm check
-        if(!isset($_SESSION['userId'])){ //cecks wheter user is logged in and is teacher
-            return ["success" => false, "noPermission" => true, "msg" => "Not logged in!"];
+        if(!$this->hub->getPermissions()->isTeacher()){ //cecks wheter user is logged in and is teacher
+            return ["success" => false, "noPermission" => true];
         }
-
-        //TODO: centralize perm check
-        // if ($_SESSION['userType'] != 1){
-        //     return ["success" => false, "noPermission" => true];
-        // }
 
         $group = new Group($this->hub);
         $group->storeNewGroup($_POST["groupName"]);
@@ -52,25 +46,17 @@ class Groups {
             return null;
         }
 
-        //TODO: centralise perm check
-        if(empty($_SESSION['userId'])){ //cecks wheter user is logged in
-            $res["success"] = false;
-            $res["notLoggedIn"] = true;
-            return $res;
-        }
-
         $group = $this->getById($_POST["groupId"]);
 
-        //TODO: centralise perm check
-        if($group->isMember($this->hub->getUsers()->getById($_SESSION["userId"]))){
-            $res["success"] = true;
-            $res["groupName"] = $group->getName();
-            return $res;
+        if(!$group->exists()){
+            return ["success" => false, "msg" => "Group with ID" .  $_POST["groupId"] . "does not exist!"];
         }
 
-        $res["success"] = false;
-        $res["userNotInGroup"] = true;
-        return $res;
+        if(!$this->hub->getPermissions()->isInGroup($group)){
+            return ["success" => false, "userNotInGroup" => true];
+        }
+
+        return ["success" => true, "groupName" => $group->getName()];
     }
 
     /**
@@ -83,28 +69,23 @@ class Groups {
             return null;
         }
 
-        //TODO: centralise perm check
-        if(empty($_SESSION['userId'])){ //cecks wheter user is logged in
-            $res["success"] = false;
-            $res["notLoggedIn"] = true;
-            return $res;
-        }
-
         $group = $this->getById($_POST["groupId"]);
 
-        //TODO: centralise perm check
-        if($group->isMember($this->hub->getUsers()->getLoggedInUser())){
-            $res["success"] = true;
-            $res["groupChatId"] = $group->getChat()->getChatId();
-            return $res;
+        if(!$group->exists()){
+            return ["success" => false, "msg" => "Group with ID" .  $_POST["groupId"] . "does not exist!"];
         }
 
-        $res["success"] = false;
-        $res["userNotInGroup"] = true;
-        return $res;
+        if(!$this->hub->getPermissions()->isInGroup($group)){
+            return ["success" => false, "userNotInGroup" => true];
+        }
+
+        return ["success" => true, "groupChatId" => $group->getChat()->getChatId()];
     }
 
     /**
+     * a user can only be assigned to a group if the user
+     * is allready in another group with the teacher
+     * 
      * method: assignUserToGroup
      * userId
      * groupId
@@ -115,8 +96,6 @@ class Groups {
             return null;
         }
         
-        //TODO: Permission check - who can add who to a group?
-
         $group = $this->getById($_POST["groupId"]);
         $user = $this->hub->getUsers()->getById($_POST["userId"]);
 
@@ -126,6 +105,10 @@ class Groups {
 
         if(!$user->exists()){
             return ["success" => false, "msg" => "User with ID" . $_POST["userId"] . "does not exist!", "inputInvalid" => true];
+        }
+
+        if(!$this->hub->getPermissions()->canAssignUserToGroup($user, $group)){
+            return ["success" => false, "noPermission" => true];
         }
         
         $group->addMember($user);

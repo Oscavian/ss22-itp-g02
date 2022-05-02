@@ -68,30 +68,12 @@ class Group {
     }
 
     /**
-     * checks, whether a user is part of the group or not
-     * @param User $user
-     * @return bool
-     */
-    public function isMember(User $user) :bool {
-        if (empty($this->members)){
-            $this->getMembers();
-        }
-
-        foreach ($this->members as $member){
-            if ($member->getUserId() == $user->getUserId()){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * @param User $user
      * @return void
      */
     public function addMember(User $user){
         
-        $this->db->insert("INSERT INTO user_group (fk_group_id, fk_user_id) VALUES (?, ?)", [$this->group_id, $user->getUserId()], "ii");
+        $this->db->insert("INSERT INTO user_group (fk_group_id, fk_user_id) VALUES (?, ?)", [$this->group_id, $user->getId()], "ii");
         $this->members[] = $user;
     }
 

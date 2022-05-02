@@ -41,7 +41,7 @@ class User {
         return true;
     }
     
-    public function getUserId(){
+    public function getId(){
         return $this->user_id;
     }
 
@@ -72,6 +72,31 @@ class User {
             }
         }
         return $this->groups;
+    }
+
+    /**
+     * checks whether the user is part of a group
+     * @param Group $group
+     * @return bool
+     */
+    public function isInGroup(Group $group) : bool {
+        if(empty($this->db->select("SELECT * FROM user_group WHERE fk_group_id = ? AND fk_user_id = ?", [$this->user_id, $group->getId()], "ii"))){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * checks whether the user is in (any) group with another user
+     * @param User $otherUser
+     * @return bool
+     */
+    public function isInGroupWith(User $otherUser): bool {
+        $query = "SELECT u1.fk_user_id, u2.fk_user_id FROM user_group u1 INNER JOIN user_group u2 ON u1.fk_group_id = u2.fk_group_id AND u1.fk_user_id != u2.fk_user_id WHERE u2.fk_user_id = ? ANDu1.fk_user_id = ?";
+        if(empty($this->db->select($query, [$this->user_id, $otherUser->getId()], "ii"))){
+            return false;
+        }
+        return true;
     }
 
     public function getFirstName(){
