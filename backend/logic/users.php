@@ -14,8 +14,18 @@ class Users {
         return new User($this->hub, $user_id);
     }
 
+    public function exists(int $id) : bool {
+        if ($this->db->select("SELECT * from user where pk_user_id=?", [$id], "i", true) == null){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     /**
      * method: login
+     * user: string
+     * password: string
      * @return array|null
      */
     public function login(): ?array {
@@ -24,17 +34,11 @@ class Users {
         }
 
         $user = new User($this->hub);
-        if ($user->initializeWithUsername($_POST["user"])) {
-            if ($user->matchPassword($_POST["password"])) {
-                $_SESSION['username'] = $user->getUsername();
-                $_SESSION['userId'] = $user->getUserId();
-                $_SESSION['userType'] = $user->getUserType();
-                $res["success"] = true;
-                return $res;
-            }
+        if ($user->login($_POST["user"], $_POST["password"])){
+            $_SESSION['userId'] = $user->getUserId();
+            return ["success" => true];
         }
-        $res["success"] = false;
-        return $res;
+        return ["success" => false];
     }
 
     /**
@@ -43,8 +47,7 @@ class Users {
      */
     public function logout(): array {
         session_destroy();
-        $res["success"] = true;
-        return $res;
+        return ["success" => true];
     }
 
     /**
@@ -53,7 +56,8 @@ class Users {
      */
     public function getUserGroups(): array {
 
-        if(empty($_SESSION['username'])){ //cecks whether user is logged in
+        //TODO new Permissions system
+        if(empty($_SESSION['userId'])){ //cecks whether user is logged in
             $res["success"] = false;
             $res["notLoggedIn"] = true;
             return $res;
@@ -63,20 +67,26 @@ class Users {
         foreach ($this->getById($_SESSION["userId"])->getGroups() as $group){
             $item = new stdClass();
             $item->groupName = $group->getName();
-            $item->groupId = $group->getGroupId();
+            $item->groupId = $group->getId();
             $res[] = $item;
         }
 
         if(empty($res)){
-            $res["success"] = true;
-            $res["noGroups"] = true;
-            return $res;
+            return ["success" => true, "noGroups" => true];
         }
+
+        $res["success"] = true;
+        $res["noGroups"] = false;
         return $res;
     }
 
     /**
-     * @return string[]|null
+     * method: registerTeacher
+     * first_name: string 
+     * last_name: string 
+     * username: string 
+     * password: string
+     * @return array
      */
     public function registerTeacher() {
 
@@ -118,31 +128,19 @@ class Users {
             return $res;
         }
 
-        //TODO: refactor
-        if (!$this->db->checkUserNameAvailable($username)) {
-            $res["success"] = false;
-            $res["userNameUnavailable"] = true;
-            return $res;
+        
+        if ((new User($this->hub))->initializeByUserName($_POST["user"])) {
+            return ["success" => false, "userNameUnavailable" => true];
         }
         // --- End of form validation ---
-
-        $user_type = 1; // = teacher
-        //TODO: refactor
-        $this->db->registerUser($username, $password, $first_name, $last_name, $user_type);
-
+        
         $user = new User($this->hub);
-        if ($user->initializeWithUsername("$username")) {
-            $_SESSION['username'] = $user->getUsername();
-            $_SESSION['userId'] = $user->getUserId();
-            $_SESSION['userType'] = $user->getUserType();
-            $res["success"] = true;
-            $res["msg"] = "User successfully created!";
-            return $res;
-        }
+        $user_type = 1; // = teacher
+        
+        $user->registerUser($username, $password, $first_name, $last_name, $user_type);
+        $_SESSION['userId'] = $user->getUserId();
 
-        $res["success"] = false;
-        $res["unknownError"] = true;
-        return $res;
+        return ["success" => true, "msg" => "User successfully created!"];
     }
 
     /**
@@ -150,34 +148,34 @@ class Users {
      * @return array
      */
     public function getLoginStatus(): array {
-        if (!empty($_SESSION['username']) && !empty($_SESSION['userId']) && !empty($_SESSION['userType'])) {
-            $res["isLoggedIn"] = true;
-            $res["username"] = $_SESSION['username'];
-            $res["userId"] = $_SESSION['userId'];
-            $res["userType"] = $_SESSION['userType'];
-            print_r($_SESSION);
-            return $res;
+        
+        if(empty($_SESSION['userId'])){
+            return ["isLoggedIn" => false];
         }
-        $res["isLoggedIn"] = false;
+
+        $user = $this->getById($_SESSION['userId']);
+
+        $res["isLoggedIn"] = true;
+        $res["username"] = $user->getUsername();
+        $res["userId"] = $user->getUserId();
+        $res["userType"] = $user->getUserType();
         return $res;
     }
 
     /**
      * method: checkUserNameAvailable
+     * user: string
      * @return array|null
      */
     public function checkUserNameAvailable() : ?array {
-        if (!isset($_POST["user"]) || $_POST["user"] == "") {
+        if (empty($_POST["user"])) {
             return null;
         }
 
-        if ($this->db->checkUserNameAvailable(($_POST["user"]))) {
-            $res["userNameAvailable"] = true;
-            return $res;
+        if((new User($this->hub))->initializeByUserName($_POST["user"])){
+            return ["userNameAvailable" => false];
         }
 
-        $res["userNameAvailable"] = false;
-        return $res;
-
+        return ["userNameAvailable" => true];
     }
 }

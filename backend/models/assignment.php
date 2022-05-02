@@ -73,7 +73,7 @@ class Assignment {
 
     public function getDueTime() {
         if (empty($this->creation_time)){
-            return $this->creation_time = $this->db->select("SELECT time from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["due_time"];
+            return $this->creation_time = $this->db->select("SELECT due_time from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["due_time"];
         }
         return $this->creation_time;
     }
