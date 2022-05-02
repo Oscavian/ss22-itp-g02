@@ -35,7 +35,7 @@ class Permissions {
         }
         
         $user = $this->hub->getUsers()->getLoggedInUser();
-        if($user->getUserType() == 1){
+        if($user->getUserType() == 2){
             return true;
         }
         return false;
