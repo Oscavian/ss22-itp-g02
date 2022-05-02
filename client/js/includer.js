@@ -45,11 +45,11 @@ function waitForNavbar() {
         success: function (response) {
             if(response["isLoggedIn"] === true){
                 //$("#post-response").append("You are now logged in with username " + response["username"] + ".");
-                $("#log-stat").append("<li class='nav-item mb-1'><div class='navbar-brand'>"+response["username"] + "</div></li>");
-                $("#log-stat").append("<li class='nav-item mb-1'><button type='button' id='logout' class='btn btn-warning me-2 fs-5' onclick='logoutUser()'>Logout</button></li>");
+                $("#log-stat").append("<li class='nav-item mb-1'><div class='navbar-brand'>" + response["username"] + "</div></li>");
+                $("#log-stat").append("<li class='nav-item mb-1'><button type='button' id='logout' class='btn btn-outline-warning me-2 fs-5' onclick='logoutUser()'>Logout</button></li>");
             }
             else if(response["isLoggedIn"] === false){
-                $("#log-stat").append("<li class='nav-item mb-1'><button type='button' id='login' class='btn btn-warning me-2 fs-5' data-bs-toggle='modal' data-bs-target='#loginModal' onclick='waitForModal()'>Login</button></li>");
+                $("#log-stat").append("<li class='nav-item mb-1'><button type='button' id='login' class='btn btn-outline-warning me-2 fs-5' data-bs-toggle='modal' data-bs-target='#loginModal' onclick='waitForModal()'>Login</button></li>");
             }
 
         },
