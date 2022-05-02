@@ -118,11 +118,20 @@ class Assignment {
         }
     }
 
-    public function createAssignment($creator_id, $group_id, $due_time, $title, $text, $file_path){
+    /**
+     * stores a new Assignment in db and sets this->id to the new id
+     * @param $creator_id
+     * @param $group_id
+     * @param $due_time
+     * @param $title
+     * @param $text
+     * @param $file_path
+     * @return void
+     */
+    public function storeNewAssignment($creator_id, $group_id, $due_time, $title, $text, $file_path){
         
         $query = "INSERT INTO assignment (fk_user_id, fk_group_id, due_time, title, text, file_path) VALUES (?,?,?,?,?,?)";
         $this->assignment_id = $this->db->insert($query, [$creator_id, $group_id, $due_time, $title, $text, $file_path], "iissss");
-        return;
     }
 
     //TODO: add submission methods

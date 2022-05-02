@@ -25,7 +25,7 @@ class MainLogic {
             case "getLoginStatus":
                 return $this->hub->getUsers()->getLoginStatus();
             case "checkUserNameAvailable":
-                return $this->hub->getUsers()->checkUserNameAvailable();
+                return $this->hub->getUsers()->isUserNameAvailable();
             case "registerTeacher":
                 return $this->hub->getUsers()->registerTeacher();
             case "getUserGroups":

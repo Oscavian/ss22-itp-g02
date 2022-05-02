@@ -37,7 +37,7 @@ class User {
     public function exists(){   
         if(empty($this->user_id)){
             return false;
-        };
+        }
         return true;
     }
     
@@ -114,7 +114,7 @@ class User {
      * also initializes user
      * @return bool
      */
-    public function login($username, $password): bool{
+    public function verifyLogin($username, $password): bool{
             
         if(!$this->initializeByUserName($username)){
             return false;
@@ -128,10 +128,9 @@ class User {
         return false;
     }
 
-    public function registerUser($username, $password, $first_name, $last_name, $user_type){
+    public function storeNewUser($username, $password, $first_name, $last_name, $user_type){
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
         $this->user_id = $this->db->insert("INSERT INTO user (fk_user_type, first_name, last_name, username, password) VALUES (?, ?, ?, ?, ?)", [$user_type, $first_name, $last_name, $username, $password_hash], "issss");
-        return;
     }
 }
 

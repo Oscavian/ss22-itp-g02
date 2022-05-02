@@ -101,24 +101,22 @@ class Group {
      * also creates Group chat and links it to group
      * @return void
      */
-    public function createGroup($groupName){
+    public function storeNewGroup($groupName){
         
         //TODO: create chat as part of chat class
         $newChatId = $this->db->insert("INSERT INTO chat (name) VALUES (?)", [$groupName], "s");
         $this->group_id = $this->db->insert("INSERT INTO `groups` (name, fk_chat_id) VALUES (?, ?)", [$groupName, $newChatId], "si");
-        return;
     }
 
     /**
      * fetches all Assignments associated with the group and returns them
      * @return array
      */
-    public function getAssignments() {
+    public function getAssignments(): array {
         
         if (!empty($this->assignments)){
             return $this->assignments;
         }
-
 
         $result = $this->db->select("SELECT pk_assignment_id as assignment_id FROM assignment WHERE fk_group_id = ?", [$this->group_id], "i");
         foreach ($result as $item) {

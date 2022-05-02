@@ -28,7 +28,7 @@ class Users {
         }
 
         $user = new User($this->hub);
-        if ($user->login($_POST["user"], $_POST["password"])){
+        if ($user->verifyLogin($_POST["user"], $_POST["password"])){
             $_SESSION['userId'] = $user->getUserId();
             return ["success" => true];
         }
@@ -123,7 +123,7 @@ class Users {
         }
 
         
-        if (!$this->checkUserNameAvailable($username)["userNameAvailable"]) {
+        if (!$this->isUserNameAvailable($username)["userNameAvailable"]) {
             return ["success" => false, "userNameUnavailable" => true];
         }
 
@@ -132,7 +132,7 @@ class Users {
         $user = new User($this->hub);
         $user_type = 1; // = teacher
         
-        $user->registerUser($username, $password, $first_name, $last_name, $user_type);
+        $user->storeNewUser($username, $password, $first_name, $last_name, $user_type);
         $_SESSION['userId'] = $user->getUserId();
 
         return ["success" => true, "msg" => "User successfully created!"];
@@ -162,7 +162,7 @@ class Users {
      * user: string
      * @return array|null
      */
-    public function checkUserNameAvailable() : ?array {
+    public function isUserNameAvailable() : ?array {
         if (empty($_POST["user"])) {
             return null;
         }

@@ -60,7 +60,7 @@ class Assignments {
         //     return ["success" => false, "noPermission" => true];
         // }
 
-        if (!$this->hub->getGroups()->getById($_POST["group_id"])->isMember($this->hub->getUsers()->getById($_SESSION["userId"]))){
+        if (!$this->hub->getGroups()->getById($_POST["group_id"])->isMember($this->hub->getUsers()->getLoggedInUser())){
             return ["success" => false, "userNotInGroup" => true];
         }
 
@@ -73,7 +73,7 @@ class Assignments {
         isset($_POST["file_path"]) ? $file_path = $_POST["file_path"] : $file_path = null;
 
         $assignment = new Assignment($this->hub);
-        $assignment->createAssignment($creator_id, $group_id, $due_time, $title, $text, $file_path);
+        $assignment->storeNewAssignment($creator_id, $group_id, $due_time, $title, $text, $file_path);
 
         if (!$assignment->exists()){
             return ["success" => false, "msg" => "Error creating assignment."];

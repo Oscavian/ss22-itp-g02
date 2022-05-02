@@ -36,7 +36,7 @@ class Groups {
         // }
 
         $group = new Group($this->hub);
-        $group->createGroup($_POST["groupName"]);
+        $group->storeNewGroup($_POST["groupName"]);
         $group->addMember($this->hub->getUsers()->getLoggedInUser());
 
         return ["success" => true, "newGroupId" => $group->getId()];
@@ -93,7 +93,7 @@ class Groups {
         $group = $this->getById($_POST["groupId"]);
 
         //TODO: centralise perm check
-        if($group->isMember($this->hub->getUsers()->getById($_SESSION["userId"]))){
+        if($group->isMember($this->hub->getUsers()->getLoggedInUser())){
             $res["success"] = true;
             $res["groupChatId"] = $group->getChat()->getChatId();
             return $res;
