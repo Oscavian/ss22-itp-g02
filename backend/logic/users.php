@@ -16,15 +16,6 @@ class Users {
         return new User($this->hub, $_SESSION["userId"]);
     }
 
-    public function exists(int $id) : bool {
-        $user = $this->getById($id);
-
-        if ($user->exists()){
-            return true;
-        }
-        return false;
-    }
-
     /**
      * method: login
      * user: string

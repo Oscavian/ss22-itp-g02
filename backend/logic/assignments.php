@@ -14,15 +14,6 @@ class Assignments {
         return new Assignment($this->hub, $id);
     }
 
-    public function exists(int $id) : bool {
-        $assignment = $this->getById($id);
-
-        if ($assignment->exists()){
-            return true;
-        }
-        return false;
-    }
-
     /**
      * method: getAssignmentById
      * assignment_id: int $id
@@ -31,19 +22,17 @@ class Assignments {
     public function getAssignmentById() : ?array {
         if (empty($_POST["assignment_id"])){
             return null;
-        } else {
-            $id = $_POST["assignment_id"];
         }
 
         //TODO: perm check
 
-        if ($this->exists($id)){
-            $assignment = $this->getById($id);
-        } else {
-            return ["success" => false, "msg" => "Assignment with ID $id does not exist!", "inputInvalid" => true];
+        $assignment = $this->getById($_POST["assignment_id"]);
+
+        if ($assignment->exists()){
+            return $assignment->getBaseData();
         }
 
-        return $assignment->getBaseData();
+        return ["success" => false, "msg" => "Assignment with ID" . $_POST["assignment_id"] . " does not exist!", "inputInvalid" => true];
     }
 
     /**

@@ -12,15 +12,6 @@ class Groups {
         return new Group($this->hub, $id);
     }
 
-    public function exists(int $id) : bool {
-        $group = $this->getById($id);
-
-        if ($group->exists()){
-            return true;
-        }
-        return false;
-    }
-
     /**
      * creates new group and adds currently logged in user to group
      * 
@@ -126,21 +117,20 @@ class Groups {
         
         //TODO: Permission check - who can add who to a group?
 
-        $groupId = $_POST["groupId"];
-        $userId = $_POST["userId"];
+        $group = $this->getById($_POST["groupId"]);
+        $user = $this->hub->getUsers()->getById($_POST["userId"]);
 
-        if(!$this->exists($groupId)){
-            return ["success" => false, "msg" => "Group with ID $groupId does not exist!", "inputInvalid" => true];
+        if(!$group->exists()){
+            return ["success" => false, "msg" => "Group with ID" .  $_POST["groupId"] . "does not exist!", "inputInvalid" => true];
         }
 
-        if(!$this->hub->getUsers()->exists($userId)){
-            return ["success" => false, "msg" => "User with ID $userId does not exist!", "inputInvalid" => true];
+        if(!$user->exists()){
+            return ["success" => false, "msg" => "User with ID" . $_POST["userId"] . "does not exist!", "inputInvalid" => true];
         }
         
-        $group = $this->getById($groupId);
-        $user = $this->hub->getUsers()->getById($userId);
         $group->addMember($user);
-
         return ["success" => true];
     }
 }
+
+
