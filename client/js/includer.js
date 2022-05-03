@@ -28,7 +28,7 @@ function waitForNavbar() {
     } else {
       setTimeout(function() {
         waitForNavbar();
-      }, 100);
+      }, 50);
     }
   };
 

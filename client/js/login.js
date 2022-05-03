@@ -49,7 +49,7 @@ function submitLoginInput() {
         success: function (response) {
             //$("#success").append(response);
             if(response["success"] === true){
-                $("#post-response").append("The Login was successful.<br>");
+                $("#post-response").text("The Login was successful.");
                 $('#login-form')[0].reset();
                 setTimeout(function(){
                     $("#loginModal").modal("hide");
