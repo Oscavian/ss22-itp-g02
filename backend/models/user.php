@@ -1,92 +1,156 @@
 <?php
 
-use LDAP\Result;
-
-require_once("models/assignment.php");
-
 class User {
     private $user_id;
     private $user_type;
     private $username;
-    private $password_hash;
     private $first_name;
     private $last_name;
+    private $groups = [];
+
+    public function __construct($id = null){
+        empty(Database::select("SELECT * FROM user WHERE pk_user_id = ?", [$id], "i")) ? $this->user_id = null : $this->user_id = $id;
+    }
+
+    /**
+     * initializes user with  username
+     * returns true if user with username exists
+     * @return bool
+     */
+    public function initializeByUserName($username){
+        
+        $user = Database::select("SELECT * from user where username=?", [$username], "s", true);
+            
+        if(empty($user)){
+            return false;
+        }
+
+        $this->user_id = $user["pk_user_id"];
+        return true;
+    }
+
+    public function exists(){   
+        if(empty($this->user_id)){
+            return false;
+        }
+        return true;
+    }
     
-    private $isValidUser = false;
+    public function getId(){
+        return $this->user_id;
+    }
 
+    public function getBaseData(): array {
 
-    //returns false if user was not found in database
-    public function initializeWithUsername($username){
-        if(!isset($username) || $username == ""){
-            return false;
-        }
-
-        $db = new Database();
-        $result = $db->getUserData($username);
-        if(!isset($result)){
-            return false;
-        }
-
-        $this->user_id = $result["pk_user_id"];
-        $this->user_type = $result["fk_user_type"];
+        $query = "SELECT pk_user_id as user_id, fk_user_type as user_type, first_name, last_name, username, password where pk_user_id = ?"; 
+        $result = Database::select($query, [$this->user_id], "i", true);
+        
+        $this->user_id = $result["user_id"];
+        $this->user_type = $result["user_type"];
         $this->username = $result["username"];
-        $this->password_hash = $result["password"];
-        $this->first_name = $result["first_name"];
+        $this->first_name =  $result["first_name"];
         $this->last_name = $result["last_name"];
 
-        $this->isValidUser = true;
+        return $result;
+    }
+
+
+    /**
+     * fetches and returns all group objects the user belongs to
+     * @return array
+     */
+    public function getGroups(): array {
+        if (empty($this->groups)){
+            $result = Database::select("SELECT fk_group_id as group_id FROM user_group WHERE fk_user_id = ?", [$this->user_id], "i");
+            foreach ($result as $item){
+                $this->groups[] = Hub::Group($item["group_id"]);
+            }
+        }
+        return $this->groups;
+    }
+
+    /**
+     * checks whether the user is part of a group
+     * @param Group $group
+     * @return bool
+     */
+    public function isInGroup(Group $group) : bool {
+        if(empty(Database::select("SELECT * FROM user_group WHERE fk_user_id = ? AND fk_group_id = ?", [$this->user_id, $group->getId()], "ii"))){
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * checks whether the user is in (any) group with another user
+     * @param User $otherUser
+     * @return bool
+     */
+    public function isInGroupWith(User $otherUser): bool {
+        $query = "SELECT u1.fk_user_id, u2.fk_user_id FROM user_group u1 INNER JOIN user_group u2 ON u1.fk_group_id = u2.fk_group_id AND u1.fk_user_id != u2.fk_user_id WHERE u2.fk_user_id = ? AND u1.fk_user_id = ?";
+        if(empty(Database::select($query, [$this->user_id, $otherUser->getId()], "ii"))){
+            return false;
+        }
         return true;
     }
 
     public function getFirstName(){
-        if($this->isValidUser){
-            return $this->first_name;
+        if(empty($this->first_name)){
+            $this->first_name = Database::select("SELECT first_name FROM user where pk_user_id = ?", [$this->user_id], "i", true)["first_name"];
         }
-        return;
+        return $this->first_name;
     }
 
     public function getLastName(){
-        if($this->isValidUser){
-            return $this->last_name;
+        if(empty($this->last_name)){
+            $this->last_name = Database::select("SELECT last_name FROM user where pk_user_id = ?", [$this->user_id], "i", true)["last_name"];
         }
-        return;
+        return $this->last_name;
 
     }
 
     public function getUsername(){
-        if($this->isValidUser){
-            return $this->username;
+        if(empty($this->username)){
+            $this->username = Database::select("SELECT username FROM user where pk_user_id = ?", [$this->user_id], "i", true)["username"];
         }
-        return;
+        return $this->username;
     }
 
-    public function getUserId(){
-        if($this->isValidUser){
-            return $this->user_id;
-        }
-        return;
-    }
 
     public function getUserType(){
-        if($this->isValidUser){
-            return $this->user_type;
+        if(empty($this->user_type)){
+            $this->user_type = Database::select("SELECT fk_user_type FROM user where pk_user_id = ?", [$this->user_id], "i", true)["fk_user_type"];
         }
-        return;
+        return $this->user_type;
     }
 
     private function getPasswordHash(){
-        if($this->isValidUser){
-            return $this->password_hash;
-        }
-        return;
+        return Database::select("SELECT password FROM user where pk_user_id = ?", [$this->user_id], "i", true)["password"];
     }
 
-    public function matchPassword($password){
-
-        if(!empty($password) && password_verify($password, $this->getPasswordHash())){
+    /**
+     * used for logging in user
+     * returns true if login was successful
+     * also initializes user
+     * @return bool
+     */
+    public function verifyLogin($username, $password): bool{
+            
+        if(!$this->initializeByUserName($username)){
+            return false;
+        }
+        
+        if(password_verify($password, $this->getPasswordHash())){
             return true;
         }
+
+        $this->user_id = NULL;
         return false;
+    }
+
+    public function storeNewUser($username, $password, $first_name, $last_name, $user_type){
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        $this->user_id = Database::insert("INSERT INTO user (fk_user_type, first_name, last_name, username, password) VALUES (?, ?, ?, ?, ?)", [$user_type, $first_name, $last_name, $username, $password_hash], "issss");
     }
 }
 
