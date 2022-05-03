@@ -16,14 +16,8 @@ function logoutUser() {
         dataType: "json",
         success: function (response) {
             //$("#success").append(response);
-            if(response["success"] === true){
                 alert("You were logged out successfully");
                 checkLoginStatus();
-            }
-            else{
-                alert("The Logout was unsuccessful, please try again later.");
-            }
-
         },
         error: function(error){
             alert("An error happened while trying to log you out.");

@@ -147,24 +147,11 @@ function submitRegisterInput() {
         dataType: "json",
         success: function (response) {
             //$("#success").append(response);
-            if(response["userNameUnavailable"] === true){
-                $("#post-response").text("The username chosen is unavailable");
-            }
-            if(response["unknownError"] === true){
-                $("#post-response").text("An error occurred while processing the request");
-            }
-            if(response["success"] === true){
-                $("#post-response").text("Your account was successfully created");
-                $('#register-form')[0].reset();
-            }
-            if(response["formDataInvalid"] === true){
-                $("#post-response").text("The data entered is invalid");
-            }
-
+            $("#post-response").text("Your account was successfully created");
+            $('#register-form')[0].reset();
         },
         error: function(error){//wtf ist error eigentlich
             $("#post-response").text("ein error");
-
         }
     });
 }

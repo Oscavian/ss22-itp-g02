@@ -57,7 +57,7 @@ function submitLoginInput() {
                 checkLoginStatus();
             }
             else if(response["success"] === false){
-                $("#post-response").text("The Login was unsuccessful, please try again later.");
+                $("#post-response").text("The User or password was not correct.");
             }
 
         },
@@ -67,7 +67,6 @@ function submitLoginInput() {
         }
     });
 }
-
 
 
 function emptyLoginErrors(){
