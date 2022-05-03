@@ -1,16 +1,6 @@
 <?php
-require_once "models/group.php";
 
 class Groups {
-    private $hub;
-
-    public function __construct(Hub $hub){
-        $this->hub = $hub;
-    }
-
-    public function getById(int $id): Group {
-        return new Group($this->hub, $id);
-    }
 
     /**
      * creates new group and adds currently logged in user to group
@@ -25,11 +15,11 @@ class Groups {
             throw new Exception("Invalid Parameters");
         }
 
-        $this->hub->getPermissions()->checkIsTeacher();
+        Permissions::checkIsTeacher();
 
-        $group = new Group($this->hub);
+        $group = Hub::Group();
         $group->storeNewGroup($_POST["groupName"]);
-        $group->addMember($this->hub->getUsers()->getLoggedInUser());
+        $group->addMember(Hub::User($_SESSION["userId"]));
 
         return ["success" => true, "newGroupId" => $group->getId()];
     }
@@ -44,8 +34,8 @@ class Groups {
             throw new Exception("Invalid Parameters");
         }
 
-        $group = $this->getById($_POST["groupId"]);
-        $this->hub->getPermissions()->checkIsInGroup($group);
+        $group = Hub::Group($_POST["groupId"]);
+        Permissions::checkIsInGroup($group);
 
         return ["success" => true, "groupName" => $group->getName()];
     }
@@ -60,8 +50,8 @@ class Groups {
             throw new Exception("Invalid Parameters");
         }
 
-        $group = $this->getById($_POST["groupId"]);
-        $this->hub->getPermissions()->checkIsInGroup($group);
+        $group = Hub::Group($_POST["groupId"]);
+        Permissions::checkIsInGroup($group);
 
         return ["success" => true, "groupChatId" => $group->getChat()->getChatId()];
     }
@@ -80,10 +70,10 @@ class Groups {
             throw new Exception("Invalid Parameters");
         }
         
-        $group = $this->getById($_POST["groupId"]);
-        $user = $this->hub->getUsers()->getById($_POST["userId"]);
+        $group = Hub::Group($_POST["groupId"]);
+        $user = Hub::User($_POST["userId"]);
 
-        $this->hub->getPermissions()->checkCanAssignUserToGroup($user, $group);
+        Permissions::checkCanAssignUserToGroup($user, $group);
         
         $group->addMember($user);
         return ["success" => true];

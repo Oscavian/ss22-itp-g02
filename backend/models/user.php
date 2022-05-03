@@ -1,8 +1,6 @@
 <?php
 
 class User {
-    private $hub;
-    private $db;
     private $user_id;
     private $user_type;
     private $username;
@@ -10,11 +8,8 @@ class User {
     private $last_name;
     private $groups = [];
 
-    public function __construct(Hub $hub, $id = null){
-        $this->db = $hub->getDb();
-        $this->hub = $hub;
-
-        empty($this->db->select("SELECT * FROM user WHERE pk_user_id = ?", [$id], "i")) ? $this->user_id = null : $this->user_id = $id;
+    public function __construct($id = null){
+        empty(Database::select("SELECT * FROM user WHERE pk_user_id = ?", [$id], "i")) ? $this->user_id = null : $this->user_id = $id;
     }
 
     /**
@@ -24,7 +19,7 @@ class User {
      */
     public function initializeByUserName($username){
         
-        $user = $this->db->select("SELECT * from user where username=?", [$username], "s", true);
+        $user = Database::select("SELECT * from user where username=?", [$username], "s", true);
             
         if(empty($user)){
             return false;
@@ -48,7 +43,7 @@ class User {
     public function getBaseData(): array {
 
         $query = "SELECT pk_user_id as user_id, fk_user_type as user_type, first_name, last_name, username, password where pk_user_id = ?"; 
-        $result = $this->db->select($query, [$this->user_id], "i", true);
+        $result = Database::select($query, [$this->user_id], "i", true);
         
         $this->user_id = $result["user_id"];
         $this->user_type = $result["user_type"];
@@ -66,9 +61,9 @@ class User {
      */
     public function getGroups(): array {
         if (empty($this->groups)){
-            $result = $this->db->select("SELECT fk_group_id as group_id FROM user_group WHERE fk_user_id = ?", [$this->user_id], "i");
+            $result = Database::select("SELECT fk_group_id as group_id FROM user_group WHERE fk_user_id = ?", [$this->user_id], "i");
             foreach ($result as $item){
-                $this->groups[] = $this->hub->getGroups()->getById($item["group_id"]);
+                $this->groups[] = Hub::Group($item["group_id"]);
             }
         }
         return $this->groups;
@@ -80,7 +75,7 @@ class User {
      * @return bool
      */
     public function isInGroup(Group $group) : bool {
-        if(empty($this->db->select("SELECT * FROM user_group WHERE fk_user_id = ? AND fk_group_id = ?", [$this->user_id, $group->getId()], "ii"))){
+        if(empty(Database::select("SELECT * FROM user_group WHERE fk_user_id = ? AND fk_group_id = ?", [$this->user_id, $group->getId()], "ii"))){
             return false;
         }
         return true;
@@ -93,7 +88,7 @@ class User {
      */
     public function isInGroupWith(User $otherUser): bool {
         $query = "SELECT u1.fk_user_id, u2.fk_user_id FROM user_group u1 INNER JOIN user_group u2 ON u1.fk_group_id = u2.fk_group_id AND u1.fk_user_id != u2.fk_user_id WHERE u2.fk_user_id = ? AND u1.fk_user_id = ?";
-        if(empty($this->db->select($query, [$this->user_id, $otherUser->getId()], "ii"))){
+        if(empty(Database::select($query, [$this->user_id, $otherUser->getId()], "ii"))){
             return false;
         }
         return true;
@@ -101,14 +96,14 @@ class User {
 
     public function getFirstName(){
         if(empty($this->first_name)){
-            $this->first_name = $this->db->select("SELECT first_name FROM user where pk_user_id = ?", [$this->user_id], "i", true)["first_name"];
+            $this->first_name = Database::select("SELECT first_name FROM user where pk_user_id = ?", [$this->user_id], "i", true)["first_name"];
         }
         return $this->first_name;
     }
 
     public function getLastName(){
         if(empty($this->last_name)){
-            $this->last_name = $this->db->select("SELECT last_name FROM user where pk_user_id = ?", [$this->user_id], "i", true)["last_name"];
+            $this->last_name = Database::select("SELECT last_name FROM user where pk_user_id = ?", [$this->user_id], "i", true)["last_name"];
         }
         return $this->last_name;
 
@@ -116,7 +111,7 @@ class User {
 
     public function getUsername(){
         if(empty($this->username)){
-            $this->username = $this->db->select("SELECT username FROM user where pk_user_id = ?", [$this->user_id], "i", true)["username"];
+            $this->username = Database::select("SELECT username FROM user where pk_user_id = ?", [$this->user_id], "i", true)["username"];
         }
         return $this->username;
     }
@@ -124,13 +119,13 @@ class User {
 
     public function getUserType(){
         if(empty($this->user_type)){
-            $this->user_type = $this->db->select("SELECT fk_user_type FROM user where pk_user_id = ?", [$this->user_id], "i", true)["fk_user_type"];
+            $this->user_type = Database::select("SELECT fk_user_type FROM user where pk_user_id = ?", [$this->user_id], "i", true)["fk_user_type"];
         }
         return $this->user_type;
     }
 
     private function getPasswordHash(){
-        return $this->db->select("SELECT password FROM user where pk_user_id = ?", [$this->user_id], "i", true)["password"];
+        return Database::select("SELECT password FROM user where pk_user_id = ?", [$this->user_id], "i", true)["password"];
     }
 
     /**
@@ -155,7 +150,7 @@ class User {
 
     public function storeNewUser($username, $password, $first_name, $last_name, $user_type){
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
-        $this->user_id = $this->db->insert("INSERT INTO user (fk_user_type, first_name, last_name, username, password) VALUES (?, ?, ?, ?, ?)", [$user_type, $first_name, $last_name, $username, $password_hash], "issss");
+        $this->user_id = Database::insert("INSERT INTO user (fk_user_type, first_name, last_name, username, password) VALUES (?, ?, ?, ?, ?)", [$user_type, $first_name, $last_name, $username, $password_hash], "issss");
     }
 }
 

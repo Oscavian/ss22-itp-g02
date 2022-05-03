@@ -1,18 +1,6 @@
 <?php
 
-require_once "models/assignment.php";
-require_once "models/submission.php";
-
 class Assignments {
-    private $hub;
-
-    public function __construct(Hub $hub){
-        $this->hub = $hub;
-    }
-
-    public function getById(int $id) : ?Assignment{
-        return new Assignment($this->hub, $id);
-    }
 
     /**
      * method: getAssignmentById
@@ -24,8 +12,8 @@ class Assignments {
             throw new Exception("Invalid Parameters");
         }
 
-        $assignment = $this->getById($_POST["assignment_id"]);
-        $this->hub->getPermissions()->checkCanAccessAssignment($assignment);
+        $assignment = Hub::Assignment($_POST["assignment_id"]);
+        Permissions::checkCanAccessAssignment($assignment);
         
         return $assignment->getBaseData();    
     }
@@ -47,10 +35,10 @@ class Assignments {
             throw new Exception("Invalid Parameters");
         }
 
-        $group = $this->hub->getGroups()->getById($_POST["group_id"]);
+        $group = Hub::Group($_POST["group_id"]);
         
-        $this->hub->getPermissions()->checkIsTeacher();
-        $this->hub->getPermissions()->checkIsInGroup($group);
+        Permissions::checkIsTeacher();
+        Permissions::checkIsInGroup($group);
 
         $creator_id = $_SESSION["userId"];
         $group_id = $_POST["group_id"];
@@ -60,7 +48,7 @@ class Assignments {
         isset($_POST["text"]) ? $text = $_POST["text"] : $text = null;
         isset($_POST["file_path"]) ? $file_path = $_POST["file_path"] : $file_path = null;
 
-        $assignment = new Assignment($this->hub);
+        $assignment = Hub::Assignment();
         $assignment->storeNewAssignment($creator_id, $group_id, $due_time, $title, $text, $file_path);
 
         if (!$assignment->exists()){

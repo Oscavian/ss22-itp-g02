@@ -4,12 +4,10 @@ include "mainLogic.php";
 
 class RequestHandler {
     private $method;
-    private $logic;
     private $request_method;
 
     public function __construct() {
         session_start();
-        $this->logic = new MainLogic();
         $this->request_method = $_SERVER["REQUEST_METHOD"];
 
         switch ($this->request_method) {
@@ -27,7 +25,7 @@ class RequestHandler {
 
     public function process() {    
         try {
-            $this->response(200, $this->logic->handleRequest($this->method));
+            $this->response(200, MainLogic::handleRequest($this->method));
         } catch (Exception $exception) {
             $this->response(400, "Error - " . $exception->getMessage());
         }

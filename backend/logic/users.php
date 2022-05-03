@@ -1,20 +1,6 @@
 <?php
-require_once "models/user.php";
 
 class Users {
-    private $hub;
-
-    public function __construct(Hub $hub){
-        $this->hub = $hub;
-    }
-
-    public function getById($user_id): User {
-        return new User($this->hub, $user_id);
-    }
-
-    public function getLoggedInUser(): User {
-        return new User($this->hub, $_SESSION["userId"]);
-    }
 
     /**
      * method: login
@@ -28,7 +14,7 @@ class Users {
             throw new Exception("Invalid Parameters");
         }
 
-        $user = new User($this->hub);
+        $user = Hub::User();
         if ($user->verifyLogin($_POST["user"], $_POST["password"])){
             $_SESSION['userId'] = $user->getId();
             return ["success" => true];
@@ -55,7 +41,7 @@ class Users {
             return ["isLoggedIn" => false];
         }
 
-        $user = $this->getLoggedInUser();
+        $user = Hub::User($_SESSION["userId"]);
 
         if(!$user->exists()){
             throw new Exception("The currently logged in user with Id " . $_SESSION["userId"] . " does not exist in the database!");
@@ -74,10 +60,10 @@ class Users {
      */
     public function getUserGroups(): array {
 
-        $this->hub->getPermissions()->checkIsLoggedIn();
+        Permissions::checkIsLoggedIn();
         
         $resultGroups = [];
-        foreach ($this->getLoggedInUser()->getGroups() as $group){
+        foreach ((Hub::User($_SESSION["userId"]))->getGroups() as $group){
             $item["groupName"] = $group->getName();
             $item["groupId"] = $group->getId();
             $resultGroups[] = $item;
@@ -138,7 +124,7 @@ class Users {
 
         // --- End of form validation ---
         
-        $user = new User($this->hub);
+        $user = Hub::User();
         $user_type = 1; // = teacher
         
         $user->storeNewUser($username, $password, $first_name, $last_name, $user_type);
@@ -157,7 +143,7 @@ class Users {
             throw new Exception("Invalid Parameters");
         }
 
-        if((new User($this->hub))->initializeByUserName($_POST["user"])){
+        if(Hub::User()->initializeByUserName($_POST["user"])){
             return ["success" => true, "userNameAvailable" => false];
         }
 

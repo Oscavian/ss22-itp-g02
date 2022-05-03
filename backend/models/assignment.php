@@ -1,11 +1,7 @@
 <?php
 
-require_once "db/database.php";
-
 class Assignment {
 
-    private $db;
-    private $hub;
     private $assignment_id;
     private $creator_id;
     private $group_id;
@@ -18,16 +14,13 @@ class Assignment {
 
     private $isExpired;
 
-    public function __construct(Hub $hub, $id = null) {
-        $this->hub = $hub;
-        $this->db = $this->hub->getDb();
-
-        empty($this->db->select("SELECT * FROM assignment where pk_assignment_id=?", [$id], "i", true)) ? $this->assignment_id = null : $this->assignment_id = $id;
+    public function __construct($id = null) {
+        empty(Database::select("SELECT * FROM assignment where pk_assignment_id=?", [$id], "i", true)) ? $this->assignment_id = null : $this->assignment_id = $id;
     }
 
     public function getBaseData(): array {
         $query = "SELECT pk_assignment_id as assignment_id, fk_user_id as creator_id, username as creator_name, fk_group_id as group_id, time, due_time, title, text, file_path FROM assignment JOIN  user u ON assignment.fk_user_id = u.pk_user_id where pk_assignment_id = ?";
-        $result = $this->db->select($query, [$this->assignment_id], "i", true);
+        $result = Database::select($query, [$this->assignment_id], "i", true);
 
         $this->creator_id = $result["creator_id"];
         $this->group_id = $result["group_id"];
@@ -62,21 +55,21 @@ class Assignment {
 
     public function getCreationTime() {
         if (empty($this->creation_time)){
-            return $this->creation_time = $this->db->select("SELECT time from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["time"];
+            return $this->creation_time = Database::select("SELECT time from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["time"];
         }
         return $this->creation_time;
     }
 
     public function getCreatorId() {
         if (empty($this->creator_id)){
-            return $this->creator_id = $this->db->select("SELECT fk_user_id from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["user_id"];
+            return $this->creator_id = Database::select("SELECT fk_user_id from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["user_id"];
         }
         return $this->creator_id;
     }
 
     public function getDueTime() {
         if (empty($this->creation_time)){
-            return $this->creation_time = $this->db->select("SELECT due_time from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["due_time"];
+            return $this->creation_time = Database::select("SELECT due_time from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["due_time"];
         }
         return $this->creation_time;
     }
@@ -84,28 +77,28 @@ class Assignment {
 
     public function getFilePath() {
         if (empty($this->file_path)){
-            return $this->file_path = $this->db->select("SELECT file_path from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["file_path"];
+            return $this->file_path = Database::select("SELECT file_path from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["file_path"];
         }
         return $this->file_path;
     }
 
     public function getGroupId() {
         if (empty($this->group_id)){
-            return $this->group_id = $this->db->select("SELECT fk_group_id from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["fk_group_id"];
+            return $this->group_id = Database::select("SELECT fk_group_id from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["fk_group_id"];
         }
         return $this->group_id;
     }
 
     public function getText() {
         if (empty($this->text)){
-            return $this->text = $this->db->select("SELECT text from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["text"];
+            return $this->text = Database::select("SELECT text from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["text"];
         }
         return $this->text;
     }
 
     public function getTitle() {
         if (empty($this->title)){
-            return $this->title = $this->db->select("SELECT title from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["title"];
+            return $this->title = Database::select("SELECT title from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["title"];
         }
         return $this->title;
     }
@@ -131,7 +124,7 @@ class Assignment {
     public function storeNewAssignment($creator_id, $group_id, $due_time, $title, $text, $file_path){
         
         $query = "INSERT INTO assignment (fk_user_id, fk_group_id, due_time, title, text, file_path) VALUES (?,?,?,?,?,?)";
-        $this->assignment_id = $this->db->insert($query, [$creator_id, $group_id, $due_time, $title, $text, $file_path], "iissss");
+        $this->assignment_id = Database::insert($query, [$creator_id, $group_id, $due_time, $title, $text, $file_path], "iissss");
     }
 
     //TODO: add submission methods
