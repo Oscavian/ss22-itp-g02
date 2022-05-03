@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    $("#submit").click(function () {
-        checkInput();
+    $("#submitRegistry").click(function () {
+        checkRegisterInput();
     }); 
     $("#showPw").change(function(){
         if($(this).is(':checked')){
@@ -28,7 +28,7 @@ $(document).ready(function() {
     });
 })
 
-function checkInput() {
+function checkRegisterInput() {
 
     emptyErrors();
     var allOk = true;
@@ -39,7 +39,7 @@ function checkInput() {
     allOk = checkPw(allOk);
 
     if(allOk === true) {
-        submitInput();
+        submitRegisterInput();
     }
 }
 
@@ -132,29 +132,27 @@ function checkPw(allIsOk){
     return allOk;
 }
 
-function submitInput() {
-    $.post("backend/requestHandler.php", {
-        method: "registerTeacher",
-        first_name: $("#first_name").val(),
-        last_name: $("#last_name").val(),
-        user: $("#user").val(),
-        password: $("#password").val(),
-    }, 
-    function(response) {
-        if(response["userNameUnavailable"] === true){
-            $("#post-response").text("The username chosen is unavailable");
-        }
-        if(response["unknownError"] === true){
-            $("#post-response").text("An error occurred while processing the request");
-        }
-        if(response["success"] === true){
+function submitRegisterInput() {
+    $.ajax({
+        type: "POST",
+        url: "../../../backend/requestHandler.php",
+        data: jQuery.param({
+            method: "registerTeacher",
+            first_name: $("#first_name").val(),
+            last_name: $("#last_name").val(),
+            user: $("#user").val(),
+            password: $("#password").val(),   
+        }),
+        cache: false,
+        dataType: "json",
+        success: function (response) {
+            //$("#success").append(response);
             $("#post-response").text("Your account was successfully created");
             $('#register-form')[0].reset();
+        },
+        error: function(error){//wtf ist error eigentlich
+            $("#post-response").text("ein error");
         }
-        if(response["formDataInvalid"] === true){
-            $("#post-response").text("The data entered is invalid");
-        }
-        
     });
 }
 
