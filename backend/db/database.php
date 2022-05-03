@@ -2,6 +2,7 @@
 
 class Database {
 
+    private static $db;
     private $connection;
 
     public function __construct() {
@@ -14,6 +15,7 @@ class Database {
         }
     }
 
+
     /**
      * @param string $query
      * @param array|null $params
@@ -21,9 +23,13 @@ class Database {
      * @param bool|null $singleRow - if explicitly one row is expected, returns a single assoc arr if true
      * @return array|bool
      */
-    public function select(string $query, array $params = null, string $param_types = null, bool $singleRow = null){
+    public static function select(string $query, array $params = null, string $param_types = null, bool $singleRow = null){
 
-        $stmt = $this->connection->prepare($query);
+        if (self::$db == null) {
+            self::$db = new Database();
+        }
+
+        $stmt = self::$db->connection->prepare($query);
         if (isset($params)) {
             $stmt->bind_param($param_types, ...$params);
         }
@@ -55,14 +61,18 @@ class Database {
      * @param string|null $param_types
      * @return int|null - returns the id of the inserted row as int, returns null if stmt failed
      */
-    public function insert(string $query, array $params, string $param_types): ?int {
+    public static function insert(string $query, array $params, string $param_types): ?int {
 
-        $stmt = $this->connection->prepare($query);
+        if (self::$db == null) {
+            self::$db = new Database();
+        }
+       
+        $stmt = self::$db->connection->prepare($query);
         $stmt->bind_param($param_types, ...$params);
 
         if ($stmt->execute()){
             $stmt->close();
-            return $this->connection->insert_id;
+            return self::$db->connection->insert_id;
         } else {
             $stmt->close();
             return null;
@@ -75,9 +85,13 @@ class Database {
      * @param string|null $param_types
      * @return bool
      */
-    public function update(string $query, array $params = null, string $param_types = null): bool {
+    public static function update(string $query, array $params = null, string $param_types = null): bool {
 
-        $stmt = $this->connection->prepare($query);
+        if (self::$db == null) {
+            self::$db = new Database();
+        }
+        
+        $stmt = self::$db->connection->prepare($query);
 
         if (isset($params)) {
             $stmt->bind_param($param_types, ...$params);

@@ -1,16 +1,6 @@
 <?php
-require_once "models/group.php";
 
 class Groups {
-    private $hub;
-
-    public function __construct(Hub $hub){
-        $this->hub = $hub;
-    }
-
-    public function getById(int $id): Group {
-        return new Group($this->hub, $id);
-    }
 
     /**
      * creates new group and adds currently logged in user to group
@@ -22,16 +12,14 @@ class Groups {
     public function createGroup(): ?array {
 
         if(empty($_POST["groupName"])){
-            return null;
+            throw new Exception("Invalid Parameters");
         }
 
-        if(!$this->hub->getPermissions()->isTeacher()){ //cecks wheter user is logged in and is teacher
-            return ["success" => false, "noPermission" => true];
-        }
+        Permissions::checkIsTeacher();
 
-        $group = new Group($this->hub);
+        $group = Hub::Group();
         $group->storeNewGroup($_POST["groupName"]);
-        $group->addMember($this->hub->getUsers()->getLoggedInUser());
+        $group->addMember(Hub::User($_SESSION["userId"]));
 
         return ["success" => true, "newGroupId" => $group->getId()];
     }
@@ -43,18 +31,11 @@ class Groups {
      */
     public function getGroupName(): ?array {
         if(empty($_POST["groupId"])){
-            return null;
+            throw new Exception("Invalid Parameters");
         }
 
-        $group = $this->getById($_POST["groupId"]);
-
-        if(!$group->exists()){
-            return ["success" => false, "msg" => "Group with ID" .  $_POST["groupId"] . "does not exist!"];
-        }
-
-        if(!$this->hub->getPermissions()->isInGroup($group)){
-            return ["success" => false, "userNotInGroup" => true];
-        }
+        $group = Hub::Group($_POST["groupId"]);
+        Permissions::checkIsInGroup($group);
 
         return ["success" => true, "groupName" => $group->getName()];
     }
@@ -66,18 +47,11 @@ class Groups {
      */
     public function getGroupChatId(): ?array {
         if(empty($_POST["groupId"])){
-            return null;
+            throw new Exception("Invalid Parameters");
         }
 
-        $group = $this->getById($_POST["groupId"]);
-
-        if(!$group->exists()){
-            return ["success" => false, "msg" => "Group with ID" .  $_POST["groupId"] . "does not exist!"];
-        }
-
-        if(!$this->hub->getPermissions()->isInGroup($group)){
-            return ["success" => false, "userNotInGroup" => true];
-        }
+        $group = Hub::Group($_POST["groupId"]);
+        Permissions::checkIsInGroup($group);
 
         return ["success" => true, "groupChatId" => $group->getChat()->getChatId()];
     }
@@ -93,23 +67,13 @@ class Groups {
      */
     public function assignUserToGroup() {
         if(empty($_POST["groupId"]) || empty($_POST["userId"])){
-            return null;
+            throw new Exception("Invalid Parameters");
         }
         
-        $group = $this->getById($_POST["groupId"]);
-        $user = $this->hub->getUsers()->getById($_POST["userId"]);
+        $group = Hub::Group($_POST["groupId"]);
+        $user = Hub::User($_POST["userId"]);
 
-        if(!$group->exists()){
-            return ["success" => false, "msg" => "Group with ID" .  $_POST["groupId"] . "does not exist!", "inputInvalid" => true];
-        }
-
-        if(!$user->exists()){
-            return ["success" => false, "msg" => "User with ID" . $_POST["userId"] . "does not exist!", "inputInvalid" => true];
-        }
-
-        if(!$this->hub->getPermissions()->canAssignUserToGroup($user, $group)){
-            return ["success" => false, "noPermission" => true];
-        }
+        Permissions::checkCanAssignUserToGroup($user, $group);
         
         $group->addMember($user);
         return ["success" => true];
