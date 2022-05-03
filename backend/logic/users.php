@@ -23,8 +23,9 @@ class Users {
      * @return array|null
      */
     public function login(): ?array {
+        session_unset();
         if (empty($_POST["user"]) || empty($_POST["password"])) {
-            return null;
+            throw new Exception("Invalid Parameters");
         }
 
         $user = new User($this->hub);
@@ -34,7 +35,7 @@ class Users {
         }
         return ["success" => false];
     }
-
+    
     /**
      * method: logout
      * @return array
@@ -45,15 +46,36 @@ class Users {
     }
 
     /**
+     * method: getLoginStatus
+     * @return array
+     */
+    public function getLoginStatus(): array {
+        
+        if(empty($_SESSION["userId"])){
+            return ["isLoggedIn" => false];
+        }
+
+        $user = $this->getLoggedInUser();
+
+        if(!$user->exists()){
+            throw new Exception("The currently logged in user with Id " . $_SESSION["userId"] . " does not exist in the database!");
+        }
+
+        $res["isLoggedIn"] = true;
+        $res["username"] = $user->getUsername();
+        $res["userId"] = $user->getId();
+        $res["userType"] = $user->getUserType();
+        return $res;
+    }
+    
+    /**
      * method: getUserGroups
      * @return array
      */
     public function getUserGroups(): array {
 
-        if(!$this->hub->getPermissions()->isLoggedIn()){
-            return ["success" => false, "notLoggedIn" => true];
-        }
-
+        $this->hub->getPermissions()->checkIsLoggedIn();
+        
         $resultGroups = [];
         foreach ($this->getLoggedInUser()->getGroups() as $group){
             $item["groupName"] = $group->getName();
@@ -82,7 +104,7 @@ class Users {
     public function registerTeacher() {
 
         if (empty($_POST["user"]) || empty($_POST["password"]) || empty($_POST["first_name"]) || empty($_POST["last_name"])) {
-            return null;
+            throw new Exception("Invalid Parameters");
         }
 
         $username = $_POST["user"];
@@ -95,33 +117,23 @@ class Users {
         $res = ["msg" => ""];
         // --- Backend form-validation ---
         if (!preg_match("/^[a-zA-Z-' ]*$/", $first_name) || strlen($first_name) > 50) {
-            $res["msg"] .= "Invalid fist_name\n";
-            $dataOk = false;
+            throw new Exception("Invalid fist_name");
         }
 
         if (!preg_match("/^[a-zA-Z-' ]*$/", $last_name) || strlen($last_name) > 50) {
-            $res["msg"] .= "Invalid last_name\n";
-            $dataOk = false;
+            throw new Exception("Invalid last_name");
         }
 
         if (strlen($username) < 6 || strlen($username) > 50) {
-            $res["msg"] .= "Invalid username\n";
-            $dataOk = false;
+            throw new Exception("Invalid username");
         }
 
         if (strlen($password) < 6) {
-            $res["msg"] .= "Invalid password\n";
-            $dataOk = false;
+            throw new Exception("Invalid password");
         }
 
-        if (!$dataOk) {
-            $res["success"] = false;
-            return $res;
-        }
-
-        
         if (!$this->isUserNameAvailable($username)["userNameAvailable"]) {
-            return ["success" => false, "userNameUnavailable" => true];
+            throw new Exception("Username is unavailable");
         }
 
         // --- End of form validation ---
@@ -136,38 +148,19 @@ class Users {
     }
 
     /**
-     * method: getLoginStatus
-     * @return array
-     */
-    public function getLoginStatus(): array {
-        
-        if(!$this->hub->getPermissions()->isLoggedIn()){
-            return ["isLoggedIn" => false];
-        }
-
-        $user = $this->getLoggedInUser();
-
-        $res["isLoggedIn"] = true;
-        $res["username"] = $user->getUsername();
-        $res["userId"] = $user->getId();
-        $res["userType"] = $user->getUserType();
-        return $res;
-    }
-
-    /**
      * method: checkUserNameAvailable
      * user: string
      * @return array|null
      */
     public function isUserNameAvailable() : ?array {
         if (empty($_POST["user"])) {
-            return null;
+            throw new Exception("Invalid Parameters");
         }
 
         if((new User($this->hub))->initializeByUserName($_POST["user"])){
-            return ["userNameAvailable" => false];
+            return ["success" => true, "userNameAvailable" => false];
         }
 
-        return ["userNameAvailable" => true];
+        return ["success" => true, "userNameAvailable" => true];
     }
 }

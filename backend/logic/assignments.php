@@ -21,17 +21,11 @@ class Assignments {
      */
     public function getAssignmentById() : ?array {
         if (empty($_POST["assignment_id"])){
-            return null;
+            throw new Exception("Invalid Parameters");
         }
 
         $assignment = $this->getById($_POST["assignment_id"]);
-        if (!$assignment->exists()){
-            return ["success" => false, "msg" => "Assignment with ID" . $_POST["assignment_id"] . " does not exist!", "inputInvalid" => true];
-        }
-        
-        if(!$this->hub->getPermissions()->canAccessAssignment($assignment)){
-            return ["success" => false, "userNotInGroup" => true];
-        }
+        $this->hub->getPermissions()->checkCanAccessAssignment($assignment);
         
         return $assignment->getBaseData();    
     }
@@ -50,17 +44,13 @@ class Assignments {
             !is_numeric($_POST["group_id"]) ||
             empty($_POST["due_time"]) ||
             empty($_POST["title"])) {
-            return null;
-        }
-
-        if(!$this->hub->getPermissions()->isTeacher()){
-            return ["success" => false, "noPermission" => true];
+            throw new Exception("Invalid Parameters");
         }
 
         $group = $this->hub->getGroups()->getById($_POST["group_id"]);
-        if(!$this->hub->getPermissions()->isInGroup($group)){
-            return ["success" => false, "userNotInGroup" => true];
-        }
+        
+        $this->hub->getPermissions()->checkIsTeacher();
+        $this->hub->getPermissions()->checkIsInGroup($group);
 
         $creator_id = $_SESSION["userId"];
         $group_id = $_POST["group_id"];
@@ -74,7 +64,7 @@ class Assignments {
         $assignment->storeNewAssignment($creator_id, $group_id, $due_time, $title, $text, $file_path);
 
         if (!$assignment->exists()){
-            return ["success" => false, "msg" => "Error creating assignment."];
+            throw new Exception("Error creating Assignment!");
         }
 
         return ["success" => true, "msg" => "Assignment successfully created!", "assignment_id" => $assignment->getId()];

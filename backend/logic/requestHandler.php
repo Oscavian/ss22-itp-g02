@@ -25,12 +25,11 @@ class RequestHandler {
         }
     }
 
-    public function process() {
-        $result = $this->logic->handleRequest($this->method);
-        if ($result == null) {
-            $this->response(400, null);
-        } else {
-            $this->response(200, $result);
+    public function process() {    
+        try {
+            $this->response(200, $this->logic->handleRequest($this->method));
+        } catch (Exception $exception) {
+            $this->response(400, "Error - " . $exception->getMessage());
         }
     }
 

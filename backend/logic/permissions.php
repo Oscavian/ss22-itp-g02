@@ -9,71 +9,72 @@ class Permissions {
         $this->db = $this->hub->getDb();
     }
 
-
-    public function isLoggedIn(): bool {      
+    public function checkIsLoggedIn() {      
         if(empty($_SESSION['userId'])){
-            return false;
+            throw new Exception("No Permission - Not logged in!");
         }
-        return true;
     }
 
-    public function isTeacher(): bool {
-        if(!$this->isLoggedIn()){
-            return false;
-        }
+    public function checkIsTeacher() {
+        $this->checkIsLoggedIn();
         
         $user = $this->hub->getUsers()->getLoggedInUser();
-        if($user->getUserType() == 1){
-            return true;
+        if($user->getUserType() != 1){
+            throw new Exception("No Permission - You need to be a teacher!");
         }
-        return false;
     }
 
-    public function isStudent(): bool {
-        if(!$this->isLoggedIn()){
-            return false;
-        }
+    public function checkIsStudent() {
+        $this->checkIsLoggedIn();
         
         $user = $this->hub->getUsers()->getLoggedInUser();
-        if($user->getUserType() == 1){
-            return true;
+        if($user->getUserType() != 2){
+            throw new Exception("No Permission - You need to be a student!");
         }
-        return false;
     }
 
-    public function isInGroup(Group $group): bool {
-        if(!$this->isLoggedIn()){
-            return false;
+    public function checkIsInGroup(Group $group) {
+        $this->checkIsLoggedIn();
+
+        if(!$group->exists()){
+            throw new Exception("The group with the requested ID does not exist!");
         }
 
         $user = $this->hub->getUsers()->getLoggedInUser();
-        return $user->isInGroup($group);
+        if(!$user->isInGroup($group)){
+            throw new Exception("No Permission - You're not in the group!");
+        }
     }
 
-    public function canAccessAssignment(Assignment $assignment): bool {
-        if(!$this->isLoggedIn()){
-            return false;
+    public function checkCanAccessAssignment(Assignment $assignment) {
+        $this->checkIsLoggedIn();
+
+        if (!$assignment->exists()){
+            throw new Exception("The assignment with the requested ID does not exist!");
         }
 
         $group = $this->hub->getGroups()->getById($assignment->getGroupId());
-        $user = $this->hub->getUsers()->getLoggedInUser();
-        return $user->isInGroup($group);
+        $this->checkIsInGroup($group);
     }
 
+    public function checkCanAssignUserToGroup(User $otherUser, Group $group) {
+        $this->checkIsTeacher();
 
-    public function canAssignUserToGroup(User $otherUser, Group $group): bool {
-        if(!$this->isTeacher()){
-            return false;
+        if(!$group->exists()){
+            throw new Exception("The group with the requested ID does not exist!");
+        }
+        
+        if(!$otherUser->exists()){
+            throw new Exception("The user with the requested ID does not exist!");
         }
 
         if($otherUser->isInGroup($group)){ //checks if user is allready in group
-            return false;
+            throw new Exception("The user you're trying to add is allready in the group!");
         }
 
         $user = $this->hub->getUsers()->getLoggedInUser();
-        return $user->isInGroupWith($otherUser); //checks if teacher is in a group with user
+        if(!$user->isInGroupWith($otherUser)){ //checks if teacher is in any group with the user
+            throw new Exception("No Permission - You're not in any group with this user!");
+        }
     }
-
-
-
 }

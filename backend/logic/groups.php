@@ -22,12 +22,10 @@ class Groups {
     public function createGroup(): ?array {
 
         if(empty($_POST["groupName"])){
-            return null;
+            throw new Exception("Invalid Parameters");
         }
 
-        if(!$this->hub->getPermissions()->isTeacher()){ //cecks wheter user is logged in and is teacher
-            return ["success" => false, "noPermission" => true];
-        }
+        $this->hub->getPermissions()->checkIsTeacher();
 
         $group = new Group($this->hub);
         $group->storeNewGroup($_POST["groupName"]);
@@ -43,18 +41,11 @@ class Groups {
      */
     public function getGroupName(): ?array {
         if(empty($_POST["groupId"])){
-            return null;
+            throw new Exception("Invalid Parameters");
         }
 
         $group = $this->getById($_POST["groupId"]);
-
-        if(!$group->exists()){
-            return ["success" => false, "msg" => "Group with ID" .  $_POST["groupId"] . "does not exist!"];
-        }
-
-        if(!$this->hub->getPermissions()->isInGroup($group)){
-            return ["success" => false, "userNotInGroup" => true];
-        }
+        $this->hub->getPermissions()->checkIsInGroup($group);
 
         return ["success" => true, "groupName" => $group->getName()];
     }
@@ -66,18 +57,11 @@ class Groups {
      */
     public function getGroupChatId(): ?array {
         if(empty($_POST["groupId"])){
-            return null;
+            throw new Exception("Invalid Parameters");
         }
 
         $group = $this->getById($_POST["groupId"]);
-
-        if(!$group->exists()){
-            return ["success" => false, "msg" => "Group with ID" .  $_POST["groupId"] . "does not exist!"];
-        }
-
-        if(!$this->hub->getPermissions()->isInGroup($group)){
-            return ["success" => false, "userNotInGroup" => true];
-        }
+        $this->hub->getPermissions()->checkIsInGroup($group);
 
         return ["success" => true, "groupChatId" => $group->getChat()->getChatId()];
     }
@@ -93,23 +77,13 @@ class Groups {
      */
     public function assignUserToGroup() {
         if(empty($_POST["groupId"]) || empty($_POST["userId"])){
-            return null;
+            throw new Exception("Invalid Parameters");
         }
         
         $group = $this->getById($_POST["groupId"]);
         $user = $this->hub->getUsers()->getById($_POST["userId"]);
 
-        if(!$group->exists()){
-            return ["success" => false, "msg" => "Group with ID" .  $_POST["groupId"] . "does not exist!", "inputInvalid" => true];
-        }
-
-        if(!$user->exists()){
-            return ["success" => false, "msg" => "User with ID" . $_POST["userId"] . "does not exist!", "inputInvalid" => true];
-        }
-
-        if(!$this->hub->getPermissions()->canAssignUserToGroup($user, $group)){
-            return ["success" => false, "noPermission" => true];
-        }
+        $this->hub->getPermissions()->checkCanAssignUserToGroup($user, $group);
         
         $group->addMember($user);
         return ["success" => true];
