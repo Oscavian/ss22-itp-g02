@@ -1,31 +1,73 @@
+//load navbar and footer
 $("navbar").load("client/html-includes/navbar.html");
 $("footer").load("client/html-includes/footer.html");
 
 //Maybe load different page when user is allready logged in?
-loadPageHome();
+loadPageWithAnimation("client/pages/basic/home.html");
 
+//--------------Pages--------------//
 
 function loadPageHome(){
-    $("#main-div").load("client/pages/basic/home.html");
-    $("title").text("Home");
+    title = "Home";
+    path = "client/pages/basic/home.html";
+    loadPage(title, path);
 }
 
 function loadPageRegister(){
-    $("title").text("Registrieren");
-    $("#main-div").load("client/pages/user/register.html");
+    title = "Registrieren";
+    path = "client/pages/user/register.html";
+    loadPage(title, path);
 }
 
 function loadPageHelp(){
-    $("title").text("Hilfe");
-    $("#main-div").load("client/pages/basic/help.html");
+    title = "Hilfe";
+    path = "client/pages/basic/help.html";
+    loadPage(title, path);
 }
 
 function loadPageImprint(){
-    $("title").text("Impressum");
-    $("#main-div").load("client/pages/basic/imprint.html");
+    title = "Impressum";
+    path = "client/pages/basic/imprint.html";
+    loadPage(title, path);
 }
 
 function loadPageContact(){
-    $("title").text("Kontakt");
-    $("#main-div").load("client/pages/basic/contact.html");
+    title = "Kontakt";
+    path = "client/pages/basic/contact.html";
+    loadPage(title, path);
+}
+
+//add more pages here
+
+//----------------Functions-----------------//
+
+function loadPage(title, path){
+    $("title").text(title);
+    loadPageWithAnimation(path);
+    addState(title, path);
+}
+
+function loadPageWithAnimation(path){
+    $("footer").fadeOut("fast");
+    $("#main-div").fadeOut("fast", function(){
+        $("#main-div").load(path, function(){
+            $("#main-div").fadeIn("fast");
+            $("footer").fadeIn("fast");
+        })
+    });
+};
+
+function addState(title, path){
+    stateObject = {"pagePath": path, "pageTitle": title};
+    window.history.pushState(stateObject, "");
+}
+
+window.onpopstate = function(event) {
+    if(event.state == null){
+        loadPageWithAnimation("client/pages/basic/home.html");
+        $("title").text("Home");
+        return;
+    }
+    loadPageWithAnimation(event.state.pagePath);
+    $("title").text(event.state.pageTitle);
 }

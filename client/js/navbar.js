@@ -34,7 +34,9 @@ function logout(){
         cache: false,
         dataType: "json",
         success: function (response) {
-            checkLoginStatus();
+            $("#log-stat").empty();
+            $("#log-stat").append("<li class='nav-item mb-1'><button type='button' id='loginButton' class='btn btn-outline-warning me-2 fs-5' data-bs-toggle='modal' data-bs-target='#loginModal'>Login</button></li>");
+            $("login-modal").load("client/html-includes/login-modal.html");
         },
         error: function(error){
             console.log("AJAX-Request error: " + error);

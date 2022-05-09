@@ -73,11 +73,8 @@ function submitLoginInput() {
         dataType: "json",
         success: function (response) {
             if(response["success"]){
-                $("#login-modal-post-response").text("The Login was successful.");
                 $('#login-form')[0].reset();
-                setTimeout(function(){
-                    $("#loginModal").modal("hide");
-                }, 2000);
+                $("#loginModal").modal("hide");
                 checkLoginStatus();
                 return;
             }
