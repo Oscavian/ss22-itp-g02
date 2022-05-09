@@ -1,32 +1,17 @@
-$(document).ready(function() {
-    $("#submitRegistry").click(function () {
-        checkRegisterInput();
-    }); 
-    $("#showPw").change(function(){
-        if($(this).is(':checked')){
-         $("#password").attr("type","text");
-         $("#showPwText").text("Hide");
-        }else{
-         // Changing type attribute
-         $("#password").attr("type","password");
-        
-         // Change the Text
-         $("#showPwText").text("Show");
-        }  
-    });
-    $("#showConf").change(function(){
-        if($(this).is(':checked')){
-         $("#confirmPassword").attr("type","text");
-         $("#showConfText").text("Hide");
-        }else{
-         // Changing type attribute
-         $("#confirmPassword").attr("type","password");
-        
-         // Change the Text
-         $("#showConfText").text("Show");
-        }  
-    });
-})
+function showHidePw(){
+    if($("#showPw").is(':checked')){
+        $("#password").attr("type","text");
+        $("#confirmPassword").attr("type","text");
+        $("#showPwText").text("Hide");
+        return;
+    }
+    // Changing type attribute
+    $("#password").attr("type","password");
+    $("#confirmPassword").attr("type","password");
+
+    // Change the Text
+    $("#showPwText").text("Show");
+}
 
 function checkRegisterInput() {
 
@@ -135,23 +120,23 @@ function checkPw(allIsOk){
 function submitRegisterInput() {
     $.ajax({
         type: "POST",
-        url: "../../../backend/requestHandler.php",
-        data: jQuery.param({
-            method: "registerTeacher",
-            first_name: $("#first_name").val(),
-            last_name: $("#last_name").val(),
-            user: $("#user").val(),
-            password: $("#password").val(),   
-        }),
+        url: "/ss22-itp-g02/backend/requestHandler.php",
+        data:   {method: "registerTeacher",
+                first_name: $("#first_name").val(),
+                last_name: $("#last_name").val(),
+                user: $("#user").val(),
+                password: $("#password").val(),
+                },
         cache: false,
         dataType: "json",
         success: function (response) {
             //$("#success").append(response);
             $("#post-response").text("Your account was successfully created");
             $('#register-form')[0].reset();
+            checkLoginStatus();
         },
-        error: function(error){//wtf ist error eigentlich
-            $("#post-response").text("ein error");
+        error: function(error){
+            console.log("AJAX-Request error: " + error);
         }
     });
 }
