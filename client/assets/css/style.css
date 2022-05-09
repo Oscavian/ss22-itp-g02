@@ -22,3 +22,11 @@
 #footer #copyright {
     background-color: rgba(0, 0, 0, 0.2);
 }
+
+.footer-link{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.footer-link:hover{
+    text-decoration: none;
+}
