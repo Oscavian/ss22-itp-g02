@@ -37,6 +37,12 @@ function loadPageContact(){
     loadPage(title, path);
 }
 
+function loadPageUserDetails(){
+    title = "Mein Profil";
+    path = "client/pages/user/account-info.html";
+    loadPage(title, path);
+}
+
 //add more pages here
 
 //----------------Functions-----------------//

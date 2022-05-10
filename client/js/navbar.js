@@ -10,7 +10,7 @@ function checkLoginStatus() {
         dataType: "json",
         success: function (response) {
             if(response["isLoggedIn"]){
-                $("#log-stat").append("<li class='nav-item mb-1'><div class='navbar-brand'>" + response["username"] + "</div></li>");
+                $("#log-stat").append("<li class='nav-item mb-1'><div class='navbar-brand' onclick='loadPageUserDetails()'>" + response["username"] + "</div></li>");
                 $("#log-stat").append("<li class='nav-item mb-1'><button type='button' id='logoutButton' class='btn btn-outline-warning me-2 fs-5' onclick='logout()'>Logout</button></li>");
                 return;
             }

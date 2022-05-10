@@ -49,6 +49,8 @@ class Users {
 
         $res["isLoggedIn"] = true;
         $res["username"] = $user->getUsername();
+        $res["firstName"] = $user->getFirstName();
+        $res["lastName"] = $user->getLastName();
         $res["userId"] = $user->getId();
         $res["userType"] = $user->getUserType();
         return $res;
@@ -131,6 +133,40 @@ class Users {
         $_SESSION['userId'] = $user->getId();
 
         return ["success" => true, "msg" => "User successfully created!"];
+    }
+
+    /**
+     * method: updateUserData
+     * type: "username" | "firstName" | "lastName"
+     * data: string
+     * @return array|null
+     */
+    public function updateUserData() : ?array {
+        if (empty($_POST["type"]) || empty($_POST["data"])) {
+            throw new Exception("Invalid Parameters");
+        }
+
+        Permissions::checkIsLoggedIn();
+
+        if($_POST["type"] == "username"){
+            if(Hub::User()->initializeByUserName($_POST["data"])){
+                throw new Exception("Username unavailable!");
+            }
+            Hub::User($_SESSION["userId"])->storeUpdateUserData("username", $_POST["data"]);
+            return ["success" => true];
+        }
+
+        if($_POST["type"] == "firstName"){
+            Hub::User($_SESSION["userId"])->storeUpdateUserData("firstName", $_POST["data"]);
+            return ["success" => true];
+        }
+
+        if($_POST["type"] == "lastName"){
+            Hub::User($_SESSION["userId"])->storeUpdateUserData("lastName", $_POST["data"]);
+            return ["success" => true];
+        }
+
+        throw new Exception("Invalid Type");
     }
 
     /**

@@ -152,5 +152,20 @@ class User {
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
         $this->user_id = Database::insert("INSERT INTO user (fk_user_type, first_name, last_name, username, password) VALUES (?, ?, ?, ?, ?)", [$user_type, $first_name, $last_name, $username, $password_hash], "issss");
     }
+
+    public function storeUpdateUserData($type, $data){
+        if($type == "username"){
+            Database::update("UPDATE user SET username = ?  WHERE pk_user_id = ?", [$data, $this->user_id], "si");
+            return;
+        }
+        if($type == "firstName"){
+            Database::update("UPDATE user SET first_name = ?  WHERE pk_user_id = ?", [$data, $this->user_id], "si");
+            return;
+        }
+        if($type == "lastName"){
+            Database::update("UPDATE user SET last_name = ?  WHERE pk_user_id = ?", [$data, $this->user_id], "si");
+            return;
+        }
+    }
 }
 
