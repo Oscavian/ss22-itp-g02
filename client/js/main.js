@@ -43,6 +43,12 @@ function loadPageUserDetails(){
     loadPage(title, path);
 }
 
+function loadPageGroupOverview() {
+    title = "Gruppenübersicht";
+    path = "client/pages/groups/groups-overview.html";
+    loadPage(title, path);
+}
+
 //add more pages here
 
 //----------------Functions-----------------//
@@ -61,7 +67,7 @@ function loadPageWithAnimation(path){
             $("footer").fadeIn("fast");
         })
     });
-};
+}
 
 function addState(title, path){
     stateObject = {"pagePath": path, "pageTitle": title};
