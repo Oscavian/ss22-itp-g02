@@ -17,7 +17,7 @@ class User {
      * returns true if user with username exists
      * @return bool
      */
-    public function initializeByUserName($username){
+    public function initializeByUserName($username): bool {
         
         $user = Database::select("SELECT * from user where username=?", [$username], "s", true);
             

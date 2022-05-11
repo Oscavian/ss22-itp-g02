@@ -22,6 +22,8 @@ class MainLogic {
                 return Hub::Users()->isUserNameAvailable();
             case "registerTeacher":
                 return Hub::Users()->registerTeacher();
+            case "registerStudents":
+                return Hub::Users()->registerStudents();
             case "getUserGroups":
                 return Hub::Users()->getUserGroups();
             case "updateUserData":
@@ -58,14 +60,9 @@ class MainLogic {
 
     private static function sanitizePostArray(){
         foreach ($_POST as $key => $value){
-            $_POST[$key] = self::test_input($value);
+            // we dont need htmlspecialchars for an api
+            // furthermore, it prevents us from posting json strings as payload
+            $_POST[$key] = trim(stripslashes($value));
         }
-    }
-
-    public static function test_input($data): string {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
     }
 }

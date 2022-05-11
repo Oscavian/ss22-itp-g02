@@ -44,6 +44,7 @@ class Users {
         $user = Hub::User($_SESSION["userId"]);
 
         if(!$user->exists()){
+            Hub::Users()->logout();
             throw new Exception("The currently logged in user with Id " . $_SESSION["userId"] . " does not exist in the database!");
         }
 
@@ -102,7 +103,6 @@ class Users {
 
 
         $dataOk = true;
-        $res = ["msg" => ""];
         // --- Backend form-validation ---
         if (!preg_match("/^[a-zA-Z-' ]*$/", $first_name) || strlen($first_name) > 50) {
             throw new Exception("Invalid fist_name");
@@ -120,7 +120,7 @@ class Users {
             throw new Exception("Invalid password");
         }
 
-        if (!$this->isUserNameAvailable($username)["userNameAvailable"]) {
+        if ($this->isUsernameNameTaken($username)) {
             throw new Exception("Username is unavailable");
         }
 
@@ -133,6 +133,79 @@ class Users {
         $_SESSION['userId'] = $user->getId();
 
         return ["success" => true, "msg" => "User successfully created!"];
+    }
+
+
+    /**
+     * method: registerStudents
+     * students: array: [
+     *                      {
+     *                          "first_name": "...",
+     *                          "last_name": "...",
+     *                      }
+     *                  ]
+     * @return array
+     * @throws Exception
+     */
+    public function registerStudents(): array {
+        if (empty($_POST["students"])){
+            throw new Exception("Invalid Parameters!");
+        }
+
+        Permissions::checkIsTeacher();
+
+        $students = json_decode($_POST["students"]);
+
+        //Payload validation
+        foreach ($students as $student) {
+            if (empty($student->first_name) ||
+                empty($student->last_name)) {
+                throw new Exception("Invalid Payload!");
+            }
+
+            if (!preg_match("/^[a-zA-Z-' ]*$/", $student->first_name) || strlen($student->first_name) > 50) {
+                throw new Exception("Invalid payload: " . $student->first_name);
+            }
+
+            if (!preg_match("/^[a-zA-Z-' ]*$/", $student->last_name) || strlen($student->last_name) > 50) {
+                throw new Exception("Invalid payload: " . $student->last_name);
+            }
+        }
+
+        $new_students_data = [];
+        //create student account data
+        foreach ($students as $student) {
+            $student_data = new stdClass();
+            if (strlen($student->last_name) > 12){
+                $username = strtolower($student->last_name . "." .  substr($student->first_name, 0, 1));
+            } else {
+                $username = strtolower($student->last_name . "." .  $student->first_name);
+            }
+
+            $password = strtolower(substr($student->first_name, 0, 2) . substr($student->last_name, 0 ,2) . random_int(1000, 9999));
+
+            $student_data->username = $username;
+            $student_data->password = $password;
+            $student_data->first_name = $student->first_name;
+            $student_data->last_name = $student->last_name;
+
+            $new_students_data[] = $student_data;
+        }
+
+        //create accounts
+        foreach ($new_students_data as $key => $student_data){
+            if ($this->isUsernameNameTaken($student_data->username)) {
+                $student_data->username .= random_int(100, 999);
+                if ($this->isUsernameNameTaken($student_data->username)){
+                    throw new Exception("Too many duplicate names!");
+                }
+            }
+            $user = Hub::User();
+            $user->storeNewUser($student_data->username, $student_data->password, $student_data->first_name, $student_data->last_name, 2);
+            $student_data->user_id = $user->getId();
+        }
+
+        return $new_students_data;
     }
 
     /**
@@ -233,5 +306,17 @@ class Users {
         }
 
         return ["success" => true, "userNameAvailable" => true];
+    }
+
+    /**
+     * helper method for boolean question if a username is already taken
+     * @param string $username
+     * @return bool
+     */
+    public function isUsernameNameTaken(string $username) : bool {
+        if (Hub::User()->initializeByUserName($username)){
+            return true;
+        }
+        return false;
     }
 }
