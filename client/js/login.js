@@ -1,14 +1,12 @@
 function loginShowHidePw(){
-    if($("#login-modal-showPw").is(':checked')){
+    if($("#login-modal-password").attr("type") == "password"){
         $("#login-modal-password").attr("type","text");
-        $("#login-modal-showPwText").text("Hide");
+        $("#login-modal-password-show").attr("class", "bi bi-eye-slash-fill");
         return;
     }
-    // Changing type attribute
+    
     $("#login-modal-password").attr("type","password");
-
-    // Change the Text
-    $("#login-modal-showPwText").text("Show");
+    $("#login-modal-password-show").attr("class", "bi bi-eye-fill");
 }
 
 function checkLoginInput() {
@@ -79,7 +77,7 @@ function submitLoginInput() {
                 return;
             }
 
-            $("#login-modal-post-response").text("The User or password was not correct.");
+            $("#login-failed-error").show();
         },
         error: function(error){
             console.log("AJAX-Request error: " + error);
@@ -91,4 +89,20 @@ function emptyLoginErrors(){
     $("#login-modal-user-error").empty();
     $("#login-modal-password-error").empty();
     $("#login-modal-post-response").empty();
+}
+
+//------Enables enter key to submit login-------
+
+$('#loginModal').on('show.bs.modal', function () {
+    document.addEventListener("keydown", enterKey);
+})
+
+$('#loginModal').on('hide.bs.modal', function () {
+    document.removeEventListener("keydown", enterKey);
+})
+
+function enterKey(event){
+    if (event.key === "Enter") {
+        $("#login-modal-submit-button").click();
+    }
 }

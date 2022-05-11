@@ -167,5 +167,10 @@ class User {
             return;
         }
     }
+
+    public function changePassword($newPassword){
+        $password_hash = password_hash($newPassword, PASSWORD_DEFAULT);
+        Database::update("UPDATE user SET password = ?  WHERE pk_user_id = ?", [$password_hash, $this->user_id], "si");
+    }
 }
 

@@ -1,8 +1,8 @@
 <script src="client/js/account-info.js" defer></script>
 
-<div id="main-body" class="container text-white">
+<div id="main-body" class="container text-dark">
     <br><br><br><br>
-    <h1 class="text-center">Dein Account</h1>
+    <h1 class="text-center text-white">Dein Account</h1>
 
     <section style="background-color: #eee; margin-bottom: 20px">
         <div class="container p-4">
@@ -13,7 +13,7 @@
                   <img src="http://localhost/ss22-itp-g02/client/assets/img/blank-profile-picture.png" alt="avatar"
                     class="rounded-circle img-fluid" style="width: 160px;">
                   
-                  <h5 style="color: black;" class="my-3" id="userFullNameField"></h5>
+                  <h5 class="my-3" id="userFullNameField"></h5>
                   <p class="text-muted mb-1" id="userTypeField" style="margin-top: -10px;"></p>
                 </div>
               </div>
@@ -23,34 +23,107 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-sm-3">
-                      <p style="color: black;" class="mb-0">Vorname</p>
+                      <p class="mb-0">Vorname</p>
                     </div>
                     <div class="col-sm-9">
-                      <p class="text-muted mb-0">Johnatan</p>
+                      <p style="display: inline;" class="text-muted mb-0" id="firstNameField"></p><i id="firstNameEdit" style="color: purple; margin-left: 5px" class="bi bi-pencil-square mb-0"></i>
+                      <p style="color: red; display: none;" id="firstNameError" class="mb-0">Vorname darf nicht länger als 50 Zeichen sein und kann nur aus Buchstaben/Leerzeichen bestehen!</p> 
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <p style="color: black;" class="mb-0">Nachname</p>
+                      <p class="mb-0">Nachname</p>
                     </div>
                     <div class="col-sm-9">
-                      <p class="text-muted mb-0">Smith</p>
+                      <p style="display: inline;" class="text-muted mb-0" id="lastNameField"></p><i id="lastNameEdit" style="color: purple; margin-left: 5px" class="bi bi-pencil-square mb-0"></i>
+                      <p style="color: red; display: none;" id="lastNameError" class="mb-0">Nachname darf nicht länger als 50 Zeichen sein und kann nur aus Buchstaben/Leerzeichen bestehen!</p> 
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <p style="color: black;" class="mb-0">Username</p>
+                      <p class="mb-0">Username</p>
                     </div>
                     <div class="col-sm-9">
-                      <p class="text-muted mb-0">testuser</p>
+                      <p style="display: inline;" class="text-muted mb-0" id="usernameField"></p><i id="usernameEdit" style="color: purple; margin-left: 5px" class="bi bi-pencil-square mb-0"></i>
+                      <p id="usernameAvailable" style="color: green; display: none;" class="mb-0">Benutzername ist verfügbar!</p>
+                      <p id="usernameUnavailable" style="color: red; display: none;" class="mb-0">Benutzername ist bereits vergeben!</p>
+                      <p id="usernameError"style="color: red; display: none;" class="mb-0">Benutzername muss zwischen 6 und 49 Zeichen haben!</p>
+                      <p id="usernameError2"style="color: red; display: none;" class="mb-0">Benutzername darf keine Sonderzeichen enthalten!</p>
                     </div>
                   </div>
                 </div>
               </div>
+              <div type="button" style="background-color: purple;" class='btn text-warning me-2 fs-5'  data-bs-toggle='modal' data-bs-target='#changePasswordModal'>Passwort ändern</div>
+              <p id="passwordChangeSuccess" style="color: purple; display: none" class="mb-0">Passwortänderung erfolgreich!</p>
             </div>
           </div>
         </div>
       </section>
+
+  <div class="modal fade" id="changePasswordModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Passwort ändern</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="changePasswordForm">
+                  <div class="row mb-2 align-items-center">
+                    <label for="oldPassword" class="col-form-label">Altes Passwort</label>
+                    <div class="col-sm-7">
+                      <div class="input-group">
+                        <input type="password" name="oldPassword" class="form-control" id="oldPassword" \>
+                        <div class="input-group-append">
+                          <span class="input-group-text" style="border-radius: 0 5px 5px 0" onclick="showHideOldPw()">
+                            <i id="oldPasswordShow" class="bi bi-eye-fill"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div id="oldPasswordError" style="color: red; display: none;" class="login_error">Das Passwort ist nicht korrekt!</div>
+                  </div>
+                    <div class="row mb-2 align-items-center">
+                      <label for="newPassword" class="col-form-label">Neues Passwort</label>
+                      <div class="col-sm-7">
+                        <div class="input-group">
+                          <input type="password" name="newPassword" class="form-control" id="newPassword" \>
+                          <div class="input-group-append">
+                            <span class="input-group-text" style="border-radius: 0 5px 5px 0" onclick="showHideNewPw()">
+                              <i id="newPasswordShow" class="bi bi-eye-fill"></i>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="newPasswordError" style="color: red; display: none;" class="login_error">Das Passwort muss mindestens 6 Zeichen lang sein!</div>
+                      <div id="newPasswordError2" style="color: red; display: none;" class="login_error">Das neue und das alte Passwort können nicht identisch sein!</div>
+                    </div>
+                    <div class="row mb-2 align-items-center">
+                      <label for="newPasswordConfirm" class="col-form-label">Neues Passwort bestätigen</label>
+                      <div class="col-sm-7">
+                        <div class="input-group">
+                          <input type="password" name="newPasswordConfirm" class="form-control" id="newPasswordConfirm" \>
+                          <div class="input-group-append">
+                            <span class="input-group-text" style="border-radius: 0 5px 5px 0" onclick="showHideNewPw()">
+                              <i id="newPasswordConfirmShow" class="bi bi-eye-fill"></i>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="newPasswordConfirmError" style="color: red; display: none;" class="login_error">Die Passwörter stimmen nicht überein!</div>
+                    </div>
+                  </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <!--works as confirmation, activates "leaving" in startTerm-->
+                <div class="btn btn-warning" id="submitPasswordChange" onclick="submitPasswordChange()">Speichern</div>
+            </div>
+        </div>
+    </div>
   </div>
+</div>

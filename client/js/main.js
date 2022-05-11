@@ -69,6 +69,7 @@ function addState(title, path){
 }
 
 window.onpopstate = function(event) {
+    $('.modal').modal('hide');
     if(event.state == null){
         loadPageWithAnimation("client/pages/basic/home.html");
         $("title").text("Home");

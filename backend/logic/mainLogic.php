@@ -26,6 +26,8 @@ class MainLogic {
                 return Hub::Users()->getUserGroups();
             case "updateUserData":
                 return Hub::Users()->updateUserData();
+            case "updateUserPassword":
+                return Hub::Users()->updateUserPassword();
 
             /* GROUPS */
             case "createGroup":
