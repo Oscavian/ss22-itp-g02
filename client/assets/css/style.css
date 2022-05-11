@@ -1,32 +1,52 @@
 /* buttoncolor #ffbb33 */
 @import url('https://fonts.googleapis.com/css2?family=Nunito');
-#navcolor{
+
+#navcolor {
     background-color: purple;
 }
-#main-body{
+
+#main-body {
     background-color: #3B1C75;
     font-family: Nunito, sans-serif;
 }
-#main-body h1{
-    font-weight: 500;
+
+#main-div {
+    margin-top: 6rem;
+    color: white;
 }
-#footer{
+
+#main-body h1 {
+    font-weight: 500;
+    text-align: center;
+    padding-bottom: 2rem;
+}
+
+#footer {
     background-color: grey;
 }
-#footer .links a{
+
+#footer .links a {
     color: rgba(255, 255, 255, 0.6);
     margin: 0 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
+
 #footer #copyright {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-.footer-link{
+.footer-link {
     text-decoration: underline;
     cursor: pointer;
 }
-.footer-link:hover{
+
+.footer-link:hover {
     text-decoration: none;
+}
+
+/* groups css */
+
+tbody tr:hover {
+    background-color: grey;
 }

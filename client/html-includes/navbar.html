@@ -4,25 +4,30 @@
 
 <nav id="navcolor" class="navbar navbarbottom navbar-dark fixed-top navbar-expand-lg">
     <div class="container-fluid mb-auto">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="linkList">
                 <li class="nav-item mb-1">
-                    <a class="btn btn-outline-warning me-2 fs-5" onclick="loadPageHome()" role="button"><i class="bi bi-house"></i>&nbsp;Startseite</a>
+                    <a class="btn btn-outline-warning me-2 fs-5" onclick="loadPageHome()" role="button"><i
+                            class="bi bi-house"></i>&nbsp;Startseite</a>
                 </li>
                 <li class="nav-item mb-1">
-                    <a class="btn btn-outline-warning me-2 fs-5" href="abgaben.php"><i class="bi bi-folder"></i>&nbsp;Abgaben</a>
+                    <a class="btn btn-outline-warning me-2 fs-5"><i class="bi bi-folder"></i>&nbsp;Abgaben</a>
                 </li>
                 <li class="nav-item mb-1">
-                    <a class="btn btn-outline-warning me-2 fs-5" href="chat/chat.html"><i class="bi bi-chat-text"></i>&nbsp;Chat</a>
+                    <a class="btn btn-outline-warning me-2 fs-5"><i class="bi bi-chat-text"></i>&nbsp;Chat</a>
+                </li>
+                <li class="nav-item mb-1">
+                    <a class="btn btn-outline-warning me-2 fs-5" onclick="loadPageGroupOverview()"><i class="bi bi-people"></i>&nbsp; Meine Gruppen</a>
                 </li>
             </ul>
         </div>
         <div class="text-end">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="log-stat" >
-                
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="log-stat">
+
             </ul>
         </div>
     </div>
