@@ -20,23 +20,25 @@
                     </div>
                     <div class="row mb-3">
                         <label for="login-modal-password" class="col-sm-2 col-form-label">Password</label>
-                        <div class="col-sm-7">
-                            <input type="password" name="password" class="form-control" id="login-modal-password">
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="password" name="password" class="form-control" id="login-modal-password" \>
+                                <div class="input-group-append">
+                                  <span class="input-group-text" style="border-radius: 0 5px 5px 0" onclick="loginShowHidePw()">
+                                    <i id="login-modal-password-show" class="bi bi-eye-fill"></i>
+                                  </span>
+                                </div>
+                            </div>
                             <div id="login-modal-password-error" class="login_error"></div>
                         </div>
-                        <div class="col-sm-3">
-                            <input type="checkbox" name="showPw" class="form-check-input" id="login-modal-showPw" onchange="loginShowHidePw()">
-                            <span id="login-modal-showPwText" class="form-check-label">Show</span>
-                        </div>
                     </div>
-                  </form>
-                  <div id="login-modal-post-response"></div>
+                </form>
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
                 <!--works as confirmation, activates "leaving" in startTerm-->
-                <button type="button" class="btn btn-warning" id="submitLogin" name="submit" value="submit" onclick="checkLoginInput()">Log in</button>
-                <a class="btn btn-outline-warning"  data-bs-dismiss="modal" onclick="loadPageRegister()">noch keinen Account?</a>
+                <div id="login-failed-error" style="color:red; margin-right: 10px; display: none;" class="login_error">Login fehlgeschlagen</div>
+                <button type="button" class="btn btn-warning" id="login-modal-submit-button" name="submit" value="submit" onclick="checkLoginInput()">Log in</button>
             </div>
         </div>
     </div>

@@ -1,16 +1,16 @@
 function showHidePw(){
-    if($("#showPw").is(':checked')){
+    if($("#password").attr("type") == "password"){
         $("#password").attr("type","text");
         $("#confirmPassword").attr("type","text");
-        $("#showPwText").text("Hide");
+        $("#showPassword").attr("class", "bi bi-eye-slash-fill");
+        $("#showConfirmPassword").attr("class", "bi bi-eye-slash-fill");
         return;
     }
-    // Changing type attribute
+    
     $("#password").attr("type","password");
     $("#confirmPassword").attr("type","password");
-
-    // Change the Text
-    $("#showPwText").text("Show");
+    $("#showPassword").attr("class", "bi bi-eye-fill");
+    $("#showConfirmPassword").attr("class", "bi bi-eye-fill");
 }
 
 function checkRegisterInput() {

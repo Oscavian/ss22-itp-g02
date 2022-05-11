@@ -37,6 +37,12 @@ function loadPageContact(){
     loadPage(title, path);
 }
 
+function loadPageUserDetails(){
+    title = "Mein Account";
+    path = "client/pages/user/account-info.html";
+    loadPage(title, path);
+}
+
 function loadPageGroupOverview() {
     title = "Gruppenübersicht";
     path = "client/pages/groups/groups-overview.html";
@@ -69,6 +75,7 @@ function addState(title, path){
 }
 
 window.onpopstate = function(event) {
+    $('.modal').modal('hide');
     if(event.state == null){
         loadPageWithAnimation("client/pages/basic/home.html");
         $("title").text("Home");
