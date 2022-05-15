@@ -69,6 +69,7 @@ class Users {
         foreach ((Hub::User($_SESSION["userId"]))->getGroups() as $group){
             $item["groupName"] = $group->getName();
             $item["groupId"] = $group->getId();
+            $item["groupChatId"] = $group->getChat();
             $resultGroups[] = $item;
         }
         
