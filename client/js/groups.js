@@ -50,40 +50,44 @@ function getGroupDetails(){
     tbody.empty();
 
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: "/ss22-itp-g02/backend/requestHandler.php",
         data: {method: "getStudentsOfGroup"},
         cache: false,
         dataType: "json",
         success: (response) => {
-            tbody.append("" +
-                        "<tr>" +
-                        "   <td>es sind noch keine Einträge hier vorhanden</td>" +
-                        "   <td>XXX</td>" +
-                        "   <td>XXX</td>" +
-                        "   <td>XXX</td>" +
-                        "</tr>");
-            /*if (response["success"]){
+            if (response["success"]){
                 if (response["noGroups"]){
                     tbody.append("" +
                         "<tr>" +
                         "   <td>es sind noch keine Einträge hier vorhanden</td>" +
+                        "   <td>XXX</td>" +
+                        "   <td>XXX</td>" +
+                        "   <td>XXX</td>" +
                         "</tr>");
-                } else {
+                }
+                else {
+                    console.log(response);
+                    /*$.each(response => {
+
+                    });
                     $.each(response["groups"], (i, g) => {
                         tbody.append("" +
                             "<tr rowId='" + g["groupId"] + "'>" +
                             "   <td>" + g["groupId"] + "</td>" +
                             "   <td><a onclick='getGroupDetails()'><u>" + g["groupName"] + "</u></a></td>" +
                             "</tr>");
-                    });
+                    });*/
                 }
-            } */
+            }
         },
         error: (error) => {
             tbody.append("" +
                         "<tr>" +
-                        "   <td>es sind noch keine Einträge hier vorhanden</td>" +
+                        "   <td style='color: red'><b>ein Fehler ist aufgetreten</b></td>" +
+                        "   <td>XXX</td>" +
+                        "   <td>XXX</td>" +
+                        "   <td>XXX</td>" +
                         "</tr>");
             console.log("AJAX Request Error: " + error);
         }
