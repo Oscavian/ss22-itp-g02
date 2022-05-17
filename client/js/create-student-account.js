@@ -5,34 +5,7 @@ defaultForms();
 function defaultForms(){
      //per default 5 forms open
      while(counter <= 5){
-        var tablerow = $("<tr id ='" + counter +"' class = 'student-form'></tr>");
-        $(tablerow).append("<td>\
-                                <label for='firstname' style='color: white;' class='col-sm-2 col-form-label col-form-label-lg'>Vorname</label>\
-                                <input type='text' placeholder='Max' class='form-control form-control-lg bg-white' id='firstname" + counter + "' name='firstname'>\
-                                <div id='firstname_error" + counter + "' style='color: red;'></div>\
-                            </td>");
-
-        $(tablerow).append("<td>\
-                                <label for='lastname' style='color: white; margin-left: 5px' class='col-sm-2 col-form-label col-form-label-lg'>Nachname</label>\
-                                <input type='text' placeholder='Mustermann' class='form-control form-control-lg bg-white' id='lastname" + counter + "' name='lastname' style='margin-left: 5px'>\
-                                <div id='lastname_error" + counter + "' style='color: red;'></div>\
-                            </td>");
-        $(tablerow).append("<td>\
-                                <label for='class-selector' class='col-sm-2 col-form-label col-form-label-lg' style='color: white; margin-left: 10px;'>Klasse</label>\
-                                <select id='class-selector" + counter + "' class='form-control form-control-lg bg-white' name='group' style=' margin-left: 10px;'>\
-                                <option value='empty slot'></option>\
-                                </select>\
-                                <div id='class_error" + counter + "' style='color: red;'></div>\
-                            </td>");
-                            getMyGroups(counter);
-        $(tablerow).append("<td>\
-                                <label for='delete-form' style='color: white; margin-left: 15px;' class='col-sm-2 col-form-label col-form-label-lg'>Löschen</label><br>\
-                                <button type='button' class='btn btn-lg btn-warning bg-warning' id='delete-form" + counter + "' style='height: 45px; width: 45px; margin-left: 15px;' onclick='deleteForm(" + counter + ")'> x </button>\
-                                <div></div>\
-                            </td>");
-        $("#form-list").append(tablerow);
-        
-        counter++;
+        addStudentAccountForm();
     }
 
     $("#add-form").click(function () {
@@ -73,31 +46,33 @@ function getMyGroups(counter){
 
 function addStudentAccountForm(){
     var tablerow = $("<tr id ='" + counter +"' class = 'student-form'></tr>");
-        $(tablerow).append("<td>\
-                                <label for='firstname' style='color: white;' class='col-sm-2 col-form-label col-form-label-lg'>Vorname</label>\
-                                <input type='text' placeholder='Max' class='form-control form-control-lg bg-white' id='firstname" + counter + "' name='firstname'>\
-                                <div id='firstname_error" + counter + "' style='color: red;'></div>\
-                            </td>");
+    $(tablerow).append("<td>\
+                            <label for='firstname' style='color: white;' class='col-sm-2 col-form-label col-form-label-lg'>Vorname</label>\
+                            <input type='text' placeholder='Max' class='form-control form-control-lg bg-white' id='firstname" + counter + "' name='firstname'>\
+                            <div id='firstname_error" + counter + "' style='color: red;'></div>\
+                        </td>");
 
-        $(tablerow).append("<td>\
-                                <label for='lastname' style='color: white; margin-left: 5px' class='col-sm-2 col-form-label col-form-label-lg'>Nachname</label>\
-                                <input type='text' placeholder='Mustermann' class='form-control form-control-lg bg-white' id='lastname" + counter + "' name='lastname' style='margin-left: 5px'>\
-                                <div id='lastname_error" + counter + "' style='color: red;'></div>\
-                            </td>");
-        $(tablerow).append("<td>\
-                                <label for='class-selector' class='col-sm-2 col-form-label col-form-label-lg' style='color: white; margin-left: 10px;'>Klasse</label>\
-                                <select id='class-selector" + counter + "' class='form-control form-control-lg bg-white' name='group' style=' margin-left: 10px;'>\
-                                <option value='empty slot'></option>\
-                                </select>\
-                            </td>");
-                            getMyGroups(counter);
-        $(tablerow).append("<td>\
-                                <label for='delete-form' style='color: white; margin-left: 15px;' class='col-sm-2 col-form-label col-form-label-lg'>Löschen</label><br>\
-                                <button type='button' class='btn btn-lg btn-warning bg-warning' id='delete-form" + counter + "' style='width: 40px; margin-left: 15px;' onclick='deleteForm(" + counter + ")'> x </button>\
-                            </td>");
-        $("#form-list").append(tablerow);
-        
-        counter++;
+    $(tablerow).append("<td>\
+                            <label for='lastname' style='color: white; margin-left: 5px' class='col-sm-2 col-form-label col-form-label-lg'>Nachname</label>\
+                            <input type='text' placeholder='Mustermann' class='form-control form-control-lg bg-white' id='lastname" + counter + "' name='lastname' style='margin-left: 5px'>\
+                            <div id='lastname_error" + counter + "' style='color: red;'></div>\
+                        </td>");
+    $(tablerow).append("<td>\
+                            <label for='class-selector' class='col-sm-2 col-form-label col-form-label-lg' style='color: white; margin-left: 10px;'>Klasse</label>\
+                            <select id='class-selector" + counter + "' class='form-control form-control-lg bg-white' name='group' style=' margin-left: 10px;'>\
+                            <option value='empty slot'></option>\
+                            </select>\
+                            <div id='class_error" + counter + "' style='color: red;'></div>\
+                        </td>");
+                        getMyGroups(counter);
+    $(tablerow).append("<td>\
+                            <label for='delete-form' style='color: white; margin-left: 15px;' class='col-sm-2 col-form-label col-form-label-lg'>Löschen</label><br>\
+                            <button type='button' class='btn btn-lg btn-warning bg-warning' id='delete-form" + counter + "' style='height: 45px; width: 45px; margin-left: 15px;' onclick='deleteForm(" + counter + ")'> x </button>\
+                            <div></div>\
+                        </td>");
+    $("#form-list").append(tablerow);
+    
+    counter++;
 }
 
 function deleteForm(id){
