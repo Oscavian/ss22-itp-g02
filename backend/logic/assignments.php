@@ -19,13 +19,32 @@ class Assignments {
     }
 
     /**
+     * @throws Exception
+     */
+    public function getAssignmentList() : ?array {
+        if (empty($_POST["group_id"])){
+            throw new Exception("Invalid Parameters");
+        }
+
+        $group = Hub::Group($_POST["group_id"]);
+
+        if (!$group->exists()){
+            throw new Exception("Group does not exist!");
+        }
+
+        Permissions::checkIsInGroup($group);
+
+        return $group->getAssignments();
+    }
+
+    /**
      * method: createAssignment
      * group_id: int
      * due_time: string (datetime)
      * title: string
      * text*: string
-     * file_path*: string
      * @return array|null
+     * @throws Exception
      */
     public function createAssignment(): ?array {
         if (empty($_POST["group_id"]) ||
@@ -46,7 +65,13 @@ class Assignments {
         $title = $_POST["title"];
 
         isset($_POST["text"]) ? $text = $_POST["text"] : $text = null;
-        isset($_POST["file_path"]) ? $file_path = $_POST["file_path"] : $file_path = null;
+
+        //TODO: make file-upload optional
+        try {
+            $file_path = Hub::FileHandler()->uploadFile("attachment", "assignments/attachments/", ["pdf", "png"]);
+        } catch (ErrorException $ex) {
+            return ["success" => false, "error" => $ex->getMessage()];
+        }
 
         $assignment = Hub::Assignment();
         $assignment->storeNewAssignment($creator_id, $group_id, $due_time, $title, $text, $file_path);
@@ -55,6 +80,6 @@ class Assignments {
             throw new Exception("Error creating Assignment!");
         }
 
-        return ["success" => true, "msg" => "Assignment successfully created!", "assignment_id" => $assignment->getId()];
+        return ["success" => true, "msg" => "Assignment erfolgreich erstellt!", "assignment_id" => $assignment->getId()];
     }
 }

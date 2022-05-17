@@ -6,6 +6,12 @@ require "permissions/permissions.php";
 
 class MainLogic {
 
+    /**
+     * Handles POST requests
+     * @param $method
+     * @return array|null
+     * @throws Exception
+     */
     public static function handleRequest($method): ?array {
 
         self::sanitizePostArray();
@@ -46,7 +52,11 @@ class MainLogic {
                 return Hub::Assignments()->getAssignmentById();
             case "createAssignment":
                 return Hub::Assignments()->createAssignment();
-            case "uploadAssignments":
+            case "getAssignmentList":
+                return Hub::Assignments()->getAssignmentList();
+            case "getSubmissions":
+                break;
+            case "addSubmission":
                 break;
 
             /* CHATS */

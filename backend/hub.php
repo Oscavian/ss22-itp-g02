@@ -8,6 +8,7 @@ class Hub {
     private static $chats;
     private static $groups;
     private static $users;
+    private static $file_handler;
 
     public static function Chats(): Chats {
         if (self::$chats == null) {
@@ -39,6 +40,17 @@ class Hub {
             self::$groups = new Groups();
         }
         return self::$groups;
+    }
+
+    /**
+     * @return FileHandler
+     */
+    public static function FileHandler(): FileHandler {
+        if (self::$file_handler == null) {
+            require_once "logic/fileHandler.php";
+            self::$file_handler = new FileHandler();
+        }
+        return self::$file_handler;
     }
 
 
