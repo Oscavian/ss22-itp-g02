@@ -41,6 +41,22 @@ class Groups {
     }
 
     /**
+     * method: getGroupMembers
+     * group_id: int
+     * @return array|null
+     */
+    public function getGroupMembers(): ?array {
+        if(empty($_POST["group_id"])){
+            throw new Exception("Invalid Parameters");
+        }
+
+        $group = Hub::Group($_POST["group_id"]);
+        Permissions::checkIsInGroup($group);
+
+        return ["success" => true, "groupName" => $group->getMembers()];
+    }
+
+    /**
      * method: getGroupChatId
      * group_id: int
      * @return array|null
