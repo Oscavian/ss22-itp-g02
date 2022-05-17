@@ -42,6 +42,10 @@ function logout(){
             $("#log-stat").append("<li class='nav-item mb-1'><div type='button' id='loginButton' class='btn btn-outline-warning me-2 fs-5' onclick='loadPageRegister()'>Registrieren</div></li>");
             $("#log-stat").append("<li class='nav-item mb-1'><button type='button' id='loginButton' class='btn btn-outline-warning me-2 fs-5' data-bs-toggle='modal' data-bs-target='#loginModal'>Login</button></li>");
             $("login-modal").load("client/html-includes/login-modal.html");
+            $("#homeworkNavButton").hide();
+            $("#chatNavButton").hide();
+            $("#myGroupsNavButton").hide();
+            $("#createStudentNavButton").hide();
             loadPageHome();
         },
         error: function(error){
