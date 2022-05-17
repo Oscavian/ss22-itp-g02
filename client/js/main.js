@@ -3,7 +3,8 @@ $("#indexNavbar").load("client/html-includes/navbar.html");
 $("#indexFooter").load("client/html-includes/footer.html");
 
 //Maybe load different page when user is allready logged in?
-loadPageWithAnimation("client/pages/basic/home.html");
+//loadPageWithAnimation("client/pages/basic/home.html");
+loadAssignmentDetails();
 
 //--------------Pages--------------//
 
@@ -52,6 +53,12 @@ function loadPageGroupOverview() {
 function loadPageCreateStudent(){
     title = "SchülerInnenaccount erstellen"
     path = "client/pages/user/create-student-account.html";
+    loadPage(title, path);
+}
+
+function loadAssignmentDetails(){
+    title = "Aufgabe"
+    path = "client/pages/tasks/task-details.html";
     loadPage(title, path);
 }
 
