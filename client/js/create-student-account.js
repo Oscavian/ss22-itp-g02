@@ -25,11 +25,13 @@ function defaultForms(){
                                 <select id='class-selector" + counter + "' class='form-control form-control-lg bg-white' name='group' style=' margin-left: 10px;'>\
                                 <option value='empty slot'></option>\
                                 </select>\
+                                <div id='class_error" + counter + "' style='color: red;'></div>\
                             </td>");
                             getMyGroups(counter);
         $(tablerow).append("<td>\
                                 <label for='delete-form' style='color: white; margin-left: 15px;' class='col-sm-2 col-form-label col-form-label-lg'>Löschen</label><br>\
-                                <button type='button' class='btn btn-lg btn-warning bg-warning' id='delete-form" + counter + "' style='width: 40px; margin-left: 15px;' onclick='deleteForm(" + counter + ")'> x </button>\
+                                <button type='button' class='btn btn-lg btn-warning bg-warning' id='delete-form" + counter + "' style='height: 45px; width: 45px; margin-left: 15px;' onclick='deleteForm(" + counter + ")'> x </button>\
+                                <div></div>\
                             </td>");
         $("#form-list").append(tablerow);
         
