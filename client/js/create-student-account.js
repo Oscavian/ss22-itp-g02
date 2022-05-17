@@ -1,7 +1,4 @@
 var counter = 1;
-var studentInfoList = [];
-
-
 
 defaultForms();
 
@@ -108,6 +105,7 @@ function deleteForm(id){
 }
 
 function createStudentAccounts(){
+    var studentInfoList = [];
     class StudentInfo {
         first_name;
         last_name;
@@ -135,7 +133,8 @@ function createStudentAccounts(){
     });
     if(allOk === true) {
         //here submitting of array of first and last names
-        submitStudentAccInput();
+        submitStudentAccInput(studentInfoList);
+        studentInfoList = [];
     }
 }
 
@@ -199,7 +198,7 @@ function emptyStudAccErrors(){
 
 }
 
-function submitStudentAccInput(){
+function submitStudentAccInput(studentInfoList){
     $.ajax({
         type: "POST",
         url: "/ss22-itp-g02/backend/requestHandler.php",
