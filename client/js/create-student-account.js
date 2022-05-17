@@ -45,7 +45,7 @@ function getMyGroups(counter){
 }
 
 function addStudentAccountForm(){
-    var tablerow = $("<tr id ='" + counter +"' class = 'student-form'></tr>");
+    var tablerow = $("<tr id ='" + counter +"' class = 'student-form' style='vertical-align: top;'></tr>");
     $(tablerow).append("<td>\
                             <label for='firstname' style='color: white;' class='col-sm-2 col-form-label col-form-label-lg'>Vorname</label>\
                             <input type='text' placeholder='Max' class='form-control form-control-lg bg-white' id='firstname" + counter + "' name='firstname'>\
