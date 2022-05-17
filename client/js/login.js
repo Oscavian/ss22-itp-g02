@@ -1,21 +1,19 @@
 function loginShowHidePw(){
-    if($("#login-modal-showPw").is(':checked')){
+    if($("#login-modal-password").attr("type") == "password"){
         $("#login-modal-password").attr("type","text");
-        $("#login-modal-showPwText").text("Hide");
+        $("#login-modal-password-show").attr("class", "bi bi-eye-slash-fill");
         return;
     }
-    // Changing type attribute
+    
     $("#login-modal-password").attr("type","password");
-
-    // Change the Text
-    $("#login-modal-showPwText").text("Show");
+    $("#login-modal-password-show").attr("class", "bi bi-eye-fill");
 }
 
 function checkLoginInput() {
     emptyLoginErrors();
     var allOk = true;
     allOk = checkIfEmptyLogin(allOk);
-    allOk = checkIfAlphanumeric(allOk);
+    allOk = checkIfAlphanumericLogin(allOk);
     allOk = checkLengthLogin(allOk);
 
     if(allOk === true) {
@@ -23,7 +21,7 @@ function checkLoginInput() {
     }
 }
 
-function checkIfAlphanumeric(allIsOk){
+function checkIfAlphanumericLogin(allIsOk){
     var allOk = allIsOk;
     var user = $("#login-modal-user").val();
     var password = $("#login-modal-password").val();
@@ -74,12 +72,13 @@ function submitLoginInput() {
         success: function (response) {
             if(response["success"]){
                 $('#login-form')[0].reset();
+                emptyLoginErrors();
                 $("#loginModal").modal("hide");
                 checkLoginStatus();
                 return;
             }
 
-            $("#login-modal-post-response").text("The User or password was not correct.");
+            $("#login-failed-error").show();
         },
         error: function(error){
             console.log("AJAX-Request error: " + error);
@@ -91,4 +90,21 @@ function emptyLoginErrors(){
     $("#login-modal-user-error").empty();
     $("#login-modal-password-error").empty();
     $("#login-modal-post-response").empty();
+}
+
+//------Enables enter key to submit login-------
+
+$('#loginModal').on('show.bs.modal', function () {
+    document.addEventListener("keydown", enterKey);
+})
+
+$('#loginModal').on('hide.bs.modal', function () {
+    document.removeEventListener("keydown", enterKey);
+    emptyLoginErrors();
+})
+
+function enterKey(event){
+    if (event.key === "Enter") {
+        $("#login-modal-submit-button").click();
+    }
 }
