@@ -94,7 +94,7 @@ function emptyLoginErrors(){
 
 //------Enables enter key to submit login-------
 
-$('#loginModal').on('show.bs.modal', function () {
+$('#loginModal').on('shown.bs.modal', function () {
     document.addEventListener("keydown", enterKey);
 })
 

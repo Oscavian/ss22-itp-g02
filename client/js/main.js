@@ -1,6 +1,6 @@
 //load navbar and footer
-$("navbar").load("client/html-includes/navbar.html");
-$("footer").load("client/html-includes/footer.html");
+$("#indexNavbar").load("client/html-includes/navbar.html");
+$("#indexFooter").load("client/html-includes/footer.html");
 
 //Maybe load different page when user is allready logged in?
 loadPageWithAnimation("client/pages/basic/home.html");
@@ -66,11 +66,9 @@ function loadPage(title, path){
 }
 
 function loadPageWithAnimation(path){
-    $("footer").fadeOut("fast");
-    $("#main-div").fadeOut("fast", function(){
-        $("#main-div").load(path, function(){
-            $("#main-div").fadeIn("fast");
-            $("footer").fadeIn("fast");
+    $("#indexContent").fadeOut("fast", function(){
+        $("#indexContent").load(path, function(){
+            $("#indexContent").fadeIn("fast");
         })
     });
 }

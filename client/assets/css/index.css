@@ -1,25 +1,20 @@
 /* buttoncolor #ffbb33 */
 @import url('https://fonts.googleapis.com/css2?family=Nunito');
 
-#navcolor {
+#navbar {
     background-color: purple;
+    margin-bottom: 1.5rem;
 }
 
-#main-body {
+body{
     background-color: #3B1C75;
     font-family: Nunito, sans-serif;
 }
 
-#main-div {
-    margin-top: 6rem;
-    padding-bottom: 100px;
-    color: white;
-}
-
-#main-body h1 {
+body h1 {
     font-weight: 500;
     text-align: center;
-    padding-bottom: 2rem;
+    padding-bottom: 1.5rem;
 }
 
 #footer {
@@ -44,6 +39,21 @@
 
 .footer-link:hover {
     text-decoration: none;
+}
+
+#indexFlexWrapper {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+  
+#indexContent {
+    padding-bottom: 1.5rem;
+}
+
+#indexFooter {
+    margin-top: auto;
 }
 
 /* groups css */
