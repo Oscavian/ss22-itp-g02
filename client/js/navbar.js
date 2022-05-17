@@ -12,6 +12,10 @@ function checkLoginStatus() {
             if(response["isLoggedIn"]){
                 $("#log-stat").append("<li class='nav-item mb-1'><div type='button' class='btn btn-outline-warning me-2 fs-5' onclick='loadPageUserDetails()'>" + response["username"] + "</div></li>");
                 $("#log-stat").append("<li class='nav-item mb-1'><div type='button' id='logoutButton' class='btn btn-outline-warning me-2 fs-5' onclick='logout()'>Logout</div></li>");
+                $("#homeworkNavButton").show();
+                $("#chatNavButton").show();
+                $("#myGroupsNavButton").show();
+                $("#createStudentNavButton").show();
                 return;
             }
             $("#log-stat").append("<li class='nav-item mb-1'><div type='button' id='loginButton' class='btn btn-outline-warning me-2 fs-5' onclick='loadPageRegister()'>Registrieren</div></li>");

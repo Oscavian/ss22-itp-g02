@@ -13,7 +13,7 @@ function checkLoginInput() {
     emptyLoginErrors();
     var allOk = true;
     allOk = checkIfEmptyLogin(allOk);
-    allOk = checkIfAlphanumeric(allOk);
+    allOk = checkIfAlphanumericLogin(allOk);
     allOk = checkLengthLogin(allOk);
 
     if(allOk === true) {
@@ -21,7 +21,7 @@ function checkLoginInput() {
     }
 }
 
-function checkIfAlphanumeric(allIsOk){
+function checkIfAlphanumericLogin(allIsOk){
     var allOk = allIsOk;
     var user = $("#login-modal-user").val();
     var password = $("#login-modal-password").val();
@@ -72,6 +72,7 @@ function submitLoginInput() {
         success: function (response) {
             if(response["success"]){
                 $('#login-form')[0].reset();
+                emptyLoginErrors();
                 $("#loginModal").modal("hide");
                 checkLoginStatus();
                 return;
@@ -99,6 +100,7 @@ $('#loginModal').on('show.bs.modal', function () {
 
 $('#loginModal').on('hide.bs.modal', function () {
     document.removeEventListener("keydown", enterKey);
+    emptyLoginErrors();
 })
 
 function enterKey(event){

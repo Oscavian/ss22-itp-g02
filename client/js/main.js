@@ -49,6 +49,12 @@ function loadPageGroupOverview() {
     loadPage(title, path);
 }
 
+function loadPageCreateStudent(){
+    title = "SchülerInnenaccount erstellen"
+    path = "client/pages/user/create-student-account.html";
+    loadPage(title, path);
+}
+
 //add more pages here
 
 //----------------Functions-----------------//

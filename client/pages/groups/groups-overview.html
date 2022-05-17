@@ -3,14 +3,29 @@
 <div class="row">
     <div class="col"></div>
     <div class="col-sm-8 col-md-8">
-        <table class="table table-bordered text-white">
+        <table class="table table-hover text-white" id="allGroupsTable">
             <thead class="fw-bold">
-            <tr>
-                <td>ID</td>
-                <td>Gruppenname</td>
-            </tr>
+                <tr>
+                    <td>Gruppen ID</td>
+                    <td>Gruppenname</td>
+                    <td>zum Chat</td>
+                </tr>
             </thead>
-            <tbody id="group-list-table-body">
+            <tbody id="group-list-table-body" class="showAllGroupsTable">
+
+            </tbody>
+        </table>
+        <table class="table table-hover text-white" id="oneGroupTable">
+            <div id='backToGroupList' onclick='getUserGroups()'>zurück</div>
+            <thead class="fw-bold">
+                <tr>
+                    <td>User ID</td>
+                    <td>Vorname</td>
+                    <td>Nachname</td>
+                    <td>Username</td>
+                </tr>
+            </thead>
+            <tbody id="group-list-table-body" class="showStudentsOfGroup">
 
             </tbody>
         </table>
