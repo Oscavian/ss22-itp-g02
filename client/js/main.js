@@ -6,6 +6,10 @@ $("#indexFooter").load("client/html-includes/footer.html");
 //loadPageWithAnimation("client/pages/basic/home.html");
 loadPageGroupDetails("1");
 
+loadPageAssignmentDetails();
+//loadPageCreateAssignment();
+//loadPageAssignmentSubmits();
+
 //--------------Pages--------------//
 
 function loadPageHome(){
@@ -69,6 +73,19 @@ function loadPageGroupDetails(id){
     path = "client/pages/groups/group-details.html";
     loadPage(title, path, id);
 }
+
+function loadPageAssignmentSubmits(){
+    title = "Abgabenübersicht"
+    path = "client/pages/tasks/submitted-tasks.html";
+    loadPage(title, path);
+}
+
+function loadPageCreateAssignment(){
+    title = "Neue Aufgabe erstellen"
+    path = "client/pages/tasks/create-task.html";
+    loadPage(title, path);
+}
+
 
 //add more pages here
 
