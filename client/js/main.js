@@ -4,7 +4,10 @@ $("#indexFooter").load("client/html-includes/footer.html");
 
 //Maybe load different page when user is allready logged in?
 //loadPageWithAnimation("client/pages/basic/home.html");
-loadAssignmentDetails();
+
+loadPageAssignmentDetails();
+//loadPageCreateAssignment();
+//loadPageAssignmentSubmits();
 
 //--------------Pages--------------//
 
@@ -56,11 +59,24 @@ function loadPageCreateStudent(){
     loadPage(title, path);
 }
 
-function loadAssignmentDetails(){
+function loadPageAssignmentDetails(){
     title = "Aufgabe"
     path = "client/pages/tasks/task-details.html";
     loadPage(title, path);
 }
+
+function loadPageAssignmentSubmits(){
+    title = "Abgabenübersicht"
+    path = "client/pages/tasks/submitted-tasks.html";
+    loadPage(title, path);
+}
+
+function loadPageCreateAssignment(){
+    title = "Neue Aufgabe erstellen"
+    path = "client/pages/tasks/create-task.html";
+    loadPage(title, path);
+}
+
 
 //add more pages here
 

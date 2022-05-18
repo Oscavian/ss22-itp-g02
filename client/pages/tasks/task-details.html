@@ -1,29 +1,37 @@
-<!--description of task, includes upload for students and edit for teachers-->
+<!--description of task, includes upload for students-->
 
 <div id="main-body" class="container text-dark">
-    <section style="background-color: #eee; margin-bottom: 20px; border-radius: 5px; margin-top: 20px">
+    <section style="background-color: #eee; margin-bottom: 20px; border-radius: 5px;">
         <div class="container p-4">
             <div class="col-lg-12">
                 <div class="card">
                   <div class="card-body">
                     <div>
-                        <div style="display: flex;">
+                        <div style="display: flex; flex-wrap: wrap;">
                             <div style="font-weight: bold; font-size: 1.17em;" id="assingmentTitle">Mathematikhausaufgaben</div>
-                            <div style="margin-left: auto; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;" id="assignmentDeadline">Lehrer*in</div>
+                            <div style="color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;" id="assignmentAuthor">Lehrer*in akjfifjiefjifjasdadawDdwADDWaDi</span></div>
                         </div>
 
-                        <div style="margin-top: 5px; font-style: oblique; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;" id="assignmentAuthor">abzugeben bis 1.1.22</div> 
+                        <div style="margin-top: auto; font-style: oblique; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;" id="assignmentDeadline">abzugeben bis 1.1.22</div>
+                        <div style="margin-top: 10px;">Status: <span style="color: green; "id="assignmentStatus"> "MatheHÜ.jpg" wurde am 31.12.21 um 16:34 abgegeben</span></div>  
 
-                        <button type="button" style="margin-top: 20px; background-color: #eee;"  class="btn btn-light">Angabe <i style="color: purple;" id="firstNameEdit" class="bi bi-file-earmark-text"></i></button>
+                        <button type="button" style="margin-top: 20px; background-color: #eee;" class="btn btn-light">Angabe <i style="color: purple;" id="assignmentDescriptionfile" class="bi bi-file-earmark-text"></i></button>
 
                         <h6 style="margin-top: 20px;">Beschreibung:</h6>
-                        <div  style=" margin-top: 10px; text-align: justify;" id="assignmentDescription">
+                        <div style=" margin-top: 10px; text-align: justify;" id="assignmentDescription">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                         </div>
 
-                        <div type="button" style="float: right; margin-left: auto; margin-top: 20px; background-color: purple;" class='end-0 btn text-warning'>Abgabe hinzufügen</div>
-
-
+                        <div style="display: flex; margin-top: 20px; flex-wrap: wrap; gap: 10px;">
+                            <div style="width: max-content;">
+                                <label class="form-label" for="customFile">Abgabe hinzufügen:</label>
+                                <input type="file" class="form-control" id="customFile" />
+                            </div>
+                            <div style="align-self: flex-end;">
+                                <div type="button" id="submitFilebtn" style="background-color: purple;" class='btn text-warning'>Speichern</div>
+                            </div>
+                        </div>
+                        
                     </div>
                   </div>
                 </div>
