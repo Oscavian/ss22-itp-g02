@@ -42,6 +42,10 @@ function loadTaskOverview(groupId) {
             } else {
                 $("#noOldTasksMessage").show();
             }
+;
+            if(!$("#group-main-bod").is(":visible")){
+                $("#group-main-body").fadeIn("fast");
+            }
         },
         error: function(error){
             console.log("AJAX-Request error: " + error);
