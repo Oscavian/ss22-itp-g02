@@ -53,8 +53,6 @@ function loadAssignmentDetails(assignmentId){
             dueDateString = dueDateDay + "." + dueDateMonth + "." + dueDateYear + " - " + dueDateHours + ":" + dueDateMinutes;
             
             $("#taskDeadline").text("abzugeben bis " + dueDateString);
-            
-            console.log(response);
         },
         error: function(error){
             console.log("AJAX-Request error: " + error);
