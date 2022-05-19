@@ -96,7 +96,7 @@ class Group {
             return $this->assignments;
         }
 
-        $result = Database::select("SELECT pk_assignment_id as assignment_id FROM assignment WHERE fk_group_id = ?", [$this->group_id], "i");
+        $result = Database::select("SELECT pk_assignment_id as assignment_id FROM assignment WHERE fk_group_id = ? ORDER BY due_time DESC", [$this->group_id], "i");
         foreach ($result as $item) {
             $this->assignments[] = Hub::Assignment($item["assignment_id"]);
         }

@@ -68,12 +68,11 @@ class Assignment {
     }
 
     public function getDueTime() {
-        if (empty($this->creation_time)){
-            return $this->creation_time = Database::select("SELECT due_time from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["due_time"];
+        if (empty($this->due_time)){
+            return $this->due_time = Database::select("SELECT due_time from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["due_time"];
         }
-        return $this->creation_time;
+        return $this->due_time;
     }
-
 
     public function getFilePath() {
         if (empty($this->file_path)){

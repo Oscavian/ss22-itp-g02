@@ -1,40 +1,46 @@
 <!--form to create new assignment (for teacher) -->
 
-<div id="main-body" class="container text-dark">
-    <section style="background-color: #eee; margin-bottom: 20px; border-radius: 5px;">
-        <div class="container p-4">
-            <div class="col-lg-12">
-                <div class="card">
-                  <div class="card-body">
-                    <div>
-                <form>
-                    <div style="margin-top: 10px;" class="form-group">
-                        <label for="exampleFormControlInput1">Titel:</label>
-                        <input required type="text" class="form-control" id="assignmentTitle">
-                    </div>
-                    <div style="margin-top: 10px;" class="form-group">
-                        <label for="exampleFormControlTextarea1">Beschreibung:</label>
-                        <textarea class="form-control" id="assignmentDescription" rows="3"></textarea>
-                    </div>
-                    <div style="margin-top: 10px;" class="form-group">
-                        <label class="form-label" for="customFile">Angabe hinzufügen:</label>
-                        <input required type="file" class="form-control" id="assignmentFile" />
-                    </div>
+<style>
+    @media (max-width: 576px){
+       #create-task-main-container{
+       padding: 0 !important;
+       }
+   } 
+</style>
 
-                    <div style="display: flex; margin-top: 20px; flex-wrap: wrap; gap: 10px;">
-                        <div style="width: max-content;">
-                            <label class="form-label" for="customFile">Abgabefrist:</label>
-                            <input type="date" class="form-control" id="customFile"/>
-                            <input type="time" class="form-control" id="customFile"/>
+<div class="row justify-content-lg-center">
+    <div class="col col-lg-8">
+        <section class="text-dark" style="background-color: #eee; border-radius: 5px;">
+            <div id="create-task-main-container" class="container p-4">
+                <div class="card" style="overflow: hidden;">
+                    <div class="card-body">
+                        <h4>Neue Aufgabe erstellen</h4>
+                        <form>
+                        <div style="margin-top: 10px;">
+                                <label for="exampleFormControlInput1">Titel:</label>
+                                <input required type="text" class="form-control" id="assignmentTitle">
+                            </div>
+                        <div style="margin-top: 10px;">
+                                <label for="exampleFormControlTextarea1">Beschreibung:</label>
+                                <textarea class="form-control" id="assignmentDescription" rows="3"></textarea>
+                            </div>
+                        <div style="margin-top: 10px;">
+                                <label class="form-label" for="customFile">Angabe hinzufügen:</label>
+                                <input required type="file" class="form-control" id="assignmentFile" />
+                            </div>
+                        <div style="display: flex; margin-top: 20px; justify-content: space-between; flex-wrap: wrap; gap: 10px">
+                            <div style="width: max-content;">
+                                <label class="form-label" for="customFile">Abgabefrist:</label>
+                                <input required type="datetime-local" class="form-control" id="customFile"/>
+                            </div>
+                            <div style="align-self: flex-end;">
+                                <button type="button" id="submitTaskBtn" style="background-color: #eee;" class="btn btn-light"><i style="color: purple;" class="bi bi-file-earmark-arrow-up"></i> Erstellen</button>
+                            </div>
                         </div>
-                        <div style="align-self: flex-end;">
-                            <div type="button" id="submitFilebtn" style="background-color: purple;" class='btn text-warning'>Speichern</div>
-                        </div>
+                        </form>
                     </div>
-                </form>
-                    </div>
-                  </div>
                 </div>
-        </div>
-      </section>
+            </div>
+        </section>
+    </div>
 </div>

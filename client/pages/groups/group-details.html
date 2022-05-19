@@ -44,21 +44,19 @@
 
   .group-details-nav-item {
       position: relative !important;
-      z-index: 10 !important;
       background-color: #f7f7f7 !important;
       color: purple !important;
       border-width: 2px !important;
       border-color: rgba(0, 0, 0, 0) !important;
       border-radius: 0 !important;
-      margin: 0 !important;
+      margin: 0 1px 0 0!important;
       /* box-shadow: 0 6px 10px rgba(128,0,128,.10), 0 0 6px rgba(128,0,128,.07); */
       transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
       cursor: pointer;
     }
   
     .group-details-nav-item.active {
-      margin: -1px 0 0 -1px !important;
-      z-index: 1000 !important;
+      margin: -1px 1px 0 -1px !important;
       border-width: 2px !important;
       border-color: purple !important;
       background-color: #f1eaf1 !important;
@@ -70,7 +68,10 @@
     }
 
     .group-details-nav-item:hover{
+      z-index: 10000 !important;
       transform: scale(1.05);
+      border-color: rgba(128,0,128,.5) !important;
+      margin: -1px 1px 1px 0 !important;
       box-shadow: 0 10px 20px rgba(128,0,128,.14), 0 4px 8px rgba(128,0,128,.08);
     }
 
@@ -101,7 +102,7 @@
         <div class="container group-details-container p-4">
             <div class="col-lg-12">
               <div id="groupTitleAndTeacherDiv" style="display: flex; align-items: center;">
-                <div style="font-weight: bold; font-size: 2em;" id="groupTitle">Gruppe Test</div>
+                <div style="font-weight: bold; font-size: 2em;" id="groupTitle"></div>
                 <div style="margin-left: auto; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;" id="groupTeacher">Lehrer*in</div>
               </div>
               <div id="group-details-content-card" class="card group-details-content-card" style="margin-top: 1rem;">

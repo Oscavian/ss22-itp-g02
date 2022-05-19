@@ -15,7 +15,12 @@ class Assignments {
         $assignment = Hub::Assignment($_POST["assignment_id"]);
         Permissions::checkCanAccessAssignment($assignment);
         
-        return $assignment->getBaseData();    
+        $res = $assignment->getBaseData();  
+        $creator = Hub::User($assignment->getCreatorId());
+        $res["creator_first_name"] = $creator->getFirstName();
+        $res["creator_last_name"] = $creator->getLastName();
+        
+        return $res;
     }
 
     /**

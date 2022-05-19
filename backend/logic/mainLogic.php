@@ -36,10 +36,14 @@ class MainLogic {
                 return Hub::Groups()->createGroup();
             case "getGroupName":
                 return Hub::Groups()->getGroupName();
+            case "getGroupTeacher":
+                return Hub::Groups()->getGroupTeacher();
             case "getGroupChatId":
                 return Hub::Groups()->getGroupChatId();
-            case "getStudentsOfGroup":
+            case "getGroupMembers":
                 return Hub::Groups()->getGroupMembers();
+            case "getGroupAssignments":
+                return Hub::Groups()->getGroupAssignments();
 
             /* ASSIGNMENTS */
             case "getAssignmentById":

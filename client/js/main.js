@@ -3,10 +3,11 @@ $("#indexNavbar").load("client/html-includes/navbar.html");
 $("#indexFooter").load("client/html-includes/footer.html");
 
 //Maybe load different page when user is allready logged in?
-//loadPageWithAnimation("client/pages/basic/home.html");
-loadPageGroupDetails("1");
+loadPageWithAnimation("client/pages/basic/home.html");
 
-loadPageAssignmentDetails();
+//loadPageGroupDetails(1);
+//loadPageGroupDetails(3);
+//loadPageAssignmentDetails();
 //loadPageCreateAssignment();
 //loadPageAssignmentSubmits();
 
@@ -67,6 +68,13 @@ function loadPageAssignmentDetails(id){
     loadPage(title, path, id);
 }
 
+function loadPageAssignmentSubmits(id){
+    id = '?assignmentId=' + id;
+    title = "Abgabenübersicht"
+    path = "client/pages/tasks/tasks-teacher-view/submitted-tasks.html";
+    loadPage(title, path, id);
+}
+
 function loadPageGroupDetails(id){
     id = '?groupId=' + id;
     title = "Gruppe"
@@ -74,16 +82,11 @@ function loadPageGroupDetails(id){
     loadPage(title, path, id);
 }
 
-function loadPageAssignmentSubmits(){
-    title = "Abgabenübersicht"
-    path = "client/pages/tasks/submitted-tasks.html";
-    loadPage(title, path);
-}
-
-function loadPageCreateAssignment(){
+function loadPageCreateAssignment(id){
+    id = '?groupId=' + id;
     title = "Neue Aufgabe erstellen"
     path = "client/pages/tasks/create-task.html";
-    loadPage(title, path);
+    loadPage(title, path, id);
 }
 
 

@@ -42,7 +42,7 @@ class User {
 
     public function getBaseData(): array {
 
-        $query = "SELECT pk_user_id as user_id, fk_user_type as user_type, first_name, last_name, username, password where pk_user_id = ?"; 
+        $query = "SELECT pk_user_id as user_id, fk_user_type as user_type, first_name, last_name, username, password from user where pk_user_id = ?"; 
         $result = Database::select($query, [$this->user_id], "i", true);
         
         $this->user_id = $result["user_id"];

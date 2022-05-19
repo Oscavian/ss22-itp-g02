@@ -1,5 +1,5 @@
 <!-- loaded in group-details tab -->
-
+<script src="client/js/task-overview.js" defer></script>
 
 <style>
 
@@ -52,82 +52,20 @@
 <h3 style="margin-bottom: -14px;"><i class="bi bi-journal-text" style="margin-right: 10px; font-size: 26px; vertical-align: bottom;"></i>Offene Aufgaben</i></h3>
 <hr size="4" style="color: purple; opacity: 80%;">
 
-<div  class="assignmentCards">
 
-    <div class="card assignmentCard">
-        <div class="card-body">
-            <h5  class="card-title assignmentCardTitle">Long Name Bla Bla Bla</h5>
-            <h6 class="card-subtitle  mb-2 text-muted assignmentCardTime"><i class="bi bi-calendar-event" style="margin-right: 5px; vertical-align:top; font-size: 15px;"></i>01.01.2022, 10:10</h6>
-            <p class="card-text assignmentCardText">This assignment has a long description. It will not fit into the card and should overflow. Bla Bla  Bla Bla Bla Bla Bla Bla Bla Bla Bla Bla</p>
-        </div>
-        <h6 class="card-footer mb-0 text-muted assignmentCardTimeLeft"><i class="bi bi-alarm-fill" style="color: purple; margin-right: 5px; vertical-align:baseline; font-size: 15px;"></i>1 Day, 5 hours</h6>
-    </div>
+<h4 id="noCurrentTasksMessageStudent" class="text-muted" style="display: none; text-align: center; margin-top: 2em; margin-bottom: 2rem;">Keine offenen Aufgaben</h4>
 
-    <div class="card assignmentCard">
-        <div class="card-body">
-            <h5  class="card-title assignmentCardTitle">Short Name</h5>
-            <h6 class="card-subtitle  mb-2 text-muted assignmentCardTime"><i class="bi bi-calendar-event" style="margin-right: 5px; vertical-align:top; font-size: 15px;"></i>01.01.2022, 10:10</h6>
-            <p class="card-text assignmentCardText">This assignment has a short description.</p>
-        </div>
-        <h6 class="card-footer mb-0 text-muted assignmentCardTimeLeft"><i class="bi bi-alarm-fill" style="color: purple; margin-right: 5px; vertical-align:baseline; font-size: 15px;"></i>1 Day, 5 hours</h6>
-    </div>
+<div style="display: none; text-align: center;" id="noCurrentTasksMessageTeacher">
+    <h4 class="text-muted" style="margin-top: 2em;">Keine offenen Aufgaben</h4>
+    <div type="button" style="background-color: purple; margin-bottom: 2rem;" class='btn text-warning'>Neue Aufgabe hinzufügen<i class="bi bi-journal-plus" style="margin-left: 5px;"></i></div>
+</div>
 
-    <div class="card assignmentCard">
-        <div class="card-body">
-            <h5  class="card-title assignmentCardTitle">Math HW</h5>
-            <h6 class="card-subtitle  mb-2 text-muted assignmentCardTime"><i class="bi bi-calendar-event" style="margin-right: 5px; vertical-align:top; font-size: 15px;"></i>01.01.2022, 10:10</h6>
-            <p class="card-text assignmentCardText">Please do excercises Number 7, 8, and 9 from the pdf!</p>
-        </div>
-        <h6 class="card-footer mb-0 text-muted assignmentCardTimeLeft"><i class="bi bi-alarm-fill" style="color: purple; margin-right: 5px; vertical-align:baseline; font-size: 15px;"></i>1 Day, 5 hours</h6>
-    </div>
+<div id="currentAssignmentsContent" class="assignmentCards">
 
-    <div class="card assignmentCard">
-        <div class="card-body">
-            <h5  class="card-title assignmentCardTitle">Geography Task</h5>
-            <h6 class="card-subtitle  mb-2 text-muted assignmentCardTime"><i class="bi bi-calendar-event" style="margin-right: 5px; vertical-align:top; font-size: 15px;"></i>01.01.2022, 10:10</h6>
-            <p class="card-text assignmentCardText">This Assignment has a medium length text. It should fit into the card.</p>
-        </div>
-        <h6 class="card-footer mb-0 text-muted assignmentCardTimeLeft"><i class="bi bi-alarm-fill" style="color: purple; margin-right: 5px; vertical-align:baseline; font-size: 15px;"></i>1 Day, 5 hours</h6>
-    </div>
-
-    <div class="card assignmentCard">
-        <div class="card-body">
-            <h5  class="card-title assignmentCardTitle">Another Task</h5>
-            <h6 class="card-subtitle  mb-2 text-muted assignmentCardTime"><i class="bi bi-calendar-event" style="margin-right: 5px; vertical-align:top; font-size: 15px;"></i>01.01.2022, 10:10</h6>
-            <p class="card-text assignmentCardText">Please do this task!</p>
-        </div>
-        <h6 class="card-footer mb-0 text-muted assignmentCardTimeLeft"><i class="bi bi-alarm-fill" style="color: purple; margin-right: 5px; vertical-align:baseline; font-size: 15px;"></i>1 Day, 5 hours</h6>
-    </div>
-
-    <div class="card assignmentCard">
-        <div class="card-body">
-            <h5  class="card-title assignmentCardTitle">Another Task</h5>
-            <h6 class="card-subtitle  mb-2 text-muted assignmentCardTime"><i class="bi bi-calendar-event" style="margin-right: 5px; vertical-align:top; font-size: 15px;"></i>01.01.2022, 10:10</h6>
-            <p class="card-text assignmentCardText">Please do this task!</p>
-        </div>
-        <h6 class="card-footer mb-0 text-muted assignmentCardTimeLeft"><i class="bi bi-alarm-fill" style="color: purple; margin-right: 5px; vertical-align:baseline; font-size: 15px;"></i>1 Day, 5 hours</h6>
-    </div>
-
-    <div class="card assignmentCard">
-        <div class="card-body">
-            <h5  class="card-title assignmentCardTitle">Another Task</h5>
-            <h6 class="card-subtitle  mb-2 text-muted assignmentCardTime"><i class="bi bi-calendar-event" style="margin-right: 5px; vertical-align:top; font-size: 15px;"></i>01.01.2022, 10:10</h6>
-            <p class="card-text assignmentCardText">Please do this task!</p>
-        </div>
-        <h6 class="card-footer mb-0 text-muted assignmentCardTimeLeft"><i class="bi bi-alarm-fill" style="color: purple; margin-right: 5px; vertical-align:baseline; font-size: 15px;"></i>1 Day, 5 hours</h6>
-    </div>
-
-    <div class="card assignmentCard">
-        <div class="card-body">
-            <h5  class="card-title assignmentCardTitle">Another Task</h5>
-            <h6 class="card-subtitle  mb-2 text-muted assignmentCardTime"><i class="bi bi-calendar-event" style="margin-right: 5px; vertical-align:top; font-size: 15px;"></i>01.01.2022, 10:10</h6>
-            <p class="card-text assignmentCardText">Please do this task!</p>
-        </div>
-        <h6 class="card-footer mb-0 text-muted assignmentCardTimeLeft"><i class="bi bi-alarm-fill" style="color: purple; margin-right: 5px; vertical-align:baseline; font-size: 15px;"></i>1 Day, 5 hours</h6>
-    </div>
+    <!-- Assignments are loaded here -->
 
     <!-- Only visible to teacher -->
-    <div class="card assignmentCard" style="height: 221.4px">
+    <div id="addNewAssignmentCard" class="card assignmentCard" style="display: none; height: 221.4px">
         <div style="margin: auto; text-align: center;">
             <i class="bi bi-journal-plus" style="font-size: 50px; color: purple;"></i>
             <p>Aufgabe hinzufügen</p>
@@ -139,33 +77,12 @@
 <h3 style="margin-bottom: -14px; margin-top: 24px;"><i class="bi bi-journals" style="margin-right: 10px; font-size: 26px; vertical-align: bottom;"></i>Archiv</h3>
 <hr size="4" style="color: purple; opacity: 80%;">
 
-<div  class="assignmentCards">
+
+<h4 id="noOldTasksMessage" class="text-muted" style="display: none; text-align: center; margin-top: 2em; margin-bottom: 2rem;">Keine Aufgaben im Archiv</h4>
+
+
+<div id="pastAssignmentsContent" class="assignmentCards">
     
-    <div class="card assignmentCard">
-        <div class="card-body">
-            <h5  class="card-title assignmentCardTitle">Short Name</h5>
-            <h6 class="card-subtitle  mb-2 text-muted assignmentCardTime"><i class="bi bi-calendar-event" style="margin-right: 5px; vertical-align:top; font-size: 15px;"></i>01.01.2022, 10:10</h6>
-            <p class="card-text assignmentCardText">This assignment has a short description.</p>
-        </div>
-        <h6 class="card-footer mb-0 text-muted assignmentCardTimeLeft"><i class="bi bi-alarm-fill" style="color: purple; margin-right: 5px; vertical-align:baseline; font-size: 15px;"></i>1 Day, 5 hours</h6>
-    </div>
-
-    <div class="card assignmentCard">
-        <div class="card-body">
-            <h5  class="card-title assignmentCardTitle">Math HW</h5>
-            <h6 class="card-subtitle  mb-2 text-muted assignmentCardTime"><i class="bi bi-calendar-event" style="margin-right: 5px; vertical-align:top; font-size: 15px;"></i>01.01.2022, 10:10</h6>
-            <p class="card-text assignmentCardText">Please do excercises Number 7, 8, and 9 from the pdf!</p>
-        </div>
-        <h6 class="card-footer mb-0 text-muted assignmentCardTimeLeft"><i class="bi bi-alarm-fill" style="color: purple; margin-right: 5px; vertical-align:baseline; font-size: 15px;"></i>1 Day, 5 hours</h6>
-    </div>
-
-    <div class="card assignmentCard">
-        <div class="card-body">
-            <h5  class="card-title assignmentCardTitle">Geography Task</h5>
-            <h6 class="card-subtitle  mb-2 text-muted assignmentCardTime"><i class="bi bi-calendar-event" style="margin-right: 5px; vertical-align:top; font-size: 15px;"></i>01.01.2022, 10:10</h6>
-            <p class="card-text assignmentCardText">This Assignment has a medium length text. It should fit into the card.</p>
-        </div>
-        <h6 class="card-footer mb-0 text-muted assignmentCardTimeLeft"><i class="bi bi-alarm-fill" style="color: purple; margin-right: 5px; vertical-align:baseline; font-size: 15px;"></i>1 Day, 5 hours</h6>
-    </div>
+    <!-- Assignments are loaded here -->
 
 </div>

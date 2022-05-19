@@ -41,6 +41,51 @@ class Groups {
     }
 
     /**
+     * method: getGroupTeacher
+     * group_id: int
+     * @return array|null
+     */
+    public function getGroupTeacher(): ?array {
+        if(empty($_POST["group_id"])){
+            throw new Exception("Invalid Parameters");
+        }
+
+        $group = Hub::Group($_POST["group_id"]);
+        Permissions::checkIsInGroup($group);
+
+        foreach($group->getMembers() as $member){          
+            if($member->getUserType() == 1){
+                return ["success" => true, "teacherFirstName" => $member->getFirstName(), "teacherLastName" => $member->getLastName()];
+            }
+        }
+
+        throw new Exception("No teacher found in group!");
+    }
+
+      /**
+     * method: getGroupAssignments
+     * group_id: int
+     * @return array|null
+     */
+    public function getGroupAssignments(): ?array {
+        if(empty($_POST["group_id"])){
+            throw new Exception("Invalid Parameters");
+        }
+
+        $group = Hub::Group($_POST["group_id"]);
+        Permissions::checkIsInGroup($group);
+
+        $groupAssignments = [];
+        foreach($group->getAssignments() as $assignment){
+            $res = $assignment->getBaseData();
+            $res["assignmentId"] = $assignment->getId();
+            $groupAssignments[] = $res;
+        }
+        return ["success" => true, "groupAssignments" => $groupAssignments];
+    }
+
+
+    /**
      * method: getGroupMembers
      * group_id: int
      * @return array|null
@@ -53,7 +98,12 @@ class Groups {
         $group = Hub::Group($_POST["group_id"]);
         Permissions::checkIsInGroup($group);
 
-        return ["success" => true, "groupName" => $group->getMembers()];
+        $groupMembers = [];
+        foreach($group->getMembers() as $member){
+            $groupMembers[] = $member->getBaseData();
+        }
+
+        return ["success" => true, "groupMembers" => $groupMembers];
     }
 
     /**
