@@ -1,6 +1,7 @@
 getUserGroups();
 
 function getUserGroups() {
+    $("#group-main-body").empty();
     $.ajax({
         type: "POST",
         url: "/ss22-itp-g02/backend/requestHandler.php",
@@ -50,8 +51,16 @@ function getUserGroups() {
     });
 
     $("#group-main-body").attr("style", "block");
+    $("#showNewGroupForm").attr("style", "block");
+}
+
+function showNewGroupForm(){
+    $("#new-group-body").attr("style", "block");
+    $("#showNewGroupForm").hide();
 }
 
 function addNewGroup(){
-    console.log();
+    $("#new-group-body").hide();
+    $("#showNewGroupForm").show();
+    getUserGroups();
 }
