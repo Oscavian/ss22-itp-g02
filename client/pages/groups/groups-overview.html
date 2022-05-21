@@ -1,34 +1,40 @@
 <script src="client/js/groups.js" defer></script>
+<style>
+    section{
+        transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+        cursor: pointer;
+    }
+
+    section:hover{
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(128,0,128,.14), 0 4px 8px rgba(128,0,128,.08);
+    }
+    /* For mobile view */
+    @media (max-width: 992px){
+      .group-details-container{
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+        padding-bottom: 0px !important;
+      }
+  
+      #groupTitle{
+        margin-left: 1rem;
+        text-align: center;
+        width: 100%
+      }
+  
+      #groupTeacher{
+        width: 100%;
+        text-align: center !important;
+      }
+      
+      #groupTitleAndTeacherDiv{
+        flex-wrap: wrap;
+      }
+  
+    }
+</style>
+
 <h1>Gruppenübersicht</h1>
-<div class="row">
-    <div class="col"></div>
-    <div class="col-sm-8 col-md-8">
-        <table class="table table-hover text-white" id="allGroupsTable">
-            <thead class="fw-bold">
-                <tr>
-                    <td>Gruppen ID</td>
-                    <td>Gruppenname</td>
-                    <td>zum Chat</td>
-                </tr>
-            </thead>
-            <tbody id="group-list-table-body" class="showAllGroupsTable">
-
-            </tbody>
-        </table>
-        <!-- <table class="table table-hover text-white" id="oneGroupTable">
-            <div id='backToGroupList' onclick='getUserGroups()'>zurück</div>
-            <thead class="fw-bold">
-                <tr>
-                    <td>User ID</td>
-                    <td>Vorname</td>
-                    <td>Nachname</td>
-                    <td>Username</td>
-                </tr>
-            </thead>
-            <tbody id="group-list-table-body" class="showStudentsOfGroup">
-
-            </tbody>
-        </table> -->
-    </div>
-    <div class="col"></div>
-</div>
+<div id="group-main-body" class="container text-dark" style="display: none"></div>
+<div id="new-group-body" class="container text-dark" style="display: none"></div>
