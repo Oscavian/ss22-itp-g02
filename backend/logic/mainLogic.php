@@ -18,7 +18,7 @@ class MainLogic {
 
         switch ($method) {
             /* USERS */
-            case "login":            
+            case "login":
                 return Hub::Users()->login();
             case "logout":
                 return Hub::Users()->logout();
@@ -55,6 +55,7 @@ class MainLogic {
             case "getAssignmentList":
                 return Hub::Assignments()->getAssignmentList();
             case "getSubmissions":
+
                 break;
             case "addSubmission":
                 break;
@@ -70,8 +71,8 @@ class MainLogic {
         return null;
     }
 
-    private static function sanitizePostArray(){
-        foreach ($_POST as $key => $value){
+    private static function sanitizePostArray() {
+        foreach ($_POST as $key => $value) {
             // we dont need htmlspecialchars for an api
             // furthermore, it prevents us from posting json strings as payload
             $_POST[$key] = trim(stripslashes($value));

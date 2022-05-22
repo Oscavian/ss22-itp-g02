@@ -30,7 +30,7 @@ class Assignment {
         $this->text = $result["text"];
         $this->file_path = $result["file_path"];
 
-        if (strtotime("now") > strtotime($this->due_time)){
+        if (strtotime("now") > strtotime($this->due_time)) {
             $this->isExpired = true;
         } else {
             $this->isExpired = false;
@@ -46,29 +46,29 @@ class Assignment {
         return $this->assignment_id;
     }
 
-    public function exists(){   
-        if(empty($this->assignment_id)){
+    public function exists() {
+        if (empty($this->assignment_id)) {
             return false;
         };
         return true;
     }
 
     public function getCreationTime() {
-        if (empty($this->creation_time)){
+        if (empty($this->creation_time)) {
             return $this->creation_time = Database::select("SELECT time from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["time"];
         }
         return $this->creation_time;
     }
 
     public function getCreatorId() {
-        if (empty($this->creator_id)){
+        if (empty($this->creator_id)) {
             return $this->creator_id = Database::select("SELECT fk_user_id from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["user_id"];
         }
         return $this->creator_id;
     }
 
     public function getDueTime() {
-        if (empty($this->creation_time)){
+        if (empty($this->creation_time)) {
             return $this->creation_time = Database::select("SELECT due_time from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["due_time"];
         }
         return $this->creation_time;
@@ -76,35 +76,35 @@ class Assignment {
 
 
     public function getFilePath() {
-        if (empty($this->file_path)){
+        if (empty($this->file_path)) {
             return $this->file_path = Database::select("SELECT file_path from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["file_path"];
         }
         return $this->file_path;
     }
 
     public function getGroupId() {
-        if (empty($this->group_id)){
+        if (empty($this->group_id)) {
             return $this->group_id = Database::select("SELECT fk_group_id from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["fk_group_id"];
         }
         return $this->group_id;
     }
 
     public function getText() {
-        if (empty($this->text)){
+        if (empty($this->text)) {
             return $this->text = Database::select("SELECT text from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["text"];
         }
         return $this->text;
     }
 
     public function getTitle() {
-        if (empty($this->title)){
+        if (empty($this->title)) {
             return $this->title = Database::select("SELECT title from assignment where pk_assignment_id=?", [$this->assignment_id], "i", true)["title"];
         }
         return $this->title;
     }
 
-    public function isExpired() : bool {
-        if ($this->isExpired){
+    public function isExpired(): bool {
+        if ($this->isExpired) {
             return true;
         } else {
             return false;
@@ -121,17 +121,19 @@ class Assignment {
      * @param $file_path
      * @return void
      */
-    public function storeNewAssignment($creator_id, $group_id, $due_time, $title, $text, $file_path){
-        
+    public function storeNewAssignment($creator_id, $group_id, $due_time, $title, $text, $file_path) {
+
         $query = "INSERT INTO assignment (fk_user_id, fk_group_id, due_time, title, text, file_path) VALUES (?,?,?,?,?,?)";
         $this->assignment_id = Database::insert($query, [$creator_id, $group_id, $due_time, $title, $text, $file_path], "iissss");
     }
 
-    //TODO: add submission methods
+
     public function getSubmissions(): array {
-        if (empty($this->submissions)){
-            //fetch submissions by Ass Id
-            //return ...
+        if (empty($this->submissions)) {
+            $result = Database::select("SELECT pk_upload_id FROM student_upload where pk_assignment_id = ?", [$this->assignment_id], "i");
+            foreach ($result as $item) {
+                $this->submissions[] = new Submission($item["pk_upload_id"]);
+            }
         }
         return $this->submissions;
     }

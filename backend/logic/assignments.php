@@ -7,28 +7,28 @@ class Assignments {
      * assignment_id: int $id
      * @return array|null
      */
-    public function getAssignmentById() : ?array {
-        if (empty($_POST["assignment_id"])){
+    public function getAssignmentById(): ?array {
+        if (empty($_POST["assignment_id"])) {
             throw new Exception("Invalid Parameters");
         }
 
         $assignment = Hub::Assignment($_POST["assignment_id"]);
         Permissions::checkCanAccessAssignment($assignment);
-        
-        return $assignment->getBaseData();    
+
+        return $assignment->getBaseData();
     }
 
     /**
      * @throws Exception
      */
-    public function getAssignmentList() : ?array {
-        if (empty($_POST["group_id"])){
+    public function getAssignmentList(): ?array {
+        if (empty($_POST["group_id"])) {
             throw new Exception("Invalid Parameters");
         }
 
         $group = Hub::Group($_POST["group_id"]);
 
-        if (!$group->exists()){
+        if (!$group->exists()) {
             throw new Exception("Group does not exist!");
         }
 
@@ -55,7 +55,7 @@ class Assignments {
         }
 
         $group = Hub::Group($_POST["group_id"]);
-        
+
         Permissions::checkIsTeacher();
         Permissions::checkIsInGroup($group);
 
@@ -68,7 +68,7 @@ class Assignments {
 
         //TODO: make file-upload optional
         try {
-            $file_path = Hub::FileHandler()->uploadFile("attachment", "assignments/attachments/", ["pdf", "png"]);
+            $file_path = Hub::FileHandler()->uploadFile("attachment", "assignments/attachments/", ["pdf", "png", "jpg", "gif", "jpeg", "docx", "odt", "pptx", "xlsx"]);
         } catch (ErrorException $ex) {
             return ["success" => false, "error" => $ex->getMessage()];
         }
@@ -76,10 +76,48 @@ class Assignments {
         $assignment = Hub::Assignment();
         $assignment->storeNewAssignment($creator_id, $group_id, $due_time, $title, $text, $file_path);
 
-        if (!$assignment->exists()){
+        if (!$assignment->exists()) {
             throw new Exception("Error creating Assignment!");
         }
 
         return ["success" => true, "msg" => "Assignment erfolgreich erstellt!", "assignment_id" => $assignment->getId()];
+    }
+
+
+    public function getSubmissions(): array {
+        if (empty($_POST["assignment_id"])) {
+            throw new Exception("Invalid Parameters");
+        }
+
+        $assignment = Hub::Assignment($_POST["assignment_id"]);
+        Permissions::checkCanAccessAssignment($assignment);
+        $submissions = [];
+        foreach ($assignment->getSubmissions() as $submission) {
+            $submissions[] = $submission->getData();
+        }
+        return $submissions;
+    }
+
+    public function addSubmission() {
+        if (empty($_POST["assignment_id"]) ||
+            empty($_POST["user_id"]) ||
+            empty($_FILES["attachment"])) {
+            throw new Exception("Invalid parameters!");
+        }
+
+        try {
+            $file_path = Hub::FileHandler()->uploadFile("attachment", "assignments/submissions/");
+        } catch (ErrorException $ex) {
+            return ["success" => false, "error" => $ex->getMessage()];
+        }
+
+        $submission = new Submission();
+        if ($submission->storeNewSubmission($_POST["user_id"], $_POST["assignment_id"], $file_path)) {
+            return ["success" => true, "msg" => "Abgabe erfolgreich erstellt!", "assignment_id" => $submission->getSubmissionId()];
+        } else {
+            throw new Exception("Error creating Submission!");
+        }
+
+
     }
 }
