@@ -11,7 +11,7 @@ class FileHandler {
      * @throws InvalidArgumentException
      * @throws Exception
      */
-    public function uploadFile(string $param, string $target_dir, array $file_types = null): string {
+    public static function uploadFile(string $param, string $target_dir, array $file_types = null): string {
 
         if (empty($_FILES[$param])){
             throw new InvalidArgumentException("Invalid file argument - '" . $param . "' expected.");
@@ -66,7 +66,4 @@ class FileHandler {
         }
     }
 
-    public function deleteFile() {
-
-    }
 }

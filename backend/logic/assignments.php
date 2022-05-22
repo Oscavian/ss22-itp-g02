@@ -1,4 +1,5 @@
 <?php
+require_once 'fileHandler.php';
 
 class Assignments {
 
@@ -68,9 +69,11 @@ class Assignments {
 
         //TODO: make file-upload optional
         try {
-            $file_path = Hub::FileHandler()->uploadFile("attachment", "assignments/attachments/", ["pdf", "png", "jpg", "gif", "jpeg", "docx", "odt", "pptx", "xlsx"]);
+            $file_path = FileHandler::uploadFile("attachment", "assignments/attachments/", ["pdf", "png", "jpg", "gif", "jpeg", "docx", "odt", "pptx", "xlsx"]);
         } catch (ErrorException $ex) {
             return ["success" => false, "error" => $ex->getMessage()];
+        } catch (Exception $e){
+            throw new Exception($e->getMessage());
         }
 
         $assignment = Hub::Assignment();
@@ -98,7 +101,7 @@ class Assignments {
         return $submissions;
     }
 
-    public function addSubmission() {
+    public function addSubmission() : array {
         if (empty($_POST["assignment_id"]) ||
             empty($_POST["user_id"]) ||
             empty($_FILES["attachment"])) {
@@ -106,18 +109,18 @@ class Assignments {
         }
 
         try {
-            $file_path = Hub::FileHandler()->uploadFile("attachment", "assignments/submissions/");
+            $file_path = FileHandler::uploadFile("attachment", "assignments/submissions/");
         } catch (ErrorException $ex) {
             return ["success" => false, "error" => $ex->getMessage()];
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
         }
 
-        $submission = new Submission();
+        $submission = Hub::Submission();
         if ($submission->storeNewSubmission($_POST["user_id"], $_POST["assignment_id"], $file_path)) {
             return ["success" => true, "msg" => "Abgabe erfolgreich erstellt!", "assignment_id" => $submission->getSubmissionId()];
         } else {
             throw new Exception("Error creating Submission!");
         }
-
-
     }
 }

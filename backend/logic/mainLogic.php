@@ -55,10 +55,9 @@ class MainLogic {
             case "getAssignmentList":
                 return Hub::Assignments()->getAssignmentList();
             case "getSubmissions":
-
-                break;
+                return Hub::Assignments()->getSubmissions();
             case "addSubmission":
-                break;
+                return Hub::Assignments()->addSubmission();
 
             /* CHATS */
             case "getMessages":

@@ -130,9 +130,9 @@ class Assignment {
 
     public function getSubmissions(): array {
         if (empty($this->submissions)) {
-            $result = Database::select("SELECT pk_upload_id FROM student_upload where pk_assignment_id = ?", [$this->assignment_id], "i");
+            $result = Database::select("SELECT pk_upload_id FROM student_upload where fk_assignment_id = ?", [$this->assignment_id], "i");
             foreach ($result as $item) {
-                $this->submissions[] = new Submission($item["pk_upload_id"]);
+                $this->submissions[] = Hub::Submission($item["pk_upload_id"]);
             }
         }
         return $this->submissions;
