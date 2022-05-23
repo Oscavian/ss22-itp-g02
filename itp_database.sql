@@ -88,7 +88,7 @@ CREATE TABLE `student_upload` (
   `fk_user_id` int(11) NOT NULL,
   `fk_assignment_id` int(11) NOT NULL,
   `time` timestamp NOT NULL DEFAULT current_timestamp(),
-  `flie_path` varchar(260) NOT NULL
+  `file_path` varchar(260) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

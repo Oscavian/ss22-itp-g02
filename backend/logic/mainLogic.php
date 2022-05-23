@@ -6,13 +6,19 @@ require "permissions/permissions.php";
 
 class MainLogic {
 
+    /**
+     * Handles POST requests
+     * @param $method
+     * @return array|null
+     * @throws Exception
+     */
     public static function handleRequest($method): ?array {
 
         self::sanitizePostArray();
 
         switch ($method) {
             /* USERS */
-            case "login":            
+            case "login":
                 return Hub::Users()->login();
             case "logout":
                 return Hub::Users()->logout();
@@ -48,10 +54,18 @@ class MainLogic {
             /* ASSIGNMENTS */
             case "getAssignmentById":
                 return Hub::Assignments()->getAssignmentById();
+            case "downloadAssignmentFile":
+                return Hub::Assignments()->downloadAssignmentFile();
             case "createAssignment":
                 return Hub::Assignments()->createAssignment();
-            case "uploadAssignments":
-                break;
+            case "getAssignmentList":
+                return Hub::Assignments()->getAssignmentList();
+            case "getSubmissions":
+                return Hub::Assignments()->getSubmissions();
+            case "downloadSubmissionFile":
+                return Hub::Assignments()->downloadSubmissionFile();
+            case "addSubmission":
+                return Hub::Assignments()->addSubmission();
 
             /* CHATS */
             case "getMessages":
@@ -64,8 +78,8 @@ class MainLogic {
         return null;
     }
 
-    private static function sanitizePostArray(){
-        foreach ($_POST as $key => $value){
+    private static function sanitizePostArray() {
+        foreach ($_POST as $key => $value) {
             // we dont need htmlspecialchars for an api
             // furthermore, it prevents us from posting json strings as payload
             $_POST[$key] = trim(stripslashes($value));
