@@ -38,19 +38,9 @@ class FileHandler {
             }
         }
 
-        $target_file = $upload_dir . basename($_FILES[$param]["name"]);
-        $fileExtension = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-        // Check if file already exists
-        if (file_exists($target_file)) {
-            throw new ErrorException("Dieser Dateiname existiert bereits, bitte nenne die Datei um.");
-        }
-
-        // Check file size
-        if ($_FILES[$param]["size"] > 10000000) {
-            throw new ErrorException("Die hochgeladene Datei ist zu groß! Max. 10MB");
-        }
-
+        $target_file_name = basename($_FILES[$param]["name"]);
+        $fileExtension = strtolower(pathinfo($target_file_name, PATHINFO_EXTENSION));
+        
         //check filetypes
         if (isset($file_types)){
             if (!in_array($fileExtension, $file_types)) {
@@ -58,9 +48,27 @@ class FileHandler {
             }
         }
 
+        // Check file size
+        if ($_FILES[$param]["size"] > 10000000) {
+            throw new ErrorException("Die hochgeladene Datei ist zu groß! Max. 10MB");
+        }
+
+        // Check if file already exists and add number to file until name is unique
+        if (file_exists($upload_dir . $target_file_name)) {
+            $counter = 1;
+            while (true){
+                if(!file_exists($upload_dir . $counter . $target_file_name)){
+                    $target_file_name = $counter . $target_file_name;
+                    break;
+                }
+                $counter++;
+            }
+        }
+
         //Upload files to right directory
-        if (move_uploaded_file($_FILES[$param]["tmp_name"], $target_file)) {
-            return "uploads/" . $target_dir . basename($_FILES[$param]["name"]);
+        $target_file_path = $upload_dir . $target_file_name;
+        if (move_uploaded_file($_FILES[$param]["tmp_name"], $target_file_path)) {
+            return "uploads/" . $target_dir . $target_file_name;
         } else {
             throw new ErrorException("Fehler beim Hochladen der Datei!");
         }
