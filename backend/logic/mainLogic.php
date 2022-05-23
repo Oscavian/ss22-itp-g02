@@ -50,6 +50,8 @@ class MainLogic {
             /* ASSIGNMENTS */
             case "getAssignmentById":
                 return Hub::Assignments()->getAssignmentById();
+            case "downloadAssignmentFile":
+                return Hub::Assignments()->downloadAssignmentFile();
             case "createAssignment":
                 return Hub::Assignments()->createAssignment();
             case "getAssignmentList":

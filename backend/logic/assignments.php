@@ -86,6 +86,38 @@ class Assignments {
         return ["success" => true, "msg" => "Assignment erfolgreich erstellt!", "assignment_id" => $assignment->getId()];
     }
 
+    /**
+     * method: downloadAssignmentFile
+     * assignment_id: int $id
+     */
+    public function downloadAssignmentFile() {
+        if (empty($_POST["assignment_id"])) {
+            throw new Exception("Invalid Parameters");
+        }
+
+        $assignment = Hub::Assignment($_POST["assignment_id"]);
+        Permissions::checkCanAccessAssignment($assignment);
+
+        //checks if assignment has file
+        $file = $assignment->getFilePath();
+        if(!$file){
+            throw new Exception("Assignment has no file or file was not found!");
+        }
+
+        $file = "../" . $file;
+
+        //sends file for user download
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="'.basename($file).'"');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($file));
+        readfile($file);
+        exit; //exits php to avoid requestHandler sending "null"
+    }
+
 
     public function getSubmissions(): array {
         if (empty($_POST["assignment_id"])) {
