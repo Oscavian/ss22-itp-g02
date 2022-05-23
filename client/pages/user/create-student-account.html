@@ -1,14 +1,33 @@
 <script src="client/js/create-student-account.js" defer></script>
 
+<style>
+  #add-form{
+      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+      cursor: pointer;
+  }
+  #add-form:hover{
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(128,0,128,.14), 0 4px 8px rgba(128,0,128,.08);
+  }
+</style>
+
 <div id="create-student-main-body">
   <h1>Neue SchülerInnen-Accounts</h1>
-    <h5>Erstellen Sie neue Accounts für Schüler und SchülerInnen</h5>
-        <div style="margin-bottom: 30px;" >Ein weiteres Formular hinzufügen <button type="button"  class="btn btn-sm btn-warning" id="add-form" style="padding-left: 10px; padding-right: 10px; margin-left: 5px; vertical-align: baseline;">+</button></div>
+  <div class="container text-dark">
+    <div style="background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px">
+      <div class="container new-students-container p-4">
+        <div style="margin-bottom: 30px; font-size: 120%" >Ein weiteres Formular hinzufügen
+          <button type="button" class="btn btn-sm btn-warning" id="add-form" style="padding-left: 10px; padding-right: 10px; margin-left: 5px; vertical-align: baseline;">+</button>
+        </div>
         <form id="student-account">
-            <table class="table table-responsive table-sm" id="form-list"></table>
-            <button type="button" class="btn btn-md btn-warning" id="submit-student-accounts" name="submit-student-accounts">Erstellen</button>
+          <table class="table table-responsive table-sm" id="form-list"></table>
+          <button type="button" class="btn btn-md btn-warning" id="submit-student-accounts" name="submit-student-accounts">Erstellen</button>
         </form>
-        <h5 id="post-response-stdacc" style="color: white; margin-top: 15px;"></h5>
-        <ul id="student-account-data" style="color: white;"></ul>
+        <h5 id="post-response-stdacc" style="margin-top: 15px;"></h5>
+        <ul id="student-account-data"></ul>
       </div>
+    </div>
+  </div>
+</div>
+
 <div id="checknumrows"></div>
