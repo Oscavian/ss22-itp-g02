@@ -21,6 +21,15 @@ class Assignments {
         $res["creator_first_name"] = $creator->getFirstName();
         $res["creator_last_name"] = $creator->getLastName();
         
+        $ownSubmission = $assignment->getSubmissionByUser(Hub::User($_SESSION["userId"]));
+        if(!$ownSubmission){
+            $res["submitted"] = false;
+            return $res;
+        }
+
+        $res["submitted"] = true;
+        $res["ownSubmissionFileName"] = $ownSubmission->getFilePath();
+        $res["ownSubmissionTime"] = $ownSubmission->getCreationTime();
         return $res;
     }
 

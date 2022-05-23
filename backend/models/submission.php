@@ -40,6 +40,13 @@ class Submission {
         return $this->file_path;
     }
 
+    public function getCreationTime() {
+        if (empty($this->creation_time)) {
+            return $this->creation_time = Database::select("SELECT time from student_upload where pk_upload_id = ?", [$this->submission_id], "i", true)["time"];
+        }
+        return $this->creation_time;
+    }
+
     public function getAssignmentId() {
         if (empty($this->user_id)) {
             return $this->assignment_id = Database::select("SELECT fk_assignment_id from student_upload where pk_upload_id = ?", [$this->submission_id], "i", true);

@@ -136,4 +136,12 @@ class Assignment {
         }
         return $this->submissions;
     }
+
+    public function getSubmissionByUser(User $user){
+        $submissionId = Database::select("SELECT pk_upload_id from student_upload where fk_user_id = ? AND fk_assignment_id = ?", [$user->getId(), $this->assignment_id], "ii", true);
+        if(!$submissionId){
+            return null;
+        }
+        return Hub::Submission($submissionId["pk_upload_id"]);
+    }
 }
