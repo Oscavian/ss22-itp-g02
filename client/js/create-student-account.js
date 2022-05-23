@@ -88,8 +88,9 @@ function createStudentAccounts(){
     }
     emptyStudAccErrors();
     var allOk = true;
+    let counter = 0;
     $("tr.student-form").each(function() {
-
+        counter++;
         var Id = $(this).attr("id");
         allOk = checkIfEmptyStudAcc(allOk, Id);
         allOk = checkIfAlphabetStudAcc(allOk, Id);
@@ -106,10 +107,13 @@ function createStudentAccounts(){
         }
         
     });
-    if(allOk === true) {
+    if(allOk === true && counter > 0) {
         //here submitting of array of first and last names
         submitStudentAccInput(studentInfoList);
         studentInfoList = [];
+    }
+    else if(counter === 0){
+        $("#post-response-stdacc").append("Es muss mindestens ein Formular korrekt ausgefüllt sein.<br>");
     }
 }
 
