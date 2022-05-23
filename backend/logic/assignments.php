@@ -67,15 +67,18 @@ class Assignments {
 
         isset($_POST["text"]) ? $text = $_POST["text"] : $text = null;
 
-        //TODO: make file-upload optional
-        try {
-            $file_path = FileHandler::uploadFile("attachment", "assignments/attachments/", ["pdf", "png", "jpg", "gif", "jpeg", "docx", "odt", "pptx", "xlsx"]);
-        } catch (ErrorException $ex) {
-            return ["success" => false, "error" => $ex->getMessage()];
-        } catch (Exception $e){
-            throw new Exception($e->getMessage());
+        if(!empty($_FILES["attachment"])){
+            try {
+                $file_path = FileHandler::uploadFile("attachment", "assignments/attachments/", ["pdf", "png", "jpg", "gif", "jpeg", "docx", "odt", "pptx", "xlsx"]);
+            } catch (ErrorException $ex) {
+                return ["success" => false, "error" => $ex->getMessage()];
+            } catch (Exception $e){
+                throw new Exception($e->getMessage());
+            }
+        } else {
+            $file_path = null;
         }
-
+        
         $assignment = Hub::Assignment();
         $assignment->storeNewAssignment($creator_id, $group_id, $due_time, $title, $text, $file_path);
 
