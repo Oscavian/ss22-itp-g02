@@ -33,6 +33,12 @@ class Submission {
         return $this->user_id;
     }
 
+    public function getFilePath() {
+        if (empty($this->file_path)) {
+            return $this->file_path = Database::select("SELECT file_path from student_upload where pk_upload_id = ?", [$this->submission_id], "i", true)["file_path"];
+        }
+        return $this->file_path;
+    }
 
     public function getAssignmentId() {
         if (empty($this->user_id)) {

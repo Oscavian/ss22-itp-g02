@@ -121,6 +121,39 @@ class Assignments {
         exit; //exits php to avoid requestHandler sending "null"
     }
 
+    /**
+     * method: downloadSubmissionFile
+     * submission_id: int $id
+     */
+    public function downloadSubmissionFile() {
+        if (empty($_POST["submission_id"])) {
+            throw new Exception("Invalid Parameters");
+        }
+
+        $submission = Hub::Submission($_POST["submission_id"]);
+        Permissions::checkCanAccessAssignment(Hub::Assignment($submission->getAssignmentId()));
+        Permissions::checkIsTeacher();
+
+        //checks if assignment has file
+        $file = $submission->getFilePath();
+        if(!$file){
+            throw new Exception("Assignment has no file or file was not found!");
+        }
+
+        $file = "../" . $file;
+
+        //sends file for user download
+        header('Content-Description: File Transfer');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment; filename="'.basename($file).'"');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($file));
+        readfile($file);
+        exit; //exits php to avoid requestHandler sending "null"
+    }
+
 
     public function getSubmissions(): array {
         if (empty($_POST["assignment_id"])) {
@@ -129,6 +162,8 @@ class Assignments {
 
         $assignment = Hub::Assignment($_POST["assignment_id"]);
         Permissions::checkCanAccessAssignment($assignment);
+        Permissions::checkIsTeacher();
+
         $submissions = [];
         foreach ($assignment->getSubmissions() as $submission) {
             $submissions[] = $submission->getData();
@@ -138,11 +173,12 @@ class Assignments {
 
     public function addSubmission() : array {
         if (empty($_POST["assignment_id"]) ||
-            empty($_POST["user_id"]) ||
             empty($_FILES["attachment"])) {
             throw new Exception("Invalid parameters!");
         }
 
+        Permissions::checkCanAccessAssignment(Hub::Assignment($_POST["assignment_id"]));
+        
         try {
             $file_path = FileHandler::uploadFile("attachment", "assignments/submissions/");
         } catch (ErrorException $ex) {
@@ -152,7 +188,7 @@ class Assignments {
         }
 
         $submission = Hub::Submission();
-        if ($submission->storeNewSubmission($_POST["user_id"], $_POST["assignment_id"], $file_path)) {
+        if ($submission->storeNewSubmission($_SESSION["userId"], $_POST["assignment_id"], $file_path)) {
             return ["success" => true, "msg" => "Abgabe erfolgreich erstellt!", "assignment_id" => $submission->getSubmissionId()];
         } else {
             throw new Exception("Error creating Submission!");
