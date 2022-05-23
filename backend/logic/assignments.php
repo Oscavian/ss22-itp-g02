@@ -80,11 +80,11 @@ class Assignments {
      * assignment_id: int $id
      */
     public function downloadAssignmentFile() {
-        if (empty($_POST["assignment_id"])) {
+        if (empty($_GET["assignment_id"])) {
             throw new Exception("Invalid Parameters");
         }
 
-        $assignment = Hub::Assignment($_POST["assignment_id"]);
+        $assignment = Hub::Assignment($_GET["assignment_id"]);
         Permissions::checkCanAccessAssignment($assignment);
 
         //checks if assignment has file
@@ -112,11 +112,11 @@ class Assignments {
      * submission_id: int $id
      */
     public function downloadSubmissionFile() {
-        if (empty($_POST["submission_id"])) {
+        if (empty($_GET["submission_id"])) {
             throw new Exception("Invalid Parameters");
         }
 
-        $submission = Hub::Submission($_POST["submission_id"]);
+        $submission = Hub::Submission($_GET["submission_id"]);
         Permissions::checkCanAccessAssignment(Hub::Assignment($submission->getAssignmentId()));
         Permissions::checkIsTeacher();
 
@@ -152,7 +152,12 @@ class Assignments {
 
         $submissions = [];
         foreach ($assignment->getSubmissions() as $submission) {
-            $submissions[] = $submission->getData();
+            $submissionData = $submission->getData();
+            $creatorUser = Hub::User($submissionData["user_id"]);
+            $submissionData["user_name"] = $creatorUser->getUsername();
+            $submissionData["first_name"] = $creatorUser->getFirstName();
+            $submissionData["last_name"] = $creatorUser->getLastName();
+            $submissions[] = $submissionData;
         }
         return $submissions;
     }
@@ -175,7 +180,7 @@ class Assignments {
 
         $submission = Hub::Submission();
         if ($submission->storeNewSubmission($_SESSION["userId"], $_POST["assignment_id"], $file_path)) {
-            return ["success" => true, "msg" => "Abgabe erfolgreich erstellt!", "assignment_id" => $submission->getSubmissionId()];
+            return ["success" => true, "msg" => "Abgabe erfolgreich erstellt!", "submission_id" => $submission->getSubmissionId()];
         } else {
             throw new Exception("Error creating Submission!");
         }

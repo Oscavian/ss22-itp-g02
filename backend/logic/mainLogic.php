@@ -58,8 +58,6 @@ class MainLogic {
                 return Hub::Assignments()->downloadAssignmentFile();
             case "createAssignment":
                 return Hub::Assignments()->createAssignment();
-            case "getAssignmentList":
-                return Hub::Assignments()->getAssignmentList();
             case "getSubmissions":
                 return Hub::Assignments()->getSubmissions();
             case "downloadSubmissionFile":
