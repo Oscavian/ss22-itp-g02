@@ -63,21 +63,21 @@ function loadPageCreateStudent(){
 
 function loadPageAssignmentDetails(id){
     id = '?assignmentId=' + id;
-    title = "Aufgabe"
+    title = null; //title is set to assignment name later
     path = "client/pages/tasks/task-details.html";
     loadPage(title, path, id);
 }
 
 function loadPageAssignmentSubmits(id){
     id = '?assignmentId=' + id;
-    title = "Abgabenübersicht"
+    title = null; //title is set to assignment name later
     path = "client/pages/tasks/tasks-teacher-view/submitted-tasks.html";
     loadPage(title, path, id);
 }
 
 function loadPageGroupDetails(id){
     id = '?groupId=' + id;
-    title = "Gruppe"
+    title = null; //title is set to group name later
     path = "client/pages/groups/group-details.html";
     loadPage(title, path, id);
 }
@@ -95,7 +95,9 @@ function loadPageCreateAssignment(id){
 //----------------Functions-----------------//
 
 function loadPage(title, path, id){
-    $("title").text(title);
+    if(title){
+        $("title").text(title);
+    }
     loadPageWithAnimation(path);
     addState(title, path, id);
 }
@@ -121,5 +123,9 @@ window.onpopstate = function(event) {
         return;
     }
     loadPageWithAnimation(event.state.pagePath);
-    $("title").text(event.state.pageTitle);
+    
+    if(event.state.pageTitle){
+        console.log("Title2: " + event.state.pageTitle);
+        $("title").text(event.state.pageTitle);
+    }
 }

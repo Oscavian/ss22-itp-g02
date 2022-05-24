@@ -43,6 +43,7 @@ function loadGroupDetails(groupId){
         dataType: "json",
         success: function (response) {
             $("#groupTitle").text(response["groupName"]);
+            $("title").text(response["groupName"]);
         },
         error: function(error){
             console.log("AJAX-Request error: " + error);
