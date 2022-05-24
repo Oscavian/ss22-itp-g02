@@ -64,7 +64,9 @@ function getUserGroups() {
     });
 
     $("#group-main-body").attr("style", "block");
+    if(isTeacher === true){
     $("#showNewGroupForm").attr("style", "block");
+    }
 }
 
 function showNewGroupForm(){
