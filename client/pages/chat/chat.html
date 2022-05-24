@@ -1,9 +1,70 @@
+<style>
+
+    .ps-container {
+        position: relative;
+    }
+
+    .ps-container {
+        -ms-touch-action: auto;
+        touch-action: auto;
+        overflow: hidden !important;
+        -ms-overflow-style: none;
+    }
+
+    .card{
+        margin-top: 5px;
+        margin-bottom: 10px;
+        padding: 5px;
+    }
+
+    .chatMsg{
+        width:fit-content;
+        max-width: 400px;
+        box-shadow: 5px 5px 5px #A98EDA;
+    }
+
+    .msgOwn{
+        background-color: #9EC5FE;
+        float: right;
+    }
+
+    .msgTeacher{
+        background-color: #FFE69C;
+        clear: right;
+    }
+
+    .msgOther{
+        background-color: #A6E9D5;
+        clear: right;
+    }
+
+</style>
+
 <div id="chat-main-body">
         <h1 class="text-center">Willkommen im Chat!</h1></br>
         <div class="row container d-flex justify-content-center">
-            drittes
             <div class="col-md-11">
-                <div class="card card-bordered">
+                <div class="card card-bordered" style="border-color: purple; border-width: 3px; background-color: #E2D9F3">
+                    <div class="ps-container" style="overflow-y: scroll !important; height:500px !important;">
+                        <div class="card border-gray chatMsg msgOther">
+                            <div class="card-text otherChat">
+                                andere Chatnachricht
+                            </div>
+                            <div class="card-text otherChat">
+                                nächste andere Chatnachricht
+                            </div>
+                        </div>
+                        <div class="card border-primary chatMsg msgOwn">
+                            <div class="card-text ownChat">
+                                eigene Chatnachricht
+                            </div>
+                        </div>
+                        <div class="card border-warning chatMsg msgTeacher">
+                            <div class="card-text otherChat">
+                                Lehrer Chatnachricht
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

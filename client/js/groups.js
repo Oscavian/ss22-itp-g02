@@ -1,13 +1,9 @@
-$("#oneGroupTable").hide();
-$("#backToGroupList").hide();
+$("#newNameError").hide();
+$("#groupAddResponse").hide();
 getUserGroups();
 
 function getUserGroups() {
-    $("#oneGroupTable").fadeOut(200);
-    $("#backToGroupList").fadeOut(200);
-    let tbody = $(".showAllGroupsTable");
-    tbody.empty();
-
+    $("#group-main-body").empty();
     $.ajax({
         type: "POST",
         url: "/ss22-itp-g02/backend/requestHandler.php",
@@ -18,80 +14,91 @@ function getUserGroups() {
             console.log(response);
             if (response["success"]){
                 if (response["noGroups"]){
-                    tbody.append("" +
-                        "<tr>" +
-                        "   <td>XXX</td>" +
-                        "   <td>Du gehörst noch zu keiner Gruppe.</td>" +
-                        "   <td>XXX</td>" +
-                        "</tr>");
-                } else {
+                    $("#group-main-body").append("" +
+                        "<section style='background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px'>" + 
+                        "   <div class='container group-details-container p-4'>" + 
+                        "       <div class='col-lg-12'>" + 
+                        "           <div id='groupTitleAndTeacherDiv' style='display: flex; align-items: center;'>" + 
+                        "               <div style='font-weight: bold; font-size: 2em; color: red' id='groupTitle'>Sie befinden sich in keiner Gruppe</div>" + 
+                        "               <div style='margin-left: auto; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;' id='groupTeacherId'></div>" + 
+                        "           </div>" + 
+                        "       <div id='group-details-content-card' class='card group-details-content-card' style='margin-top: 1rem;'>" + 
+                        "           <div id='group-details-content' class='card-body'>" + 
+                        "               keine Gruppe vorhanden</div></div></div></div></section>");
+                }
+                else {
                     $.each(response["groups"], (i, g) => {
-                        tbody.append("" +
-                            "<tr rowId='" + g["groupId"] + "'>" +
-                            "   <td>" + g["groupId"] + "</td>" +
-                            "   <td><a onclick='loadPageGroupDetails(" + g["groupId"] + ")'><u>" + g["groupName"] + "</u></a></td>" +
-                            "   <td><a onclick=''><u>" + g["groupChatId"] + "</u></a></td>" +
-                            "</tr>");
+                        $("#group-main-body").append("" +
+                        "<section style='background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px' onclick='loadPageGroupDetails(" + g['groupId'] + ")'>" + 
+                        "   <div class='container group-details-container p-4'>" + 
+                        "       <div class='col-lg-12'>" + 
+                        "           <div id='groupTitleAndTeacherDiv' style='display: flex; align-items: center;'>" + 
+                        "               <div style='font-weight: bold; font-size: 2em;' id='groupTitle'>Gruppe " + g['groupName'] + "</div>" + 
+                        "               <div style='margin-left: auto; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;' id='groupTeacher" + g['groupId'] + "'></div>" + 
+                        "           </div>" + 
+                        "       <div id='group-details-content-card' class='card group-details-content-card' style='margin-top: 1rem;'>" + 
+                        "           <div id='group-details-content' class='card-body'>" + 
+                        "               Content/etc</div></div></div></div></section>");
+                        $.ajax({
+                            type: "POST",
+                            url: "/ss22-itp-g02/backend/requestHandler.php",
+                            data: {method: "getGroupTeacher", group_id: g['groupId']},
+                            cache: false,
+                            dataType: "json",
+                            success: (response) => {
+                                if (response["success"]){
+                                    $("#groupTeacher" + g['groupId'] + "").append("Lehrer*in: " + response['teacherFirstName'] + " " + response['teacherLastName'] + "");
+                                }
+                            },
+                            error: (error) => {
+                                console.log("AJAX Request Error: " + error);
+                            }
+                        });
                     })
                 }
             }
-            $("#allGroupsTable").delay(300).fadeIn(200);
         },
         error: (error) => {
             console.log("AJAX Request Error: " + error);
         }
     });
 
+    $("#group-main-body").attr("style", "block");
+    $("#showNewGroupForm").attr("style", "block");
 }
 
-// function getGroupDetails(){
-//     $("#allGroupsTable").fadeOut(200);
-//     let tbody = $(".showStudentsOfGroup");
-//     tbody.empty();
+function showNewGroupForm(){
+    $("#new-group-body").attr("style", "block");
+    $("#showNewGroupForm").hide();
+    $("#groupAddResponse").hide();
+}
 
-//     $.ajax({
-//         type: "GET",
-//         url: "/ss22-itp-g02/backend/requestHandler.php",
-//         data: {method: "getStudentsOfGroup"},
-//         cache: false,
-//         dataType: "json",
-//         success: (response) => {
-//             if (response["success"]){
-//                 if (response["noGroups"]){
-//                     tbody.append("" +
-//                         "<tr>" +
-//                         "   <td>es sind noch keine Einträge hier vorhanden</td>" +
-//                         "   <td>XXX</td>" +
-//                         "   <td>XXX</td>" +
-//                         "   <td>XXX</td>" +
-//                         "</tr>");
-//                 }
-//                 else {
-//                     console.log(response);
-//                     /*$.each(response => {
-
-//                     });
-//                     $.each(response["groups"], (i, g) => {
-//                         tbody.append("" +
-//                             "<tr rowId='" + g["groupId"] + "'>" +
-//                             "   <td>" + g["groupId"] + "</td>" +
-//                             "   <td><a onclick='getGroupDetails()'><u>" + g["groupName"] + "</u></a></td>" +
-//                             "</tr>");
-//                     });*/
-//                 }
-//             }
-//         },
-//         error: (error) => {
-//             tbody.append("" +
-//                         "<tr>" +
-//                         "   <td style='color: red'><b>ein Fehler ist aufgetreten</b></td>" +
-//                         "   <td>XXX</td>" +
-//                         "   <td>XXX</td>" +
-//                         "   <td>XXX</td>" +
-//                         "</tr>");
-//             console.log("AJAX Request Error: " + error);
-//         }
-//     });
-//     $("#oneGroupTable").delay(300).fadeIn(200);
-//     $("#backToGroupList").delay(300).fadeIn(200);
-// }
+function addNewGroup(){
+    if(!($("#newGroupTitle").val())){
+        $("#newNameError").show();
+        return;
+    }
+    $("#newNameError").hide();
+    let newGroupName = $("#newGroupTitle").val();
+    $('#newGroupTitle').val('');
+    console.log(newGroupName);
+    $.ajax({
+        type: "POST",
+        url: "/ss22-itp-g02/backend/requestHandler.php",
+        data: {method: "createGroup", group_name: newGroupName},
+        cache: false,
+        dataType: "json",
+        success: (response) => {
+            $("#groupAddResponse").text("Die Gruppe " + newGroupName + " wurde erfolgreich angelegt!");
+            $("#groupAddResponse").attr("style", "font-weight: bold");
+        },
+        error: (e) => {
+            $("#groupAddResponse").text("Die Gruppe konnte nicht angelegt werden!");
+            $("#groupAddResponse").attr("style", "color: red; font-weight: bold");
+        },
+    });
+    $("#groupAddResponse").show();
+    $("#new-group-body").hide();
+    $("#showNewGroupForm").show();
+    getUserGroups();
+}
