@@ -26,11 +26,17 @@ function loadTaskOverview(groupId) {
             if(currentAssignments.length){
                 if(isTeacher){
                     $("#addNewAssignmentCard").show();
+                    $("#addNewAssignmentCard").click(() => {
+                        loadPageCreateAssignment(groupId);
+                    });
                 }
                 currentAssignments.forEach(displayCurrentAssignment);  
             } else {       
                 if(isTeacher){
                     $("#noCurrentTasksMessageTeacher").show();
+                    $("#addNewAssignmentButton").click(() => {
+                        loadPageCreateAssignment(groupId);
+                    });
                 } else {
                     $("#noCurrentTasksMessageStudent").show();
                 }
@@ -69,6 +75,11 @@ function displayCurrentAssignment(assignment){
     dueDateHours = new String(dueDate.getHours()).padStart(2, '0');
     dueDateMinutes = new String(dueDate.getMinutes()).padStart(2, '0');
     dueDateString = dueDateDay + "." + dueDateMonth + "." + dueDateYear + " - " + dueDateHours + ":" + dueDateMinutes;
+
+    
+    if(assignment.text == null){
+        assignment.text = "";
+    }
 
     card = document.createElement("div");
     $(card).addClass("card");

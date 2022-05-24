@@ -1,5 +1,7 @@
 <!--form to create new assignment (for teacher) -->
 
+<script src="client/js/create-task.js" defer></script>
+
 <style>
     @media (max-width: 576px){
        #create-task-main-container{
@@ -18,23 +20,26 @@
                         <form>
                         <div style="margin-top: 10px;">
                                 <label for="exampleFormControlInput1">Titel:</label>
-                                <input required type="text" class="form-control" id="assignmentTitle">
+                                <input type="text" class="form-control" id="newAssignmentTitle">
+                                <p style="color: red; display: none;" id="noTitleError" class="mb-0">Ein Titel ist erforderlich!</p>
                             </div>
                         <div style="margin-top: 10px;">
                                 <label for="exampleFormControlTextarea1">Beschreibung:</label>
-                                <textarea class="form-control" id="assignmentDescription" rows="3"></textarea>
+                                <textarea class="form-control" id="newAssignmentDescription" rows="3"></textarea>
+                                <p style="color: red; display: none;" id="noDescriptionError" class="mb-0">Eine Beschreibung ist erforderlich!</p>
                             </div>
                         <div style="margin-top: 10px;">
                                 <label class="form-label" for="customFile">Angabe hinzufügen:</label>
-                                <input required type="file" class="form-control" id="assignmentFile" />
+                                <input type="file" class="form-control" id="newAssignmentFile" />
                             </div>
                         <div style="display: flex; margin-top: 20px; justify-content: space-between; flex-wrap: wrap; gap: 10px">
                             <div style="width: max-content;">
                                 <label class="form-label" for="customFile">Abgabefrist:</label>
-                                <input required type="datetime-local" class="form-control" id="customFile"/>
+                                <input id="newAssignmentTime" type="datetime-local" class="form-control"/>
+                                <p style="color: red; display: none;" id="noTimeError" class="mb-0">Eine Abgabefrist ist erforderlich!</p>
                             </div>
                             <div style="align-self: flex-end;">
-                                <button type="button" id="submitTaskBtn" style="background-color: #eee;" class="btn btn-light"><i style="color: purple;" class="bi bi-file-earmark-arrow-up"></i> Erstellen</button>
+                                <button type="button" onclick="submitNewTask()" id="submitTaskBtn" style="background-color: #eee;" class="btn btn-light"><i style="color: purple;" class="bi bi-file-earmark-arrow-up"></i> Erstellen</button>
                             </div>
                         </div>
                         </form>

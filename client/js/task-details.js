@@ -95,8 +95,6 @@ function uploadSubmission(){
     return;
   }
 
-  console.log(file.name);
-
   formData = new FormData();
   formData.append("attachment", file, file.name);
   formData.append("method", "addSubmission");
