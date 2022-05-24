@@ -1,0 +1,129 @@
+<!--group detail view, includes tabs for assignments, chat, and members-->
+
+<script src="client/js/group-details.js" defer></script>
+
+<style>
+
+  /* For mobile view */
+  @media (max-width: 992px){
+    .group-details-container{
+      padding-left: 0px !important;
+      padding-right: 0px !important;
+      padding-bottom: 0px !important;
+    }
+
+    #groupTitle{
+      /* margin-left: 1rem; */
+      text-align: center;
+      width: 100%
+    }
+
+    #groupTeacher{
+      width: 100%;
+      text-align: center !important;
+    }
+    
+    #groupTitleAndTeacherDiv{
+      flex-wrap: wrap;
+    }
+
+  }
+
+  /* Nav styling */
+  
+  .group-details-nav-header {
+      padding: 0 !important;
+      border-bottom: 0px !important;
+      margin: 0 0 0.5rem 0 !important;
+    }
+  
+  #group-details-nav {
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+  .group-details-nav-item {
+      position: relative !important;
+      background-color: #f7f7f7 !important;
+      color: purple !important;
+      border-width: 2px !important;
+      border-color: rgba(0, 0, 0, 0) !important;
+      border-radius: 0 !important;
+      margin: 0 1px 0 0!important;
+      /* box-shadow: 0 6px 10px rgba(128,0,128,.10), 0 0 6px rgba(128,0,128,.07); */
+      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+      cursor: pointer;
+    }
+  
+    .group-details-nav-item.active {
+      margin: -1px 1px 0 -1px !important;
+      border-width: 2px !important;
+      border-color: purple !important;
+      background-color: #f1eaf1 !important;
+      box-shadow: 0 6px 10px rgba(128,0,128,.10), 0 0 6px rgba(128,0,128,.07);   
+    }
+    
+    .group-details-first-nav-item {
+      border-radius: 0.25rem 0 0 0 !important;
+    }
+
+    .group-details-nav-item:hover{
+      z-index: 10000 !important;
+      transform: scale(1.05);
+      border-color: rgba(128,0,128,.5) !important;
+      margin: -1px 1px 1px 0 !important;
+      box-shadow: 0 10px 20px rgba(128,0,128,.14), 0 4px 8px rgba(128,0,128,.08);
+    }
+
+    /* Nav mobile view */
+
+    @media (max-width: 992px){
+      #group-details-content-card{
+        border-top-left-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+      } 
+      
+      .group-details-first-nav-item {
+        border-radius: 0 0 0 0 !important;
+      }
+
+      .group-details-nav-header {
+        display: flex !important;
+        justify-content: center !important;
+      }
+
+    }
+
+</style>
+
+
+<div style="display: none" id="group-main-body" class="container text-dark">
+    <section style="background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px">
+        <div class="container group-details-container p-4">
+            <div class="col-lg-12">
+              <div id="groupTitleAndTeacherDiv" style="display: flex; align-items: center;">
+                <div style="font-weight: bold; font-size: 2em;" id="groupTitle"></div>
+                <div style="margin-left: auto; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;" id="groupTeacher">Lehrer*in</div>
+              </div>
+              <div id="group-details-content-card" class="card group-details-content-card" style="margin-top: 1rem;">
+                <div class="card-header group-details-nav-header">
+                  <ul id="group-details-nav" class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                      <a id="group-details-nav-assignments" class="nav-link active group-details-nav-item group-details-first-nav-item" onclick="groupViewShowAssignments()">Aufgaben</a>
+                    </li>
+                    <li class="nav-item">
+                      <a id="group-details-nav-chat" class="nav-link group-details-nav-item" onclick="groupViewShowChat()">Chat</a>
+                    </li>
+                    <li class="nav-item">
+                      <a id="group-details-nav-members" class="nav-link group-details-nav-item" onclick="groupViewShowMembers()">Mitglieder</a>
+                    </li>
+                  </ul>
+                </div>
+                  <div id="group-details-content" class="card-body">
+                      <!-- Content -->
+                  </div>
+                </div>
+              </div>
+        </div>
+      </section>
+</div>

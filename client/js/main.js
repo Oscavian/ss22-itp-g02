@@ -5,6 +5,12 @@ $("#indexFooter").load("client/html-includes/footer.html");
 //Maybe load different page when user is allready logged in?
 loadPageWithAnimation("client/pages/basic/home.html");
 
+//loadPageGroupDetails(1);
+//loadPageGroupDetails(3);
+//loadPageAssignmentDetails();
+//loadPageCreateAssignment();
+//loadPageAssignmentSubmits();
+
 //--------------Pages--------------//
 
 function loadPageHome(){
@@ -55,14 +61,43 @@ function loadPageCreateStudent(){
     loadPage(title, path);
 }
 
+function loadPageAssignmentDetails(id){
+    id = '?assignmentId=' + id;
+    title = "Aufgabe"
+    path = "client/pages/tasks/task-details.html";
+    loadPage(title, path, id);
+}
+
+function loadPageAssignmentSubmits(id){
+    id = '?assignmentId=' + id;
+    title = "Abgabenübersicht"
+    path = "client/pages/tasks/tasks-teacher-view/submitted-tasks.html";
+    loadPage(title, path, id);
+}
+
+function loadPageGroupDetails(id){
+    id = '?groupId=' + id;
+    title = "Gruppe"
+    path = "client/pages/groups/group-details.html";
+    loadPage(title, path, id);
+}
+
+function loadPageCreateAssignment(id){
+    id = '?groupId=' + id;
+    title = "Neue Aufgabe erstellen"
+    path = "client/pages/tasks/create-task.html";
+    loadPage(title, path, id);
+}
+
+
 //add more pages here
 
 //----------------Functions-----------------//
 
-function loadPage(title, path){
+function loadPage(title, path, id){
     $("title").text(title);
     loadPageWithAnimation(path);
-    addState(title, path);
+    addState(title, path, id);
 }
 
 function loadPageWithAnimation(path){
@@ -73,9 +108,9 @@ function loadPageWithAnimation(path){
     });
 }
 
-function addState(title, path){
+function addState(title, path, id){
     stateObject = {"pagePath": path, "pageTitle": title};
-    window.history.pushState(stateObject, "");
+    window.history.pushState(stateObject, "", id);
 }
 
 window.onpopstate = function(event) {

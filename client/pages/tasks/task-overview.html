@@ -1,1 +1,88 @@
-<!--for teacher and student -->
+<!-- loaded in group-details tab -->
+<script src="client/js/task-overview.js" defer></script>
+
+<style>
+
+    .assignmentCards {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .assignmentCard {
+        overflow: hidden;
+        width: 14rem;
+    }
+
+    @media (max-width: 992px){
+        .assignmentCard {
+            width: 100%;
+        }
+    }
+
+    .assignmentCardTitle, .assignmentCardTime, .assignmentCardTimeLeft{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .assignmentCardText {
+        line-height: 1.5em;
+        height: 6em;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .assignmentCard{
+        /* box-shadow: 0 6px 10px rgba(128,0,128,.10), 0 0 6px rgba(128,0,128,.07); */
+        transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+        cursor: pointer;
+    }
+
+    .assignmentCard:hover{
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(128,0,128,.14), 0 4px 8px rgba(128,0,128,.08);
+    }
+
+</style>
+
+<h3 style="margin-bottom: -14px;"><i class="bi bi-journal-text" style="margin-right: 10px; font-size: 26px; vertical-align: bottom;"></i>Offene Aufgaben</i></h3>
+<hr size="4" style="color: purple; opacity: 80%;">
+
+
+<h4 id="noCurrentTasksMessageStudent" class="text-muted" style="display: none; text-align: center; margin-top: 2em; margin-bottom: 2rem;">Keine offenen Aufgaben</h4>
+
+<div style="display: none; text-align: center;" id="noCurrentTasksMessageTeacher">
+    <h4 class="text-muted" style="margin-top: 2em;">Keine offenen Aufgaben</h4>
+    <div id="addNewAssignmentButton" type="button" style="background-color: purple; margin-bottom: 2rem;" class='btn text-warning'>Neue Aufgabe hinzufügen<i class="bi bi-journal-plus" style="margin-left: 5px;"></i></div>
+</div>
+
+<div id="currentAssignmentsContent" class="assignmentCards">
+
+    <!-- Assignments are loaded here -->
+
+    <!-- Only visible to teacher -->
+    <div id="addNewAssignmentCard" class="card assignmentCard" style="display: none; height: 221.4px">
+        <div style="margin: auto; text-align: center;">
+            <i class="bi bi-journal-plus" style="font-size: 50px; color: purple;"></i>
+            <p>Aufgabe hinzufügen</p>
+        </div>
+    </div>
+
+</div>
+
+<h3 style="margin-bottom: -14px; margin-top: 24px;"><i class="bi bi-journals" style="margin-right: 10px; font-size: 26px; vertical-align: bottom;"></i>Archiv</h3>
+<hr size="4" style="color: purple; opacity: 80%;">
+
+
+<h4 id="noOldTasksMessage" class="text-muted" style="display: none; text-align: center; margin-top: 2em; margin-bottom: 2rem;">Keine Aufgaben im Archiv</h4>
+
+
+<div id="pastAssignmentsContent" class="assignmentCards">
+    
+    <!-- Assignments are loaded here -->
+
+</div>

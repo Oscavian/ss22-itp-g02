@@ -1,5 +1,7 @@
 checkLoginStatus();
 
+var isTeacher; //global Variable, used for showing/hiding elements later, set in checkLoginStatus()
+
 function checkLoginStatus() {
     $("#log-stat").empty();
     $.ajax({
@@ -10,6 +12,7 @@ function checkLoginStatus() {
         dataType: "json",
         success: function (response) {
             if(response["isLoggedIn"]){
+                if(response["userType"] == 1){isTeacher = true;} else {isTeacher = false;}
                 $("#log-stat").append("<li class='nav-item mb-1'><div type='button' class='btn btn-outline-warning me-2 fs-5' onclick='loadPageUserDetails()'>" + response["username"] + "</div></li>");
                 $("#log-stat").append("<li class='nav-item mb-1'><div type='button' id='logoutButton' class='btn btn-outline-warning me-2 fs-5' onclick='logout()'>Logout</div></li>");
                 $("#homeworkNavButton").show();
