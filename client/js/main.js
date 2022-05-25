@@ -1,3 +1,8 @@
+//makes all ajax-calls async
+$.ajaxPrefilter(function( options, original_Options, jqXHR ) {
+    options.async = true;
+});
+
 //load navbar and footer
 $("#indexNavbar").load("client/html-includes/navbar.html");
 $("#indexFooter").load("client/html-includes/footer.html");
