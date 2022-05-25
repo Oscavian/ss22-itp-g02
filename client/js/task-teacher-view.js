@@ -1,5 +1,4 @@
 var assignmentId = new URLSearchParams(window.location.search).get("id");
-console.log("Loading assignment with id: " + assignmentId);
 loadAssignmentDetails(assignmentId);
 
 $("#submitted-tasks-content").load("client/pages/tasks/tasks-teacher-view/submitted-task-details.html");
@@ -46,7 +45,6 @@ function loadAssignmentDetails(assignmentId){
             
             $("#taskTime").text(dateString);
 
-            console.log(response["due_time"]);
             dueDateYear = dueDate.getFullYear() % 2000;
             dueDateMonth = new String(dueDate.getMonth() + 1).padStart(2, '0');
             dueDateDay = new String(dueDate.getDate()).padStart(2, '0');

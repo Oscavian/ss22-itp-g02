@@ -11,7 +11,6 @@ function getUserGroups() {
         cache: false,
         dataType: "json",
         success: (response) => {
-            console.log(response);
             if (response["success"]){
                 if (response["noGroups"]){
                     $("#group-main-body").append("" +

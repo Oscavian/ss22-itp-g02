@@ -1,5 +1,4 @@
 var groupId = new URLSearchParams(window.location.search).get("id");
-console.log("Loading Group with id: " + groupId);
 loadGroupDetails(groupId);
 
 $("#group-details-content").load("client/pages/tasks/task-overview.html")

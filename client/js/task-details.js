@@ -1,5 +1,4 @@
 var assignmentId = new URLSearchParams(window.location.search).get("id");
-console.log("Loading assignment with id: " + assignmentId);
 loadAssignmentDetails(assignmentId);
 
 function loadAssignmentDetails(assignmentId) {
