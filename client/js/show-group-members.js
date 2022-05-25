@@ -1,6 +1,4 @@
-var groupId = window.location.href.split('?groupId=').pop()
-console.log("Loading Group with id: " + groupId);
-
+var groupId = new URLSearchParams(window.location.search).get("id");
 getUserGroups();
 
 function getUserGroups() {
@@ -15,7 +13,6 @@ function getUserGroups() {
         cache: false,
         dataType: "json",
         success: (response) => {
-            console.log(response);
             if (response["success"]){
                 $.each(response["groupMembers"], (i, g) => {
                     var tablerow = $("<tr class='group-member' style='vertical-align: top;'></tr>");
