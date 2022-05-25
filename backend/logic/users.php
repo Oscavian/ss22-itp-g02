@@ -70,6 +70,11 @@ class Users {
             $item["groupName"] = $group->getName();
             $item["groupId"] = $group->getId();
             $item["groupChatId"] = $group->getChat();
+
+            $teacher = $group->getTeacher();
+            $item["teacherFirstName"] = $teacher->getFirstName();
+            $item["teacherLastName"] = $teacher->getLastName();
+
             $resultGroups[] = $item;
         }
         

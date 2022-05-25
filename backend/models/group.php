@@ -102,5 +102,19 @@ class Group {
         }
         return $this->assignments;
     }
+    
+    /**
+     * returns first user found in group that is a teacher
+     * @return user
+     */
+    public function getTeacher() {
+
+        foreach($this->getMembers() as $member){          
+            if($member->getUserType() == 1){
+                return $member;
+            }
+        }
+        throw new Exception("No teacher found in group!");
+    }
 
 }
