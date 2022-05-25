@@ -80,7 +80,6 @@ function addNewGroup(){
     $("#newNameError").hide();
     let newGroupName = $("#newGroupTitle").val();
     $('#newGroupTitle').val('');
-    console.log(newGroupName);
     $.ajax({
         type: "POST",
         url: "/ss22-itp-g02/backend/requestHandler.php",
