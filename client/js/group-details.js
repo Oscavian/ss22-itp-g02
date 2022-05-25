@@ -1,4 +1,4 @@
-var groupId = window.location.href.split('?groupId=').pop()
+var groupId = new URLSearchParams(window.location.search).get("id");
 console.log("Loading Group with id: " + groupId);
 loadGroupDetails(groupId);
 

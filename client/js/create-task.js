@@ -1,4 +1,4 @@
-var groupId = window.location.href.split('?groupId=').pop()
+var groupId = new URLSearchParams(window.location.search).get("id");
 console.log("Loading Group with id: " + groupId);
 
 
@@ -54,7 +54,7 @@ function submitNewTask(){
       type: "POST",
       url: "/ss22-itp-g02/backend/requestHandler.php",
       success: function (data) {
-        loadPageGroupDetails(groupId);
+        loadPage('gruppe', groupId);
       },
       error: function (error) {
           console.log("AJAX-Request error: " + error);

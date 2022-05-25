@@ -29,7 +29,7 @@ function getUserGroups() {
                 else {
                     $.each(response["groups"], (i, g) => {
                         $("#group-main-body").append("" +
-                        "<section style='background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px' onclick='loadPageGroupDetails(" + g['groupId'] + ")'>" + 
+                        "<section style='background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px' onclick='loadPage(`gruppe`, " + g['groupId'] + ");'>" + 
                         "   <div class='container group-details-container p-4'>" + 
                         "       <div class='col-lg-12'>" + 
                         "           <div id='groupTitleAndTeacherDiv' style='display: flex; align-items: center;'>" + 
