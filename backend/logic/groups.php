@@ -53,13 +53,8 @@ class Groups {
         $group = Hub::Group($_POST["group_id"]);
         Permissions::checkIsInGroup($group);
 
-        foreach($group->getMembers() as $member){          
-            if($member->getUserType() == 1){
-                return ["success" => true, "teacherFirstName" => $member->getFirstName(), "teacherLastName" => $member->getLastName()];
-            }
-        }
-
-        throw new Exception("No teacher found in group!");
+        $teacher = $group->getTeacher();
+        return ["success" => true, "teacherFirstName" => $teacher->getFirstName(), "teacherLastName" => $teacher->getLastName()];
     }
 
       /**
