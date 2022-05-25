@@ -1,2 +1,58 @@
+<script src="client/js/show-group-members.js" defer></script>
 
-Group Members
+<style>
+    @media (max-width: 576px){
+       #show-groupmembers-main-container{
+       padding: 0 !important;
+       }
+   } 
+   .group-member {
+      position: relative !important;
+      background-color: #fff !important;
+      border-bottom-style: solid !important;
+      border-bottom-width: 2px !important;
+      border-bottom-color: rgba(0, 0, 0, 0) !important;
+      border-radius: 0 !important;
+      margin: 1px 1px 0 0!important;
+      /* box-shadow: 0 6px 10px rgba(128,0,128,.10), 0 0 6px rgba(128,0,128,.07); */
+      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+    }
+   .group-member:hover{
+      z-index: 10000 !important;
+      background-color:rgba(255, 240, 255, 0.5) !important; 
+      border-bottom-color: rgba(128,0,128,.5) !important;
+      margin: 2px 1px 1px 0 !important;
+      box-shadow: 0 10px 20px rgba(128,0,128,.14), 0 4px 8px rgba(128,0,128,.08);
+    }
+
+</style>
+
+<h3 style="margin-bottom: -14px;">Teil dieser Gruppe sind:</h3>
+<hr size="4" style="color: purple; opacity: 80%;">
+<h5><strong>Lehrer*innen:</strong></h5>
+<table id="teacher-member" class="table table-responsive" style="display: none;">
+    <thead>
+        <tr>
+            <th>User-ID</th>
+            <th>Vorname</th>
+            <th>Nachname</th>
+            <th>Username</th>
+        </tr>
+    </thead>
+    <tbody id="teacher-member-list"></tbody>
+</table>
+<br>
+<h5><strong>Schüler*innen:</strong></h5>
+<div id="noStudents"></div>
+<table id="student-member" class="table table-responsive" style="display: none;">
+    <thead>
+        <tr>
+            <th>User-ID</th>
+            <th>Vorname</th>
+            <th>Nachname</th>
+            <th>Username</th>
+        </tr>
+    </thead>
+    <tbody id="student-member-list"></tbody>
+</table>
+                   
