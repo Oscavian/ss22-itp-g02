@@ -28,7 +28,7 @@
 <script>
 
     function downloadSubmissionFile(submissionId) {
-    window.location = "/ss22-itp-g02/backend/requestHandler.php?method=downloadSubmissionFile&submission_id=" + submissionId;
+        window.location = "/ss22-itp-g02/backend/requestHandler.php?method=downloadSubmissionFile&submission_id=" + submissionId;
     }
 
     function displaySubmission(submission) {
@@ -67,6 +67,8 @@
         cache: false,
         dataType: "json",
         success: function (response) {
+            
+            $("#submissionsTableContent").empty();
 
             if (!response.length) {
                 $("#noSubmissionsMessage").show();

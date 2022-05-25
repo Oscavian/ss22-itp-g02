@@ -2,9 +2,6 @@ var groupId = new URLSearchParams(window.location.search).get("id");
 getGroupMembers();
 
 function getGroupMembers() {
-    $("#teacher-member-list").empty();
-    $("#student-member-list").empty();
-    $("#noStudents").empty();
 
     $.ajax({
         type: "POST",
@@ -14,6 +11,8 @@ function getGroupMembers() {
         dataType: "json",
         success: (response) => {
             if (response["success"]){
+                $("#teacher-member-list").empty();
+                $("#student-member-list").empty();
                 $.each(response["groupMembers"], (i, g) => {
                     var tablerow = $("<tr class='group-member' style='vertical-align: top;'></tr>");
                     tablerow.append(`
@@ -49,7 +48,7 @@ function getGroupMembers() {
                     }
                     $("#student-member").show();
                 }
-                
+                $("#addNewStudentsButton").off();
                 $("#addNewStudentsButton").click(() => {
                     console.log("test123");
                     loadPage('accountErstellen', groupId);

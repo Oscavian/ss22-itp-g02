@@ -27,11 +27,11 @@ function checkIfAlphanumericLogin(allIsOk){
     var password = $("#login-modal-password").val();
     if(!/^[a-zA-Z0-9.]+$/.test(user)){
         allOk = false;
-        $("#login-modal-user-error").append("Username must consist of letters and numbers only <br>");
+        $("#login-modal-user-error").text("Username must consist of letters and numbers only <br>");
     }
     if(!/^[a-zA-Z0-9]+$/.test(password)){
         allOk = false;
-        $("#login-modal-password-error").append("Password must consist of letters and numbers only <br>");
+        $("#login-modal-password-error").text("Password must consist of letters and numbers only <br>");
     }
     return allOk;
 }
@@ -40,11 +40,11 @@ function checkIfEmptyLogin(allIsOk) {
     var allOk = allIsOk;
     if($("#login-modal-user").val() === ""){
         allOk = false;
-        $("#login-modal-user-error").append("Please enter a username <br>");
+        $("#login-modal-user-error").text("Please enter a username <br>");
     }
     if($("#login-modal-password").val() === ""){
         allOk = false;
-        $("#login-modal-password-error").append("Please enter a password <br>");
+        $("#login-modal-password-error").text("Please enter a password <br>");
     }
     return allOk;
 }
@@ -53,11 +53,11 @@ function checkLengthLogin(allIsOk){
     var allOk = allIsOk;
     if($("#login-modal-user").val().length < 6 || $("#login-modal-user").val().length > 50){
         allOk = false;
-        $("#login-modal-user-error").append("Username must be between 6 to 50 characters long <br>");
+        $("#login-modal-user-error").text("Username must be between 6 to 50 characters long <br>");
     }
     if($("#login-modal-password").val().length < 6 || $("#login-modal-password").val().length > 50){
         allOk = false;
-        $("#login-modal-password-error").append("Password must be between 6 to 50 characters long <br>");
+        $("#login-modal-password-error").text("Password must be between 6 to 50 characters long <br>");
     }
     return allOk;
 }

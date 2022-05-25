@@ -5,13 +5,16 @@ var counter = 1;
 defaultForms();
 
 function defaultForms(){
-     
+
+    $("#form-list").empty();
     addStudentAccountForm();
 
+    $("#add-form").off();
     $("#add-form").click(function () {
         addStudentAccountForm();
     }); 
 
+    $("#submit-student-accounts").off();
     $("#submit-student-accounts").click(function () {
         createStudentAccounts();
     }); 

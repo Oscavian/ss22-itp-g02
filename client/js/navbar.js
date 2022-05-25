@@ -3,7 +3,6 @@ checkLoginStatus();
 var isTeacher; //global Variable, used for showing/hiding elements later, set in checkLoginStatus()
 
 function checkLoginStatus() {
-    $("#log-stat").empty();
     $.ajax({
         type: "POST",
         url: "/ss22-itp-g02/backend/requestHandler.php",
@@ -11,6 +10,7 @@ function checkLoginStatus() {
         cache: false,
         dataType: "json",
         success: function (response) {
+            $("#log-stat").empty();
             if(response["isLoggedIn"]){
                 if(response["userType"] == 1){isTeacher = true;} else {isTeacher = false;}
                 $("#log-stat").append("<li class='nav-item mb-1'><div type='button' class='btn btn-outline-warning me-2 fs-5' onclick='loadPage(`account`);'>" + response["username"] + "</div></li>");

@@ -107,6 +107,7 @@ function loadPage(pageName, id = null){
 }
 
 function loadPageWithAnimation(path){
+    $("#indexContent").find("*").off(); //removes all current eventHandlers in content div
     $("#indexContent").fadeOut("fast", function(){
         $("#indexContent").load(path, function(){
             $("#indexContent").fadeIn("fast");
