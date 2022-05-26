@@ -28,7 +28,7 @@ function getGroupMembers() {
                                     `);
 
                     if(isTeacher && g["user_type"] == "2"){
-                        tablerow.append(`<td><span class="pw-reset-link">Passwort zurücksetzen<span></td>`);
+                        tablerow.append(`<td><span class="pw-reset-link" data-bs-toggle="modal" onclick="setUserName('${g["username"]}')" data-bs-target="#resetPasswordModal">Passwort zurücksetzen<span></td>`);
                     }
                     if(g["user_type"] == "1"){
                         $("#teacher-member-list").append(tablerow);
@@ -79,3 +79,32 @@ function createStudentTableRow(){
 
     $("#student-member-list").append(tablerow);
 }
+
+function showNewPassword(){
+
+    //toDO: generate new password
+    $("#newPassword").html("Passwort123");
+
+    $("#newPasswordField").slideDown();
+    $("#passwordChangeBtn").html("Passwort speichern");
+    $("#passwordChangeBtn").attr("onclick", "saveNewPassword()");
+}
+
+function closeResetPasswordModal(){
+    $("#newPasswordField").hide();
+    $("#resetPasswordModal").modal("hide");
+    $("#passwordChangeBtn").html("Passwort zurücksetzen");
+    $("#passwordChangeBtn").attr("onclick", "showNewPassword()");
+}
+
+function saveNewPassword(){
+    closeResetPasswordModal();
+}
+
+function setUserName(username){
+    $("#modalUserName").html(username);
+}
+
+$(document).ready(function() {
+    closeResetPasswordModal();
+});

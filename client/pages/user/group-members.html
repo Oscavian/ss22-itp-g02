@@ -72,4 +72,35 @@
     </thead>
     <tbody id="student-member-list"></tbody>
 </table>
-</div>                   
+</div>
+
+<div class="modal fade text-dark" id="resetPasswordModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <div style="display: flex; align-items: center;"><i class="bi bi-person-circle text-muted" style="font-size: 2rem; margin-bottom: -25px; margin-top: -21.5px;"></i>
+                    <span style="vertical-align: middle; margin: 1px 0 0 7px;">
+                        <div style="margin-left: 3px" id="modalUserName"></div>
+                    </span>
+                </div>
+                
+                <button type="button" class="btn-close" onclick="closeResetPasswordModal()"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+
+                <div id="newPasswordField">
+                    <h6 style="margin-bottom: 10px; font-weight: bold;">neues Passwort:</h6>
+                    <h6 id="newPassword" style="background-color: #eee; padding: 7px; border-radius: 5px; 
+                     display: inline-block; margin-bottom: 10px;"></h6>
+                </div>
+
+             <div style="float: right; " class="btn btn-warning" id="passwordChangeBtn" onclick="showNewPassword()">Passwort zurücksetzen</div>
+
+            </div>
+        </div>
+    </div>
+  </div>
+
+</div>   
