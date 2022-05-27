@@ -325,4 +325,44 @@ class Users {
         }
         return false;
     }
+
+    /**
+     * generates new password for resetting student password
+     * 
+     * method: generateNewStudentPassword
+     * @return array|null
+     */
+    public function generateNewStudentPassword(){     
+        $length = 10;
+        $generatedPassword = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1, $length);
+
+        return ["success" => true, "generatedPassword" => $generatedPassword];
+    }
+
+    /**
+     * method: setNewStudentPassword
+     * new_password: string
+     * user_id: int //student user id
+     * @return array|null
+     */
+    public function setNewStudentPassword(){
+        if (empty($_POST["user_id"]) || empty($_POST["new_password"])) {
+            throw new Exception("Invalid Parameters");
+        }
+
+        Permissions::checkIsTeacher();
+        
+        $teacher = Hub::User($_SESSION['userId']);
+        $student = Hub::User($_POST["user_id"]);
+        
+        Permissions::checkIsInGroupWith($teacher, $student);
+
+        if (strlen($_POST["new_password"]) < 6) {
+            throw new Exception("Invalid password");
+        }
+
+        $student->changePassword($_POST["new_password"]);
+
+        return ["success" => true];
+    }
 }
