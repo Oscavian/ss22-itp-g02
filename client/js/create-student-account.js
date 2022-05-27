@@ -138,15 +138,38 @@ function submitStudentAccInput(studentInfoList){
         url: "/ss22-itp-g02/backend/requestHandler.php",
         data:   {
                     method: "registerStudents",
-                    students: JSON.stringify(studentInfoList)
+                    students: JSON.stringify(studentInfoList),
+                    group_id: groupId
                 },
         cache: false,
         dataType: "json",
         success: function (response) {
             //$("#success").append(response);
             $("#post-response-stdacc").append("Die SchülerInnen-Accounts sind erfolgreich angelegt worden<br>");
+            $("#newStudentAccountListBody").empty();
+            $("#createNewStudentsFormDiv").hide();
+            $("#newStudentAccountList").show();
+            
             $.each(response, function(i, p) {
-                $("#student-account-data").append("<li>Username: "+ p["username"] +", Passwort: "+ p["password"] +"</li>");
+
+
+                var tablerow = $("<tr class='newStudentAccount' style='vertical-align: top;'></tr>");
+                tablerow.append(`
+                                <td>
+                                    <div style="display: flex; align-items: center;"><i class="bi bi-person-circle text-muted" style="font-size: 2rem; margin-bottom: -25px; margin-top: -21.5px;"></i>
+                                        <span style="vertical-align: middle; margin: 1px 0 0 7px;">
+                                            <span style="margin-left: 3px" id="userName">${p["username"]}</span>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>${p["first_name"]}</td>
+                                <td>${p["last_name"]}</td>
+                                <td>${p["password"]}</td>
+                                `);
+
+                $("#newStudentAccountListBody").append(tablerow);
+
+
             });
 
             $('#student-account')[0].reset();
