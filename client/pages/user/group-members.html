@@ -74,7 +74,7 @@
 </table>
 </div>
 
-<div class="modal fade text-dark" id="resetPasswordModal">
+<div style="z-index: 999999;" class="modal fade text-dark" id="resetPasswordModal">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <!-- Modal Header -->
@@ -90,13 +90,14 @@
             <!-- Modal body -->
             <div class="modal-body">
 
-                <div id="newPasswordField">
-                    <h6 style="margin-bottom: 10px; font-weight: bold;">neues Passwort:</h6>
+                <div style="display: none;" id="newPasswordField">
+                    <h6 style="margin-bottom: 10px; font-weight: bold;">Neues Passwort:</h6>
                     <h6 id="newPassword" style="background-color: #eee; padding: 7px; border-radius: 5px; 
                      display: inline-block; margin-bottom: 10px;"></h6>
                 </div>
 
-             <div style="float: right; " class="btn btn-warning" id="passwordChangeBtn" onclick="showNewPassword()">Passwort zurücksetzen</div>
+             <div style="float: right; " class="btn btn-warning" id="passwordChangeBtn" onclick="getNewPassword()">Passwort zurücksetzen</div>
+             <div style="float: right; display: none;" class="btn btn-warning" id="passwordChangeConfirmBtn" onclick="saveNewPassword()">Passwort speichern</div>
 
             </div>
         </div>

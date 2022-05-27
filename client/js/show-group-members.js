@@ -28,7 +28,7 @@ function getGroupMembers() {
                                     `);
 
                     if(isTeacher && g["user_type"] == "2"){
-                        tablerow.append(`<td><span class="pw-reset-link" data-bs-toggle="modal" onclick="setUserName('${g["username"]}')" data-bs-target="#resetPasswordModal">Passwort zurücksetzen<span></td>`);
+                        tablerow.append(`<td><span class="pw-reset-link" data-bs-toggle="modal" onclick="setUserName('${g["username"]}', '${g["user_id"]}')" data-bs-target="#resetPasswordModal">Passwort zurücksetzen<span></td>`);
                     }
                     if(g["user_type"] == "1"){
                         $("#teacher-member-list").append(tablerow);
@@ -50,7 +50,6 @@ function getGroupMembers() {
                 }
                 $("#addNewStudentsButton").off();
                 $("#addNewStudentsButton").click(() => {
-                    console.log("test123");
                     loadPage('accountErstellen', groupId);
                 })
             }
@@ -60,6 +59,8 @@ function getGroupMembers() {
         }
     });
 }
+
+
 
 function createStudentTableRow(){
 
@@ -80,31 +81,67 @@ function createStudentTableRow(){
     $("#student-member-list").append(tablerow);
 }
 
-function showNewPassword(){
 
-    //toDO: generate new password
-    $("#newPassword").html("Passwort123");
+//----------------Reset Student Password Modal Logic-----------------//
+
+
+function getNewPassword(){
+
+    $.ajax({
+        type: "POST",
+        url: "/ss22-itp-g02/backend/requestHandler.php",
+        data: {method: "generateNewStudentPassword"},
+        cache: false,
+        dataType: "json",
+        success: (response) => {
+            if (response["success"]){
+                showNewPassword(response["generatedPassword"]);
+            }
+        },
+        error: (error) => {
+            console.log("AJAX Request Error: " + error);
+        } 
+    });
+}
+
+function showNewPassword(newPassword){
+
+    $("#newPassword").html(newPassword);
 
     $("#newPasswordField").slideDown();
-    $("#passwordChangeBtn").html("Passwort speichern");
-    $("#passwordChangeBtn").attr("onclick", "saveNewPassword()");
+    $("#passwordChangeBtn").hide();
+    $("#passwordChangeConfirmBtn").show();
 }
 
 function closeResetPasswordModal(){
     $("#newPasswordField").hide();
+    $("#newPassword").empty();
     $("#resetPasswordModal").modal("hide");
-    $("#passwordChangeBtn").html("Passwort zurücksetzen");
-    $("#passwordChangeBtn").attr("onclick", "showNewPassword()");
+    $("#passwordChangeBtn").show();
+    $("#passwordChangeConfirmBtn").hide();
 }
 
 function saveNewPassword(){
-    closeResetPasswordModal();
+
+    $.ajax({
+        type: "POST",
+        url: "/ss22-itp-g02/backend/requestHandler.php",
+        data: {method: "setNewStudentPassword", user_id: document.getElementById("modalUserName").dataset.userId, new_password: $("#newPassword").html()},
+        cache: false,
+        dataType: "json",
+        success: (response) => {  
+            if (response["success"]){
+                closeResetPasswordModal();
+            }
+        },
+        error: (error) => {
+            console.log("AJAX Request Error: " + error);
+        } 
+    }); 
 }
 
-function setUserName(username){
+function setUserName(username, userId){
     $("#modalUserName").html(username);
-}
 
-$(document).ready(function() {
-    closeResetPasswordModal();
-});
+    document.getElementById("modalUserName").dataset.userId = userId;
+}
