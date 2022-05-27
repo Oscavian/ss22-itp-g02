@@ -38,6 +38,7 @@ function loadAssignmentDetails(assignmentId) {
         fileName = response["file_path"].split("/").pop()
         $("#taskDescriptionFileName").text(fileName);
         $("#taskDescriptionFile").show();
+        $("#taskDescriptionFile").off();
         $("#taskDescriptionFile").click(() => {
           downloadTaskDescriptionFile(assignmentId);
         });

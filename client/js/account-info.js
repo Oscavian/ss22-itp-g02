@@ -32,6 +32,9 @@ function loadUserInfo() {
 
 //--------------Change User-Data Functions---------------//
 
+$("#firstNameEdit").off();
+$("#lastNameEdit").off();
+$("#usernameEdit").off();
 $("#firstNameEdit").click(enableEditFirstName);
 $("#lastNameEdit").click(enableEditLastName);
 $("#usernameEdit").click(enableEditUsername);
@@ -82,7 +85,7 @@ function checkFirstName(){
 
     $("#firstNameError").hide();
     $("#firstNameEditActive").css("color", "green");
-    $("#firstNameEditActive").unbind();
+    $("#firstNameEditActive").off();
     $("#firstNameEditActive").click(function() {confirmEdit("firstName")});
 }
 
@@ -105,7 +108,7 @@ function checkLastName(){
 
     $("#lastNameError").hide();
     $("#lastNameEditActive").css("color", "green");
-    $("#lastNameEditActive").unbind();
+    $("#lastNameEditActive").off();
     $("#lastNameEditActive").click(function() {confirmEdit("lastName")});
 }
 
@@ -118,7 +121,7 @@ function checkUsername(){
         $("#usernameUnavailable").hide();
         $("#usernameAvailable").hide();
         $("#usernameEditActive").css("color", "green");
-        $("#usernameEditActive").unbind();
+        $("#usernameEditActive").off();
         $("#usernameEditActive").click(function() {confirmEdit("username")});
         return;
     }
@@ -156,7 +159,7 @@ function checkUsername(){
                 $("#usernameUnavailable").hide();
                 $("#usernameAvailable").show();
                 $("#usernameEditActive").css("color", "green");
-                $("#usernameEditActive").unbind();
+                $("#usernameEditActive").off();
                 $("#usernameEditActive").click(function() {confirmEdit("username")});
                 return;
             }

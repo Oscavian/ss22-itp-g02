@@ -32,23 +32,23 @@ function checkIfEmpty(allIsOk) {
     var allOk = allIsOk;
     if($("#first_name").val() === ""){
         allOk = false;
-        $("#first_name_error").append("Please enter a first name <br>");
+        $("#first_name_error").text("Please enter a first name <br>");
     }
     if ($("#last_name").val() === ""){
         allOk = false;
-        $("#last_name_error").append("Please enter a last name <br>");
+        $("#last_name_error").text("Please enter a last name <br>");
     }
     if($("#user").val() === ""){
         allOk = false;
-        $("#user_error").append("Please enter a username <br>");
+        $("#user_error").text("Please enter a username <br>");
     }
     if($("#password").val() === ""){
         allOk = false;
-        $("#password_error").append("Please enter a password <br>");
+        $("#password_error").text("Please enter a password <br>");
     }
     if($("#confirmPassword").val() === ""){
         allOk = false;
-        $("#confirm_password_error").append("Please confirm your password <br>");
+        $("#confirm_password_error").text("Please confirm your password <br>");
     }
     return allOk;
 }
@@ -60,11 +60,11 @@ function checkIfAlphabet(allIsOk){
     var lastName = $("#last_name").val();
     if(!/^[A-Za-z\s]*$/.test(firstName)){
         allOk = false;
-        $("#first_name_error").append("First name must consist of letters only <br>");
+        $("#first_name_error").text("First name must consist of letters only <br>");
     }
     if(!/^[A-Za-z\s]*$/.test(lastName)){
         allOk = false;
-        $("#last_name_error").append("Last name must consist of letters only <br>");
+        $("#last_name_error").text("Last name must consist of letters only <br>");
     }
     return allOk;
 }
@@ -75,11 +75,11 @@ function checkIfAlphanumeric(allIsOk){
     var password = $("#password").val();
     if(!/^[a-zA-Z0-9]+$/.test(user)){
         allOk = false;
-        $("#user_error").append("Username must consist of letters and numbers only <br>");
+        $("#user_error").text("Username must consist of letters and numbers only <br>");
     }
     if(!/^[a-zA-Z0-9]+$/.test(password)){
         allOk = false;
-        $("#password_error").append("Password must consist of letters and numbers only <br>");
+        $("#password_error").text("Password must consist of letters and numbers only <br>");
     }
     return allOk;
 }
@@ -88,19 +88,19 @@ function checkLength(allIsOk){
     var allOk = allIsOk;
     if($("#first_name").val().length > 50){
         allOk = false;
-        $("#first_name_error").append("Only a maximum of 50 characters allowed <br>");
+        $("#first_name_error").text("Only a maximum of 50 characters allowed <br>");
     }
     if($("#last_name").val().length > 50){
         allOk = false;
-        $("#last_name_error").append("Only a maximum of 50 characters allowed <br>");
+        $("#last_name_error").text("Only a maximum of 50 characters allowed <br>");
     }
     if($("#user").val().length < 6 || $("#user").val().length > 50){
         allOk = false;
-        $("#user_error").append("Username must be between 6 to 50 characters long <br>");
+        $("#user_error").text("Username must be between 6 to 50 characters long <br>");
     }
     if($("#password").val().length < 6 || $("#password").val().length > 50){
         allOk = false;
-        $("#password_error").append("Password must be between 6 to 50 characters long <br>");
+        $("#password_error").text("Password must be between 6 to 50 characters long <br>");
     }
     return allOk;
 }
@@ -111,7 +111,7 @@ function checkPw(allIsOk){
     var pw = $("#password").val();
     var cpw = $("#confirmPassword").val();
     if(pw !== cpw){
-        $("#password_error").append("Password and its confirmation must match <br>");
+        $("#password_error").text("Password and its confirmation must match <br>");
         allOk = false;
     }
     return allOk;

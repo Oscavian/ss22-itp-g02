@@ -1,2 +1,107 @@
+<script src="client/js/show-group-members.js" defer></script>
 
-Group Members
+<style>
+    @media (max-width: 576px){
+       #show-groupmembers-main-container{
+       padding: 0 !important;
+       }
+   } 
+   .group-member {
+      position: relative !important;
+      background-color: #fff !important;
+      border-bottom-style: solid !important;
+      border-bottom-width: 2px !important;
+      border-bottom-color: rgba(0, 0, 0, 0) !important;
+      border-radius: 0 !important;
+      margin: 1px 1px 0 0!important;
+      /* box-shadow: 0 6px 10px rgba(128,0,128,.10), 0 0 6px rgba(128,0,128,.07); */
+      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+    }
+   .group-member:hover{
+      z-index: 10000 !important;
+      background-color:rgba(255, 240, 255, 0.5) !important; 
+      border-bottom-color: rgba(128,0,128,.5) !important;
+      margin: 2px 1px 1px 0 !important;
+      box-shadow: 0 10px 20px rgba(128,0,128,.14), 0 4px 8px rgba(128,0,128,.08);
+    }
+
+    .pw-reset-link, #addNewStudentsButton {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    .pw-reset-link:hover, #addNewStudentsButton:hover {
+        text-decoration: none;
+    }
+
+</style>
+
+<h3 style="margin-bottom: -14px;">Teil dieser Gruppe sind:</h3>
+<hr size="4" style="color: purple; opacity: 80%;">
+<h5><strong>Lehrer*innen:</strong></h5>
+<div style="overflow: hidden; white-space: nowrap; display: block;  overflow-x: auto;">
+    <table id="teacher-member" class="table table-responsive" style="display: none;">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Vorname</th>
+                <th>Nachname</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="teacher-member-list"></tbody>
+    </table>
+</div>
+<br>
+<h5><strong>Schüler*innen:</strong></h5>
+
+<div style="display: none; text-align: center;" id="noStudentsMessage">
+    <h4 class="text-muted" style="margin-top: 2em;">Keine Schüler*innen</h4>
+    <div id="addNewStudentsButton" type="button" style="background-color: purple; margin-bottom: 2rem;" class='btn text-warning'><i class="bi bi-person-plus" style="margin-right: 5px;"></i>Schüler*innen hinzufügen</div>
+</div>
+
+<div style="overflow: hidden; white-space: nowrap; display: block;  overflow-x: auto;">
+<table id="student-member" class="table table-responsive" style="display: none;">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Vorname</th>
+            <th>Nachname</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="student-member-list"></tbody>
+</table>
+</div>
+
+<div style="z-index: 999999;" class="modal fade text-dark" id="resetPasswordModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <div style="display: flex; align-items: center;"><i class="bi bi-person-circle text-muted" style="font-size: 2rem; margin-bottom: -25px; margin-top: -21.5px;"></i>
+                    <span style="vertical-align: middle; margin: 1px 0 0 7px;">
+                        <div style="margin-left: 3px" id="modalUserName"></div>
+                    </span>
+                </div>
+                
+                <button type="button" class="btn-close" onclick="closeResetPasswordModal()"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+
+                <div style="display: none;" id="newPasswordField">
+                    <h6 style="margin-bottom: 10px; font-weight: bold;">Neues Passwort:</h6>
+                    <h6 id="newPassword" style="background-color: #eee; padding: 7px; border-radius: 5px; 
+                     display: inline-block; margin-bottom: 10px;"></h6>
+                </div>
+
+             <div style="float: right; " class="btn btn-warning" id="passwordChangeBtn" onclick="getNewPassword()">Passwort zurücksetzen</div>
+             <div style="float: right; display: none;" class="btn btn-warning" id="passwordChangeConfirmBtn" onclick="saveNewPassword()">Passwort speichern</div>
+
+            </div>
+        </div>
+    </div>
+  </div>
+
+</div>   

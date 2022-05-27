@@ -9,25 +9,74 @@
       transform: scale(1.05);
       box-shadow: 0 10px 20px rgba(128,0,128,.14), 0 4px 8px rgba(128,0,128,.08);
   }
+
+  @media (max-width: 900px){
+        .new-students-container{
+        padding: 0 !important;
+        }
+    }
+
+
+   .newStudentAccount {
+      position: relative !important;
+      background-color: #fff !important;
+      border-bottom-style: solid !important;
+      border-bottom-width: 2px !important;
+      border-bottom-color: rgba(0, 0, 0, 0) !important;
+      border-radius: 0 !important;
+      margin: 1px 1px 0 0!important;
+      /* box-shadow: 0 6px 10px rgba(128,0,128,.10), 0 0 6px rgba(128,0,128,.07); */
+      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+    }
+   .newStudentAccount:hover{
+      z-index: 10000 !important;
+      background-color:rgba(255, 240, 255, 0.5) !important; 
+      border-bottom-color: rgba(128,0,128,.5) !important;
+      margin: 2px 1px 1px 0 !important;
+      box-shadow: 0 10px 20px rgba(128,0,128,.14), 0 4px 8px rgba(128,0,128,.08);
+    }
+
 </style>
 
 <div id="create-student-main-body">
   <h1>Neue SchülerInnen-Accounts</h1>
-  <div class="container text-dark">
+  <div style="max-width: 900px;" class="container text-dark">
     <div style="background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px">
-      <div class="container new-students-container p-4">
-        <div style="margin-bottom: 30px; font-size: 120%" >Ein weiteres Formular hinzufügen
-          <button type="button" class="btn btn-sm btn-warning" id="add-form" style="padding-left: 10px; padding-right: 10px; margin-left: 5px; vertical-align: baseline;">+</button>
-        </div>
-        <form id="student-account">
-          <table class="table table-responsive table-sm" id="form-list"></table>
-          <button type="button" class="btn btn-md btn-warning" id="submit-student-accounts" name="submit-student-accounts">Erstellen</button>
-        </form>
-        <h5 id="post-response-stdacc" style="margin-top: 15px;"></h5>
-        <ul id="student-account-data"></ul>
+      <div style="overflow: hidden;" class="container new-students-container p-4">
+        
+        
+        <div id="createNewStudentsFormDiv" class="card">
+          <div class="card-body">
+            <form id="student-account">
+              <table style="max-width: 900px; overflow: hidden; white-space: nowrap; display: block; overflow-x: auto;" class="table table-responsive table-sm" id="form-list"></table>
+            </form>
+              <div id="add-form" type="button" style="background-color: #eee;" class='btn btn-light'><i class="bi bi-person-plus" style="margin-right: 5px; color: purple;"></i>Weitere Schüler*in</div>
+              <div type="button" class="btn btn-md btn-warning float-end" id="submit-student-accounts" name="submit-student-accounts">Erstellen</div>
+            </div>
+          </div>
+          
+          <div  id="newStudentAccountList" style="display: none;" class="card">
+            <div class="card-body">
+
+              <h3 style="margin-bottom: -14px;"><i class="bi bi-person-plus" style="margin-right: 10px; font-size: 26px; vertical-align: bottom;"></i>Erstellte Accounts</i></h3>
+              <hr size="4" style="color: purple; opacity: 80%;">
+              
+              <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Vorname</th>
+                        <th>Nachname</th>
+                        <th>Passwort</th>
+                    </tr>
+                </thead>
+                <tbody id="newStudentAccountListBody"></tbody>
+            </table>
+            <div type="button" onclick="history.back()" class="btn btn-md btn-warning float-end">Zurück zur Gruppe</div>
+            </div>
+          </div>
+          
       </div>
     </div>
   </div>
 </div>
-
-<div id="checknumrows"></div>

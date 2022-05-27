@@ -12,6 +12,7 @@ function getUserGroups() {
         dataType: "json",
         success: (response) => {
             if (response["success"]){
+                $("#group-main-body").empty();
                 if (response["noGroups"]){
                     $("#group-main-body").append("" +
                         "<section style='background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px'>" + 

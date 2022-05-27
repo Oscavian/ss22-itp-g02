@@ -1,73 +1,41 @@
+var groupId = new URLSearchParams(window.location.search).get("id");
+
 var counter = 1;
 
 defaultForms();
 
 function defaultForms(){
-     //per default 5 forms open
-     while(counter <= 5){
-        addStudentAccountForm();
-    }
 
+    $("#form-list").empty();
+    addStudentAccountForm();
+
+    $("#add-form").off();
     $("#add-form").click(function () {
         addStudentAccountForm();
     }); 
 
+    $("#submit-student-accounts").off();
     $("#submit-student-accounts").click(function () {
         createStudentAccounts();
     }); 
 }
 
-function getMyGroups(counter){
-    $.ajax({
-        type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
-        data: {method: "getUserGroups"},
-        cache: false,
-        dataType: "json",
-        success: (response) => {
-            if (response["success"]){
-
-                if (response["noGroups"]){
-                    $("#class-selector" + counter).append("<option>Keine Klassen zur Auswahl</option>");
-                } 
-                else {
-                    $.each(response["groups"], (i, g) => {
-                        $("#class-selector" + counter).append("<option id='" + g["groupId"] + "'>" + g["groupName"] + "</option");
-                    })
-                }
-            }
-        },
-        error: (error) => {
-            console.log("AJAX Request Error: " + error);
-        }
-    });
-
-}
-
 function addStudentAccountForm(){
     var tablerow = $("<tr id ='" + counter +"' class = 'student-form' style='vertical-align: top;'></tr>");
     $(tablerow).append("<td class='vornameZeile'>\
-                            <label for='firstname' class='col-sm-2 col-form-label col-form-label-lg'>Vorname</label>\
-                            <input type='text' placeholder='Max' class='form-control form-control-lg bg-white' id='firstname" + counter + "' name='firstname'>\
+                            <label for='firstname' style='font-size: 20px'>Vorname</label>\
+                            <input style='padding-left: 10px; padding-rigth: 5px;' type='text' placeholder='Max' class='form-control form-control-lg' id='firstname" + counter + "' name='firstname'>\
                             <div id='firstname_error" + counter + "' style='color: red;'></div>\
                         </td>");
 
-    $(tablerow).append("<td class='nachnameZeile'>\
-                            <label for='lastname' margin-left: 5px' class='col-sm-2 col-form-label col-form-label-lg'>Nachname</label>\
-                            <input type='text' placeholder='Mustermann' class='form-control form-control-lg bg-white' id='lastname" + counter + "' name='lastname' style='margin-left: 5px'>\
+    $(tablerow).append("<td style='padding-left: 10px; padding-right: 10px' class='nachnameZeile'>\
+                            <label for='lastname' style='font-size: 20px'>Nachname</label>\
+                            <input style='padding-left: 10px; padding-rigth: 5px;' type='text' placeholder='Mustermann' class='form-control form-control-lg' id='lastname" + counter + "' name='lastname'>\
                             <div id='lastname_error" + counter + "' style='color: red;'></div>\
                         </td>");
-    $(tablerow).append("<td class='klasseZeile'>\
-                            <label for='class-selector' class='col-sm-2 col-form-label col-form-label-lg' margin-left: 10px;'>Klasse</label>\
-                            <select id='class-selector" + counter + "' class='form-control form-control-lg bg-white' name='group' style=' margin-left: 10px;'>\
-                            <option value='empty slot'></option>\
-                            </select>\
-                            <div id='class_error" + counter + "' style='color: red;'></div>\
-                        </td>");
-                        getMyGroups(counter);
-    $(tablerow).append("<td>\
-                            <label for='delete-form' margin-left: 15px;' class='col-sm-2 col-form-label col-form-label-lg'>Löschen</label><br>\
-                            <button type='button' class='btn btn-lg btn-warning bg-warning' id='delete-form" + counter + "' style='height: 45px; width: 45px; margin-left: 15px;' onclick='deleteForm(" + counter + ")'> x </button>\
+    $(tablerow).append("<td style='width: 1%; white-space: nowrap;'>\
+                            <label for='delete-form' style='font-size: 20px; visibility: hidden;' class=''>x</label><br>\
+                            <div style='border: 0; display: flex; align-items: center; justify-content: center; height: 48px; width: 48px; background-color: #eee;' id='delete-form" + counter + "' onclick='deleteForm(" + counter + ")' class='btn btn-light'><i class='bi bi-x-lg' style='margin-top: 2px; color: purple; font-size: 20px'></i></div>\
                             <div></div>\
                         </td>");
     $("#form-list").append(tablerow);
@@ -95,13 +63,11 @@ function createStudentAccounts(){
         allOk = checkIfEmptyStudAcc(allOk, Id);
         allOk = checkIfAlphabetStudAcc(allOk, Id);
         allOk = checkLengthStudAcc(allOk, Id);
-        //allOk = checkIfSelectedStudAcc(allOk, Id);
         if(allOk === true) {
 
             var student = new StudentInfo();
             student.first_name = $("#firstname" + Id).val();
             student.last_name = $("#lastname" + Id).val();
-            //add group into it later on
             studentInfoList.push(student);
             //$("#checknumrows").append("row"+Id+" is ok, ");
         }
@@ -157,17 +123,6 @@ function checkLengthStudAcc(allIsOk, id){
     }
     return allOk;
 }
-//is there for adding students to classes immediately
-function checkIfSelectedStudAcc(allIsOk, id){
-    var allOk = allIsOk;
-    var opt = $("#class-selector"+id+" option").filter(':selected').text();
-
-    if ( opt == "" ) {
-        $("#class_error"+ id).append("Es muss eine Klasse ausgewählt werden");
-        allOk = false;
-    }
-    return allOk;
-}
 
 function emptyStudAccErrors(){
     $("div[id^='firstname_error']").empty();
@@ -183,15 +138,38 @@ function submitStudentAccInput(studentInfoList){
         url: "/ss22-itp-g02/backend/requestHandler.php",
         data:   {
                     method: "registerStudents",
-                    students: JSON.stringify(studentInfoList)
+                    students: JSON.stringify(studentInfoList),
+                    group_id: groupId
                 },
         cache: false,
         dataType: "json",
         success: function (response) {
             //$("#success").append(response);
             $("#post-response-stdacc").append("Die SchülerInnen-Accounts sind erfolgreich angelegt worden<br>");
+            $("#newStudentAccountListBody").empty();
+            $("#createNewStudentsFormDiv").hide();
+            $("#newStudentAccountList").show();
+            
             $.each(response, function(i, p) {
-                $("#student-account-data").append("<li>Username: "+ p["username"] +", Passwort: "+ p["password"] +"</li>");
+
+
+                var tablerow = $("<tr class='newStudentAccount' style='vertical-align: top;'></tr>");
+                tablerow.append(`
+                                <td>
+                                    <div style="display: flex; align-items: center;"><i class="bi bi-person-circle text-muted" style="font-size: 2rem; margin-bottom: -25px; margin-top: -21.5px;"></i>
+                                        <span style="vertical-align: middle; margin: 1px 0 0 7px;">
+                                            <span style="margin-left: 3px" id="userName">${p["username"]}</span>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>${p["first_name"]}</td>
+                                <td>${p["last_name"]}</td>
+                                <td>${p["password"]}</td>
+                                `);
+
+                $("#newStudentAccountListBody").append(tablerow);
+
+
             });
 
             $('#student-account')[0].reset();

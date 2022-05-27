@@ -10,6 +10,9 @@ function loadTaskOverview(groupId) {
         dataType: "json",
         success: function (response) {
             
+            $("#currentAssignmentsContent").children().not(":last").remove();
+            $("#pastAssignmentsContent").empty();
+            
             currentAssignments = [];
             pastAssignments = [];
 
@@ -25,6 +28,7 @@ function loadTaskOverview(groupId) {
             if(currentAssignments.length){
                 if(isTeacher){
                     $("#addNewAssignmentCard").show();
+                    $("#addNewAssignmentCard").off();
                     $("#addNewAssignmentCard").click(() => {
                         loadPage('neueAufgabe', groupId);
                     });
@@ -33,6 +37,7 @@ function loadTaskOverview(groupId) {
             } else {       
                 if(isTeacher){
                     $("#noCurrentTasksMessageTeacher").show();
+                    $("#addNewAssignmentButton").off();
                     $("#addNewAssignmentButton").click(() => {
                         loadPage('neueAufgabe', groupId);
                     });
@@ -95,10 +100,12 @@ function displayCurrentAssignment(assignment){
     $("#currentAssignmentsContent").prepend(card);
 
     if(isTeacher){
+        $(card).off();
         $(card).click(function() {
             loadPage('aufgabeMitAbgaben', assignment.assignmentId);
         });
     } else {
+        $(card).off();
         $(card).click(function() {
             loadPage('aufgabe', assignment.assignmentId);        
         });
@@ -137,10 +144,12 @@ function displayPastAssignment(assignment){
     $("#pastAssignmentsContent").prepend(card);
     
     if(isTeacher){
+        $(card).off();
         $(card).click(function() {
             loadPage('aufgabeMitAbgaben', assignment.assignmentId);
         });
     } else {
+        $(card).off();
         $(card).click(function() {
             loadPage('aufgabe', assignment.assignmentId); 
         });
