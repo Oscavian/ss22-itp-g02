@@ -34,7 +34,7 @@ function getUserGroups() {
                         "       <div class='col-lg-12'>" + 
                         "           <div id='groupTitleAndTeacherDiv' style='display: flex; align-items: center;'>" + 
                         "               <div style='font-weight: bold; font-size: 2em;' id='groupTitle'>Gruppe " + g['groupName'] + "</div>" + 
-                        "               <div style='margin-left: auto; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;' id='groupTeacher" + g['groupId'] + "'></div>" + 
+                        "               <div style='margin-left: auto; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;' class='groupTeacherName' id='groupTeacher" + g['groupId'] + "'></div>" + 
                         "           </div>" + 
                         "       <div id='group-details-content-card' class='card group-details-content-card' style='margin-top: 1rem;'>" + 
                         "           <div id='group-details-content' class='card-body'>" + 

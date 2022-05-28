@@ -1,3 +1,5 @@
+<script src="client/js/chat.js" defer></script>
+
 <style>
 
     .ps-container {
@@ -15,6 +17,8 @@
         width:fit-content;
         margin-top: 5px;
         margin-bottom: 10px;
+        margin-left: 5px;
+        margin-right: 5px;
         padding: 5px;
         max-width: 400px;
         box-shadow: 5px 5px 5px #A98EDA;
@@ -23,46 +27,69 @@
     .msgOwn{
         background-color: #9EC5FE;
         float: right;
+        border-color: blue;
     }
 
     .msgTeacher{
         background-color: #FFE69C;
         clear: right;
+        border-color: orange;
     }
 
     .msgOther{
         background-color: #A6E9D5;
         clear: right;
+        border-color: gray;
+    }
+
+    .sendingField{
+        position: absolute;
+        bottom: 8px;
+        left: 5px;
+    }
+
+    .chatMsgInput{
+        width: 550px;
+    }
+    
+    @media (max-width: 992px){
+        .chatMsg{
+        max-width: 200px;
+        }
     }
 
 </style>
 
 <div id="chat-main-body">
-        <h1 class="text-center">Willkommen im Chat!</h1></br>
-        <div class="row container d-flex justify-content-center">
-            <div class="col-md-11">
-                <div class="card card-bordered" style="border-color: purple; border-width: 3px; background-color: #E2D9F3">
-                    <div class="ps-container" style="overflow-y: scroll !important; height:500px !important;">
-                        <div class="card border-gray chatMsg msgOther">
-                            <div class="card-text otherChat">
-                                andere Chatnachricht
-                            </div>
-                            <div class="card-text otherChat">
-                                nächste andere Chatnachricht
-                            </div>
+    <h1 class="text-center">Willkommen im Chat!</h1></br>
+    <div class="row container d-flex justify-content-center">
+        <div class="col-md-11">
+            <div class="card card-bordered" style="border-color: purple; border-width: 3px; background-color: #E2D9F3">
+                <div class="ps-container" style="overflow-y: scroll !important; height:500px !important;" id="chatContent">
+                    <div class="card chatMsg msgOther">
+                        <div class="card-text">
+                            andere Chatnachricht
                         </div>
-                        <div class="card border-primary chatMsg msgOwn">
-                            <div class="card-text ownChat">
-                                eigene Chatnachricht
-                            </div>
+                        <div class="card-text">
+                            nächste andere Chatnachricht
                         </div>
-                        <div class="card border-warning chatMsg msgTeacher">
-                            <div class="card-text otherChat">
-                                Lehrer Chatnachricht
-                            </div>
+                    </div>
+                    <div class="card chatMsg msgOwn">
+                        <div class="card-text">
+                            eigene Chatnachricht ffffffffffffffffff fffffffffff fffffffffff ffffffffff ffffffffffffffffffffffff fffffffffff
                         </div>
+                    </div>
+                    <div class="card chatMsg msgTeacher">
+                        <div class="card-text">
+                            Lehrer Chatnachricht asf aod ndg nidg d ngnoig w ugwr gng snsr n rs ngbfgngfnfhn hshfg
+                        </div>
+                    </div>
+                    <div class="sendingField form-group">
+                        <button class="btn btn-success chatSendBtn" onclick="sendMessage()"><i class="bi bi-send"></i></button>
+                        <input type="text" class="form-control col-lg chatMsgInput" id="newChatMessage">
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </div>
