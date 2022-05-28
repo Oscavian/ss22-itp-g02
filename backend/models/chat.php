@@ -40,7 +40,12 @@ class Chat {
     }
 
     public function getMessages(): array {
-        //TODO
+        if (empty($this->messages)) {
+            $result = Database::select("SELECT pk_message_id FROM message where fk_chat_id = ?", [$this->chat_id], "i");
+            foreach ($result as $item) {
+                $this->messages[] = Hub::Message($item["pk_message_id"]);
+            }
+        }
         return $this->messages;
     }
 }

@@ -6,8 +6,8 @@ class Message {
     private $chat_id;
     private $text;
     private $time;
-    private $file_path;
-    private $image_path;
+    //private $file_path;
+    //private $image_path;
 
 
     public function __construct($id = null) {
@@ -15,9 +15,9 @@ class Message {
 
     }
 
-    public function getBaseData() {
-        $query = "SELECT pk_message_id as message_id, fk_user_id as user_id, fk_chat_id as chat_id, time, text FROM message WHERE pk_message_id = ?";
-        $result = Database::select($query, [$this->message_id], "i");
+    public function getData(): array {
+        $query = "SELECT fk_user_id as user_id, fk_chat_id as chat_id, time, text FROM message WHERE pk_message_id = ?";
+        $result = Database::select($query, [$this->message_id], "i", true);
 
         $this->user_id = $result["user_id"];
         $this->text = $result["text"];
@@ -27,15 +27,25 @@ class Message {
         return get_object_vars($this);
     }
 
-    public function storeNewMessage($user_id, $chat_id, $text){
+    public function storeNewMessage($user_id, $chat_id, $text): bool {
 
         $new_message_id = Database::insert("INSERT INTO message (fk_user_id, fk_chat_id, text) values (?, ?, ?)", [$user_id, $chat_id, $text], "iis");
-        if (isset($this->message_id)){
+        if (isset($this->message_id)) {
             $this->message_id = $new_message_id;
-            $this->getBaseData();
+            $this->getData();
         } else {
             $this->message_id = $new_message_id;
         }
+
+        if (isset($new_message_id)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function removeMessage(): bool {
+        return Database::delete("DELETE FROM message where pk_message_id = ?", [$this->message_id], "i");
     }
 
     public function getMessageId() {
@@ -44,7 +54,7 @@ class Message {
 
 
     public function getUserId() {
-        if (empty($this->user_id)){
+        if (empty($this->user_id)) {
             return $this->user_id = Database::select("SELECT fk_user_id AS user_id FROM message WHERE pk_message_id = ?")["user_id"];
         }
         return $this->user_id;
@@ -52,7 +62,7 @@ class Message {
 
 
     public function getText() {
-        if (empty($this->text)){
+        if (empty($this->text)) {
             return $this->text = Database::select("SELECT text FROM message WHERE pk_message_id = ?")["text"];
         }
         return $this->text;
@@ -60,7 +70,7 @@ class Message {
 
 
     public function getChatId() {
-        if (empty($this->chat_id)){
+        if (empty($this->chat_id)) {
             return $this->chat_id = Database::select("SELECT fk_chat_id AS chat_id FROM message WHERE pk_message_id = ?")["chat_id"];
         }
         return $this->chat_id;
@@ -68,7 +78,7 @@ class Message {
 
 
     public function getTime() {
-        if (empty($this->time)){
+        if (empty($this->time)) {
             return $this->time = Database::select("SELECT time AS user_id FROM message WHERE pk_message_id = ?")["time"];
         }
         return $this->time;
