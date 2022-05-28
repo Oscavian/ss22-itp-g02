@@ -1,5 +1,4 @@
-var groupId = window.location.href.split('?groupId=').pop()
-console.log("Loading Group with id: " + groupId);
+var groupId = new URLSearchParams(window.location.search).get("id");
 loadGroupDetails(groupId);
 
 $("#group-details-content").load("client/pages/tasks/task-overview.html")
@@ -43,6 +42,7 @@ function loadGroupDetails(groupId){
         dataType: "json",
         success: function (response) {
             $("#groupTitle").text(response["groupName"]);
+            $("title").text(response["groupName"]);
         },
         error: function(error){
             console.log("AJAX-Request error: " + error);

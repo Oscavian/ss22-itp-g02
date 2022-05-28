@@ -1,5 +1,4 @@
-var groupId = window.location.href.split('?groupId=').pop()
-console.log("Loading tasks for group with id: " + groupId);
+var groupId = new URLSearchParams(window.location.search).get("id");
 loadTaskOverview(groupId);
 
 function loadTaskOverview(groupId) {
@@ -27,7 +26,7 @@ function loadTaskOverview(groupId) {
                 if(isTeacher){
                     $("#addNewAssignmentCard").show();
                     $("#addNewAssignmentCard").click(() => {
-                        loadPageCreateAssignment(groupId);
+                        loadPage('neueAufgabe', groupId);
                     });
                 }
                 currentAssignments.forEach(displayCurrentAssignment);  
@@ -35,7 +34,7 @@ function loadTaskOverview(groupId) {
                 if(isTeacher){
                     $("#noCurrentTasksMessageTeacher").show();
                     $("#addNewAssignmentButton").click(() => {
-                        loadPageCreateAssignment(groupId);
+                        loadPage('neueAufgabe', groupId);
                     });
                 } else {
                     $("#noCurrentTasksMessageStudent").show();
@@ -97,11 +96,11 @@ function displayCurrentAssignment(assignment){
 
     if(isTeacher){
         $(card).click(function() {
-            loadPageAssignmentSubmits(assignment.assignmentId);
+            loadPage('aufgabeMitAbgaben', assignment.assignmentId);
         });
     } else {
         $(card).click(function() {
-            loadPageAssignmentDetails(assignment.assignmentId);
+            loadPage('aufgabe', assignment.assignmentId);        
         });
     }
 }
@@ -139,11 +138,11 @@ function displayPastAssignment(assignment){
     
     if(isTeacher){
         $(card).click(function() {
-            loadPageAssignmentSubmits(assignment.assignmentId);
+            loadPage('aufgabeMitAbgaben', assignment.assignmentId);
         });
     } else {
         $(card).click(function() {
-            loadPageAssignmentDetails(assignment.assignmentId);
+            loadPage('aufgabe', assignment.assignmentId); 
         });
     }
 }

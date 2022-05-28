@@ -1,5 +1,4 @@
-var assignmentId = window.location.href.split("?assignmentId=").pop();
-console.log("Loading assignment with id: " + assignmentId);
+var assignmentId = new URLSearchParams(window.location.search).get("id");
 loadAssignmentDetails(assignmentId);
 
 function loadAssignmentDetails(assignmentId) {
@@ -11,6 +10,7 @@ function loadAssignmentDetails(assignmentId) {
     dataType: "json",
     success: function (response) {
       $("#taskTitle").text(response["title"]);
+      $("title").text(response["title"]);
 
       $("#taskAuthor").text(response["creator_first_name"] + " " + response["creator_last_name"]);
 

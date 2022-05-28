@@ -1,5 +1,4 @@
-var assignmentId = window.location.href.split('?assignmentId=').pop()
-console.log("Loading assignment with id: " + assignmentId);
+var assignmentId = new URLSearchParams(window.location.search).get("id");
 loadAssignmentDetails(assignmentId);
 
 $("#submitted-tasks-content").load("client/pages/tasks/tasks-teacher-view/submitted-task-details.html");
@@ -33,9 +32,11 @@ function loadAssignmentDetails(assignmentId){
         dataType: "json",
         success: function (response) {
             $("#taskTitle").text(response["title"]);
+            $("title").text(response["title"]);
 
             $("#taskAuthor").text(response["creator_first_name"] + " " + response["creator_last_name"]);
-
+            
+            dueDate = new Date(response["due_time"]);
             date = new Date(response["time"]);
             dateYear = dueDate.getFullYear() % 2000;
             dateMonth = new String(dueDate.getMonth() + 1).padStart(2, '0');
@@ -44,7 +45,6 @@ function loadAssignmentDetails(assignmentId){
             
             $("#taskTime").text(dateString);
 
-            dueDate = new Date(response["due_time"]);
             dueDateYear = dueDate.getFullYear() % 2000;
             dueDateMonth = new String(dueDate.getMonth() + 1).padStart(2, '0');
             dueDateDay = new String(dueDate.getDate()).padStart(2, '0');
