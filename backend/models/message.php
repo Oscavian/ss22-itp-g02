@@ -15,6 +15,14 @@ class Message {
 
     }
 
+    public function exists(): bool {
+        if (empty($this->message_id)){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public function getData(): array {
         $query = "SELECT fk_user_id as user_id, fk_chat_id as chat_id, time, text FROM message WHERE pk_message_id = ?";
         $result = Database::select($query, [$this->message_id], "i", true);
@@ -52,26 +60,23 @@ class Message {
         return $this->message_id;
     }
 
-
     public function getUserId() {
         if (empty($this->user_id)) {
-            return $this->user_id = Database::select("SELECT fk_user_id AS user_id FROM message WHERE pk_message_id = ?")["user_id"];
+            return $this->user_id = Database::select("SELECT fk_user_id AS user_id FROM message WHERE pk_message_id = ?", [$this->message_id], "i", true)["user_id"];
         }
         return $this->user_id;
     }
 
-
     public function getText() {
         if (empty($this->text)) {
-            return $this->text = Database::select("SELECT text FROM message WHERE pk_message_id = ?")["text"];
+            return $this->text = Database::select("SELECT text FROM message WHERE pk_message_id = ?", [$this->message_id], "i", true)["text"];
         }
         return $this->text;
     }
 
-
     public function getChatId() {
         if (empty($this->chat_id)) {
-            return $this->chat_id = Database::select("SELECT fk_chat_id AS chat_id FROM message WHERE pk_message_id = ?")["chat_id"];
+            return $this->chat_id = Database::select("SELECT fk_chat_id AS chat_id FROM message WHERE pk_message_id = ?", [$this->message_id], "i", true)["chat_id"];
         }
         return $this->chat_id;
     }
@@ -79,7 +84,7 @@ class Message {
 
     public function getTime() {
         if (empty($this->time)) {
-            return $this->time = Database::select("SELECT time AS user_id FROM message WHERE pk_message_id = ?")["time"];
+            return $this->time = Database::select("SELECT time AS user_id FROM message WHERE pk_message_id = ?", [$this->message_id], "i", true)["time"];
         }
         return $this->time;
     }

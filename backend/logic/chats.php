@@ -7,25 +7,24 @@ class Chats {
      *
      * method: getMessages
      * chat_id: int
+     * offset: int //offsets loaded messages by 20, set offset to 0 to get latest messages
      * @return array
      * @throws Exception
      */
-    public function getMessages(): array {
-        if (empty($_POST["chat_id"])){
+    public function getMessages(): array {        
+        if (empty($_POST["chat_id"]) || !isset($_POST["offset"])){
             throw new Exception("Invalid Parameters!");
         }
 
         $chat = Hub::Chat($_POST["chat_id"]);
-        //TODO: add permission checks
 
-        //TODO: add limitation for loading messages
-        $messages = [];
-        foreach ($chat->getMessages() as $message){
-            $msgData = $message->getData();
-            $messages[] = $msgData;
+        if(!$chat->exists()){
+            throw new Exception("The chat with the requested id could not be found!");
         }
 
-        return $messages;
+        Permissions::checkIsInGroup($chat->getGroup());
+
+        return $chat->getMessages($_POST["offset"]);
     }
 
     /**
@@ -42,26 +41,47 @@ class Chats {
             throw new Exception("Invalid Parameters!");
         }
 
+        $chat = Hub::Chat($_POST["chat_id"]);
+
+        if(!$chat->exists()){
+            throw new Exception("The chat with the requested id could not be found!");
+        }
+
         Permissions::checkIsLoggedIn();
-        //TODO: check for permission
+        Permissions::checkIsInGroup($chat->getGroup());
 
         $message = Hub::Message();
-        if ($message->storeNewMessage($_SESSION["userId"], $_POST["chat_id"], $_POST["text"])) {
+        if ($message->storeNewMessage($_SESSION["userId"], $chat->getChatId(), $_POST["text"])) {
             return ["success" => true, "msg" => "Nachricht gesendet.", "message_id" => $message->getMessageId()];
         } else {
             throw new Exception("Message not sent!");
         }
     }
 
+    /**
+     * deletes a message
+     *
+     * method: deleteMessage
+     * message_id: int
+     * @return array
+     * @throws Exception
+     */
     public function deleteMessage() {
         if (empty($_POST["message_id"])) {
             throw new Exception("Invalid Parameters!");
         }
-
-        //TODO: check for permissions
+        
         Permissions::checkIsTeacher();
-
+        
         $message = Hub::Message($_POST["message_id"]);
+        
+        if(!$message->exists()){
+            throw new Exception("The message with the requested id could not be found!");
+        }
+        
+        $chat = Hub::Chat($message->getChatId());       
+        Permissions::checkIsInGroup($chat->getGroup());
+
         $message->removeMessage();
         return ["success" => true, "msg" => "Message deleted."];
     }
