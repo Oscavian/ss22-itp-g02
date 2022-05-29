@@ -53,7 +53,7 @@ function loadTaskOverview(groupId) {
                 $("#noOldTasksMessage").show();
             }
 ;
-            if(!$("#group-main-bod").is(":visible")){
+            if(!$("#group-main-body").is(":visible")){
                 $("#group-main-body").fadeIn("fast");
             }
         },
