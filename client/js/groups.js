@@ -42,6 +42,10 @@ function getUserGroups() {
                     })
                 }
             }
+            
+            if(isTeacher){
+                $("#showNewGroupForm").show();
+            }  
         },
         error: (error) => {
             console.log("AJAX Request Error: " + error);
@@ -49,7 +53,6 @@ function getUserGroups() {
     });
 
     $("#group-main-body").attr("style", "block");
-    $("#showNewGroupForm").attr("style", "block");
 }
 
 function showNewGroupForm(){
