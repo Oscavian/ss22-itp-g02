@@ -5,7 +5,6 @@
     .ps-container {
         position: relative;
     }
-
     .ps-container {
         -ms-touch-action: auto;
         touch-action: auto;
@@ -13,8 +12,18 @@
         -ms-overflow-style: none;
     }
 
+    .chatDate{
+        text-align: center;
+        color: black;
+        clear: both;
+    }
+    .chatDate span{
+        padding: 3px;
+        border-radius: 4px;
+        background-color: violet;
+    }
     .chatMsg{
-        width:fit-content;
+        width: fit-content;
         margin-top: 5px;
         margin-bottom: 10px;
         margin-left: 5px;
@@ -23,39 +32,43 @@
         max-width: 400px;
         box-shadow: 5px 5px 5px #A98EDA;
     }
-
+    .senderInfo{
+        color: gray;
+    }
     .msgOwn{
         background-color: #9EC5FE;
         float: right;
         border-color: blue;
+        clear: both;
     }
-
-    .msgTeacher{
-        background-color: #FFE69C;
-        clear: right;
-        border-color: orange;
-    }
-
     .msgOther{
         background-color: #A6E9D5;
-        clear: right;
+        clear: both;
         border-color: gray;
-    }
-
-    .sendingField{
-        position: absolute;
-        bottom: 8px;
-        left: 5px;
-    }
-
-    .chatMsgInput{
-        width: 550px;
     }
 
     .btnDeleteMsg{
         width: fit-content;
+        background-color: transparent;
+        outline: none;
+        color: red;
     }
-    
+    .btnDeleteMsg:hover{
+        background-color: red;
+        outline: red;
+        color: black;
+    }
+
+    .sendingField{
+        position: sticky;
+        bottom: 8px;
+        left: 5px;
+        clear: both;
+    }
+    .chatMsgInput{
+        width: 100%
+    }
+
     @media (max-width: 992px){
         .chatMsg{
         max-width: 200px;
@@ -70,7 +83,29 @@
         <div class="col-md-11">
             <div class="card card-bordered" style="border-color: purple; border-width: 3px; background-color: #E2D9F3">
                 <div class="ps-container" style="overflow-y: scroll !important; height:500px !important;" id="chatContent">
+                    <div class="card chatMsg msgOwn">
+                        <div class="senderInfo">
+                            Du - 23:46
+                        </div>
+                        <div class="card-text">
+                            gute Nacht an alle lol
+                        </div>
+                    </div>
+                    <div class="card chatMsg msgOwn">
+                        <div class="senderInfo">
+                            Du - 23:47
+                        </div>
+                        <div class="card-text">
+                            heyjod aipfnodsinf ng iagbaiuogbaiu ghsuoghofghfioghfsgh ioagh aiofgh iasfoghsfiohsf iohsfoai
+                        </div>
+                    </div>
+                    <div class="chatDate">
+                        <span>31.05</span>
+                    </div>
                     <div class="card chatMsg msgOther">
+                        <div class="senderInfo">
+                            Maria Hofer - 12:30
+                        </div>
                         <div class="card-text">
                             andere Chatnachricht
                         </div>
@@ -83,14 +118,14 @@
                             eigene Chatnachricht ffffffffffffffffff fffffffffff fffffffffff ffffffffff ffffffffffffffffffffffff fffffffffff
                         </div>
                     </div>
-                    <div class="card chatMsg msgTeacher">
+                    <div class="card chatMsg msgOther">
                         <div class="card-text">
                             Lehrer Chatnachricht asf aod ndg nidg d ngnoig w ugwr gng snsr n rs ngbfgngfnfhn hshfg
                         </div>
                     </div>
                     <div class="sendingField form-group">
-                        <button class="btn btn-success chatSendBtn" onclick="sendMessage()"><i class="bi bi-send"></i></button>
                         <input type="text" class="form-control col-lg chatMsgInput" id="newChatMessage">
+                        <button class="btn btn-success chatSendBtn" onclick="sendMessage()"><i class="bi bi-send"></i></button>
                     </div>
                 </div>
             </div>

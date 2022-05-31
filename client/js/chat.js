@@ -14,21 +14,17 @@ function loadMessages(){
                 if(counter >= 25){
                     break;
                 }
-                if(isTeacher === true){}
             });
         }
     });*/
+    $("#chatContent").append("<div class='card chatMsg msgOwn' id='msg" + 1 + "'>" +
+    "<div class='card-text'>" +
+    "eigene Chatnachricht ffffffffffffffffff fffffffffff fffffffffff ffffffffff ffffffffffffffffffffffff fffffffffff" +
+    "</div></div>");
     if(isTeacher === true){
-        $("#chatContent").append("<div class='card chatMsg msgOwn'>" +
-        "<button class='btn btn-sm btn-danger btnDeleteMsg' onclick='deleteMessage()'><i class='bi bi-trash3'></i></button><div class='card-text'>" +
-        "eigene Chatnachricht ffffffffffffffffff fffffffffff fffffffffff ffffffffff ffffffffffffffffffffffff fffffffffff" +
-        "</div></div>");
-    }else{
-        $("#chatContent").append("<div class='card chatMsg msgOwn'>" +
-        "<div class='card-text'>" +
-        "eigene Chatnachricht ffffffffffffffffff fffffffffff fffffffffff ffffffffff ffffffffffffffffffffffff fffffffffff" +
-        "</div></div>");
+        $("#msg" + 1 + "").prepend("<button class='btn btn-sm btnDeleteMsg' onclick='deleteMessage()'><i class='bi bi-trash3'></i></button>");
     }
+    
 }
 
 function sendMessage(){
