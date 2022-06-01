@@ -1,5 +1,5 @@
+let counter = 0; // unnötig wenn ids von der DB genommen werden
 loadMessages();
-
 function loadMessages(){
     /*$.ajax({
         type: "POST",
@@ -8,24 +8,28 @@ function loadMessages(){
         cache: false,
         dataType: "json",
         success: (response) => {
-            let counter = 0;
+            let counter = 0; wenn nur eine gewisse Anzahl Nachrichten geladen werden soll
             $.each(response =>{
-                counter++;
-                if(counter >= 25){
-                    break;
+                while(counter < 25){
+                    Nachricht einfügen
+                    counter++;
                 }
             });
         }
     });*/
-    ///////////////////// folgende Zahlen sind nur Platzhalter für die messageId aus der DB
-    $("#textsField").append("<div class='card chatMsg msgOwn' id='msg" + 1 + "'>" +
-    "<div class='senderInfo'>Vorname Nachname - Uhrzeit</div>" +
-    "<div class='card-text'>" +
-    "eigene Chatnachricht ffffffffffffffffff fffffffffff fffffffffff ffffffffff ffffffffffffffffffffffff fffffffffff" +
-    "</div></div>");
-    if(isTeacher === true){
-        $("#msg" + 1 + "").append("<button class='btn btn-sm py-0 btnDeleteMsg' onclick='deleteMessage(" + 1 + ")'><i class='bi bi-trash3'></i></button>");
+    ///////////////////// folgende Zahlen sind nur Platzhalter für die messageId aus der DB, Vorname + Nachname + Uhrzeit ebenfalls
+    while(counter < 5){
+        $("#textsField").append("<div class='card chatMsg msgOwn' id='msg" + counter + "'>" +
+        "<div class='senderInfo'>Vorname Nachname - Uhrzeit</div>" +
+        "<div class='card-text'>" +
+        "eigene Chatnachricht ffffffffffffffffff fffffffffff fffffffffff ffffffffff ffffffffffffffffffffffff fffffffffff" +
+        "</div></div>");
+        if(isTeacher === true){
+            $("#msg" + counter + "").append("<button class='btn btn-sm py-0 px-1 btnDeleteMsg' onclick='deleteMessage(" + counter + ")'><i class='bi bi-trash3'></i></button>");
+        }
+        counter++;
     }
+    
     $('#chatContent').animate({scrollTop: document.body.scrollHeight},"fast");
 }
 
@@ -41,6 +45,15 @@ function sendMessage(){
         dataType: "json",
         success: (response) => {}
     });*/
+    $("#textsField").append("<div class='card chatMsg msgOwn' id='msg" + counter + "'>" +
+    "<div class='senderInfo'>Vorname Nachname - Uhrzeit</div>" +
+    "<div class='card-text'>" + message +
+    "</div></div>");
+    if(isTeacher === true){
+        $("#msg" + counter + "").append("<button class='btn btn-sm py-0 px-1 btnDeleteMsg' onclick='deleteMessage(" + counter + ")'><i class='bi bi-trash3'></i></button>");
+    }
+    counter++;
+    $('#chatContent').animate({scrollTop: document.body.scrollHeight},"fast");
 }
 
 function deleteMessage(msgId){
