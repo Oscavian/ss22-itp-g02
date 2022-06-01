@@ -52,6 +52,7 @@
         background-color: transparent;
         outline: none;
         color: red;
+        font-size: 0.8em;
     }
     .btnDeleteMsg:hover{
         background-color: red;
@@ -60,13 +61,15 @@
     }
 
     .sendingField{
-        position: sticky;
-        bottom: 8px;
+        display: flex;
+        bottom: 0px;
         left: 5px;
+        position: sticky;
+        background: #E2D9F3;
         clear: both;
     }
     .chatMsgInput{
-        width: 100%
+        margin-right: 10px;
     }
 
     @media (max-width: 992px){
@@ -82,48 +85,80 @@
     <div class="row container d-flex justify-content-center">
         <div class="col-md-11">
             <div class="card card-bordered" style="border-color: purple; border-width: 3px; background-color: #E2D9F3">
-                <div class="ps-container" style="overflow-y: scroll !important; height:500px !important;" id="chatContent">
-                    <div class="card chatMsg msgOwn">
-                        <div class="senderInfo">
-                            Du - 23:46
+                <div class="ps-container" style="overflow-y: scroll !important; height:600px !important;" id="chatContent">
+                    <div id="textsField">
+                        <div class="card chatMsg msgOwn">
+                            <div class="senderInfo">
+                                Du - 23:46
+                            </div>
+                            <div class="card-text">
+                                gute Nacht an alle
+                            </div>
                         </div>
-                        <div class="card-text">
-                            gute Nacht an alle lol
+                        <div class="card chatMsg msgOwn">
+                            <div class="senderInfo">
+                                Du - 23:47
+                            </div>
+                            <div class="card-text">
+                                heyjod aipfnodsinf ng iagbaiuogbaiu ghsuoghofghfioghfsgh ioagh aiofgh iasfoghsfiohsf iohsfoai
+                            </div>
+                        </div>
+                        <div class="chatDate">
+                            <span>31.05</span>
+                        </div>
+                        <div class="card chatMsg msgOther">
+                            <div class="senderInfo">
+                                Maria Hofer - 12:30
+                            </div>
+                            <div class="card-text">
+                                andere Chatnachricht
+                            </div>
+                            <div class="card-text">
+                                nächste andere Chatnachricht
+                            </div>
+                        </div>
+                        <div class="card chatMsg msgOwn">
+                            <div class="senderInfo">
+                                Du - 13:01
+                            </div>
+                            <div class="card-text">
+                                eigene Chatnachricht ffffffffffffffffff fffffffffff fffffffffff ffffffffff ffffffffffffffffffffffff fffffffffff
+                            </div>
+                        </div>
+                        <div class="card chatMsg msgOther">
+                            <div class="senderInfo">
+                                Johnny Pedd - 13:10
+                            </div>
+                            <div class="card-text">
+                                Lehrer Chatnachricht asf aod ndg nidg d ngnoig w ugwr gng snsr n rs ngbfgngfnfhn hshfg
+                            </div>
+                        </div>
+                        <div class="card chatMsg msgOwn">
+                            <div class="senderInfo">
+                                Du - 23:47
+                            </div>
+                            <div class="card-text">
+                                heyjod aipfnodsinf ng iagbaiuogbaiu ghsuoghofghfioghfsgh ioagh aiofgh iasfoghsfiohsf iohsfoai
+                            </div>
+                        </div>
+                        <div class="card chatMsg msgOwn">
+                            <div class="senderInfo">
+                                Du - 23:47
+                            </div>
+                            <div class="card-text">
+                                heyjod aipfnodsinf ng iagbaiuogbaiu ghsuoghofghfioghfsgh ioagh aiofgh iasfoghsfiohsf iohsfoai
+                            </div>
+                        </div>
+                        <div class="card chatMsg msgOther">
+                            <div class="senderInfo">
+                                Vorname Nachname - Uhrzeit
+                            </div>
+                            <div class="card-text">
+                                heyjod aipfnodsinf ng iagbaiuogbaiu ghsuoghofghfioghfsgh ioagh aiofgh iasfoghsfiohsf iohsfoai
+                            </div>
                         </div>
                     </div>
-                    <div class="card chatMsg msgOwn">
-                        <div class="senderInfo">
-                            Du - 23:47
-                        </div>
-                        <div class="card-text">
-                            heyjod aipfnodsinf ng iagbaiuogbaiu ghsuoghofghfioghfsgh ioagh aiofgh iasfoghsfiohsf iohsfoai
-                        </div>
-                    </div>
-                    <div class="chatDate">
-                        <span>31.05</span>
-                    </div>
-                    <div class="card chatMsg msgOther">
-                        <div class="senderInfo">
-                            Maria Hofer - 12:30
-                        </div>
-                        <div class="card-text">
-                            andere Chatnachricht
-                        </div>
-                        <div class="card-text">
-                            nächste andere Chatnachricht
-                        </div>
-                    </div>
-                    <div class="card chatMsg msgOwn">
-                        <div class="card-text">
-                            eigene Chatnachricht ffffffffffffffffff fffffffffff fffffffffff ffffffffff ffffffffffffffffffffffff fffffffffff
-                        </div>
-                    </div>
-                    <div class="card chatMsg msgOther">
-                        <div class="card-text">
-                            Lehrer Chatnachricht asf aod ndg nidg d ngnoig w ugwr gng snsr n rs ngbfgngfnfhn hshfg
-                        </div>
-                    </div>
-                    <div class="sendingField form-group">
+                    <div class="card-body sendingField form-group">
                         <input type="text" class="form-control col-lg chatMsgInput" id="newChatMessage">
                         <button class="btn btn-success chatSendBtn" onclick="sendMessage()"><i class="bi bi-send"></i></button>
                     </div>

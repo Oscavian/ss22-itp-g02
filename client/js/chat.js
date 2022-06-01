@@ -17,38 +17,40 @@ function loadMessages(){
             });
         }
     });*/
-    $("#chatContent").append("<div class='card chatMsg msgOwn' id='msg" + 1 + "'>" +
+    ///////////////////// folgende Zahlen sind nur Platzhalter für die messageId aus der DB
+    $("#textsField").append("<div class='card chatMsg msgOwn' id='msg" + 1 + "'>" +
+    "<div class='senderInfo'>Vorname Nachname - Uhrzeit</div>" +
     "<div class='card-text'>" +
     "eigene Chatnachricht ffffffffffffffffff fffffffffff fffffffffff ffffffffff ffffffffffffffffffffffff fffffffffff" +
     "</div></div>");
     if(isTeacher === true){
-        $("#msg" + 1 + "").prepend("<button class='btn btn-sm btnDeleteMsg' onclick='deleteMessage()'><i class='bi bi-trash3'></i></button>");
+        $("#msg" + 1 + "").append("<button class='btn btn-sm py-0 btnDeleteMsg' onclick='deleteMessage(" + 1 + ")'><i class='bi bi-trash3'></i></button>");
     }
-    
+    $('#chatContent').animate({scrollTop: document.body.scrollHeight},"fast");
 }
 
 function sendMessage(){
     let message = $("#newChatMessage").val();
+    $("#newChatMessage").val("");
     console.log(message);
-    $.ajax({
+    /*$.ajax({
         type: "POST",
         url: "/ss22-itp-g02/backend/requestHandler.php",
         data: {method: "sendMessage", message: message},
         cache: false,
         dataType: "json",
         success: (response) => {}
-    });
+    });*/
 }
 
-function deleteMessage(){
-    let delMsgId = $(this).val();
-    console.log(delMsgId);
-    $.ajax({
+function deleteMessage(msgId){
+    console.log(msgId);
+    /*$.ajax({
         type: "POST",
         url: "/ss22-itp-g02/backend/requestHandler.php",
-        data: {method: "deleteMessage", messageId: delMsgId},
+        data: {method: "deleteMessage", messageId: msgId},
         cache: false,
         dataType: "json",
         success: (response) => {}
-    });
+    });*/
 }
