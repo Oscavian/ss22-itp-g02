@@ -123,7 +123,15 @@ class Assignment {
     public function storeNewAssignment($creator_id, $group_id, $due_time, $title, $text, $file_path) {
 
         $query = "INSERT INTO assignment (fk_user_id, fk_group_id, due_time, title, text, file_path) VALUES (?,?,?,?,?,?)";
-        $this->assignment_id = Database::insert($query, [$creator_id, $group_id, $due_time, $title, $text, $file_path], "iissss");
+        $new_assignment_id = Database::insert($query, [$creator_id, $group_id, $due_time, $title, $text, $file_path], "iissss");
+        if (isset($this->assignment_id)){
+            $this->assignment_id = $new_assignment_id;
+            //fetch new data into object to prevent false data in object
+            $this->getBaseData();
+        } else {
+            $this->assignment_id = $new_assignment_id;
+        }
+
     }
 
 
