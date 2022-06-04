@@ -55,6 +55,14 @@ class Chat {
 
     public function getMessages(int $offset): array {
         $offsetMessages = $offset * 20;
-        return Database::select("SELECT * FROM message where fk_chat_id = ? ORDER BY time DESC LIMIT 20 OFFSET ?", [$this->chat_id, $offsetMessages], "ii");
+        $result = Database::select("SELECT * FROM message where fk_chat_id = ? ORDER BY time DESC LIMIT 20 OFFSET ?", [$this->chat_id, $offsetMessages], "ii");
+
+        $messages = [];
+        foreach ($result as $message) {
+            $message["first_name"] = Hub::User($message["fk_user_id"])->getFirstName();
+            $message["last_name"] = Hub::User($message["fk_user_id"])->getLastName();
+            $messages[] = $message;
+        }
+        return $messages;
     }
 }
