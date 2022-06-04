@@ -61,6 +61,7 @@ class Chat {
         foreach ($result as $message) {
             $message["first_name"] = Hub::User($message["fk_user_id"])->getFirstName();
             $message["last_name"] = Hub::User($message["fk_user_id"])->getLastName();
+            $message["fk_user_id"] == $_SESSION["userId"] ? $message["isOwnMessage"] = true : $message["isOwnMessage"] = false;
             $messages[] = $message;
         }
         return $messages;
