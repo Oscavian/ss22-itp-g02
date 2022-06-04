@@ -7,17 +7,26 @@ class Chats {
      *
      * method: getMessages
      * chat_id: int
+     * group_id: int //either chat_id or group_id must be provided
      * offset: int //offsets loaded messages by 20, set offset to 0 to get latest messages
      * @return array
      * @throws Exception
      */
     public function getMessages(): array {        
-        if (empty($_POST["chat_id"]) || !isset($_POST["offset"])){
+        if ((empty($_POST["chat_id"]) && empty($_POST["group_id"])) || !isset($_POST["offset"])){
             throw new Exception("Invalid Parameters!");
         }
 
-        $chat = Hub::Chat($_POST["chat_id"]);
-
+        if(empty($_POST["chat_id"])){
+            $group = Hub::Group($_POST["group_id"]);
+            if(!$group->exists()){
+                throw new Exception("The group with the requested id could not be found!");
+            }
+            $chat = $group->getChat();
+        } else {
+            $chat = Hub::Chat($_POST["chat_id"]);
+        }
+        
         if(!$chat->exists()){
             throw new Exception("The chat with the requested id could not be found!");
         }
@@ -31,17 +40,27 @@ class Chats {
      * receives and stores a new new message to a given chat
      *
      * method: sendMessage
+     * chat_id: int
+     * group_id: int //either chat_id or group_id must be provided
      * text: string
      * @return array
      * @throws Exception
      */
     public function sendMessage() {
-        if (empty($_POST["chat_id"]) ||
+        if ((empty($_POST["chat_id"]) && empty($_POST["group_id"])) ||
             empty($_POST["text"])) {
             throw new Exception("Invalid Parameters!");
         }
 
-        $chat = Hub::Chat($_POST["chat_id"]);
+        if(empty($_POST["chat_id"])){
+            $group = Hub::Group($_POST["group_id"]);
+            if(!$group->exists()){
+                throw new Exception("The group with the requested id could not be found!");
+            }
+            $chat = $group->getChat();
+        } else {
+            $chat = Hub::Chat($_POST["chat_id"]);
+        }
 
         if(!$chat->exists()){
             throw new Exception("The chat with the requested id could not be found!");
