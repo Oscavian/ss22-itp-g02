@@ -2,10 +2,36 @@
 
 <style>
 
+    #chatContent{
+        overflow-y: scroll !important;
+        height:600px !important;
+    }
+
+    /* width */
+    #chatContent::-webkit-scrollbar {
+    width: 10px;
+    }
+
+    /* Track */
+    #chatContent::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    }
+
+    /* Handle */
+    #chatContent::-webkit-scrollbar-thumb {
+    background: rgba(128,0,128, 0.9);
+    }
+
+    /* Handle on hover */
+    #chatContent::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    }
+
     .ps-container {
         position: relative;
-    }
-    .ps-container {
+        display: flex;
+        align-items: flex-end;
+        flex-wrap: wrap;
         -ms-touch-action: auto;
         touch-action: auto;
         overflow: hidden !important;
@@ -16,155 +42,127 @@
         text-align: center;
         color: black;
         clear: both;
+        margin: 5px;
     }
     .chatDate span{
         padding: 3px;
         border-radius: 4px;
         background-color: violet;
     }
+
+
     .chatMsg{
         width: fit-content;
-        margin-top: 5px;
-        margin-bottom: 10px;
-        margin-left: 5px;
-        margin-right: 5px;
         padding: 5px;
-        max-width: 400px;
+        max-width: 70%;
         box-shadow: 5px 5px 5px #A98EDA;
     }
     .senderInfo{
         color: gray;
     }
     .msgOwn{
+        margin-left: 5px;
         background-color: #9EC5FE;
         float: right;
-        border-color: blue;
+        /* border-color: blue; */
         clear: both;
     }
     .msgOther{
+        margin-right: 5px;
         background-color: #A6E9D5;
         clear: both;
-        border-color: gray;
+        /* border-color: gray; */
+    }
+
+    .ownMessageFlex{
+        align-items: center;
+        padding: 10px;
+        display: flex;
+        width: 100%;
+        flex-direction: row-reverse;
+    }
+
+    .otherMessageFlex{
+        align-items: center;
+        padding: 10px;
+        display: flex;
+        width: 100%;
     }
 
     .btnDeleteMsg{
         width: fit-content;
         background-color: transparent;
         outline: none;
-        color: red;
+        color: gray;
         font-size: 0.8em;
     }
+
     .btnDeleteMsg:hover{
-        background-color: red;
-        outline: red;
-        color: black;
+        color: red;
     }
 
     .sendingField{
         display: flex;
         bottom: 0px;
         left: 0px;
-        position: sticky;
         background: #E2D9F3;
         clear: both;
+        width: 100%;
+        padding: 10px
     }
     .chatMsgInput{
         margin-right: 10px;
+    }
+
+    #textsField{
+        padding-top: 10px;
+        bottom: 0;
+        width: 100%
+    }
+
+    #chat-main-body{
+            border: 0;
+            border-radius: 0;
+    }
+
+    .chatSendBtn{
+        color: white;
+        background-color: purple;
+    }
+
+    .chatSendBtn:hover{
+        color: white;
+        background-color: rgba(128,0,128, 0.8);
     }
 
     @media (max-width: 992px){
         .chatMsg{
         max-width: 200px;
         }
+
+        #chatContainer{
+            padding: 0;
+        }
+
+        #group-details-content{
+            padding: 0;
+        }
+
+        #chatContent::-webkit-scrollbar {
+            width: 0;
+        }
     }
 
 </style>
 
-<div id="chat-main-body">
-    <h1 class="text-center">Willkommen im Chat!</h1></br>
-    <div class="row container d-flex justify-content-center">
-        <div class="col-md-11">
-            <div class="card card-bordered" style="border-color: purple; border-width: 3px; background-color: #E2D9F3">
-                <div class="ps-container" style="overflow-y: scroll !important; height:600px !important;" id="chatContent">
-                    <div id="textsField">
-                        <div class="card chatMsg msgOwn">
-                            <div class="senderInfo">
-                                Du - 23:46
-                            </div>
-                            <div class="card-text">
-                                gute Nacht an alle
-                            </div>
-                        </div>
-                        <div class="card chatMsg msgOwn">
-                            <div class="senderInfo">
-                                Du - 23:47
-                            </div>
-                            <div class="card-text">
-                                heyjod aipfnodsinf ng iagbaiuogbaiu ghsuoghofghfioghfsgh ioagh aiofgh iasfoghsfiohsf iohsfoai
-                            </div>
-                        </div>
-                        <!-- Datumsanzeige für einen neuen Tag -->
-                        <div class="chatDate">
-                            <span>31.05</span>
-                        </div>
-                        <div class="card chatMsg msgOther">
-                            <div class="senderInfo">
-                                Maria Hofer - 12:30
-                            </div>
-                            <div class="card-text">
-                                andere Chatnachricht
-                            </div>
-                            <div class="card-text">
-                                nächste andere Chatnachricht
-                            </div>
-                        </div>
-                        <div class="card chatMsg msgOwn">
-                            <div class="senderInfo">
-                                Du - 13:01
-                            </div>
-                            <div class="card-text">
-                                eigene Chatnachricht ffffffffffffffffff fffffffffff fffffffffff ffffffffff ffffffffffffffffffffffff fffffffffff
-                            </div>
-                        </div>
-                        <div class="card chatMsg msgOther">
-                            <div class="senderInfo">
-                                Johnny Pedd - 13:10
-                            </div>
-                            <div class="card-text">
-                                Lehrer Chatnachricht asf aod ndg nidg d ngnoig w ugwr gng snsr n rs ngbfgngfnfhn hshfg
-                            </div>
-                        </div>
-                        <div class="card chatMsg msgOwn">
-                            <div class="senderInfo">
-                                Du - 23:47
-                            </div>
-                            <div class="card-text">
-                                heyjod aipfnodsinf ng iagbaiuogbaiu ghsuoghofghfioghfsgh ioagh aiofgh iasfoghsfiohsf iohsfoai
-                            </div>
-                        </div>
-                        <div class="card chatMsg msgOwn">
-                            <div class="senderInfo">
-                                Du - 23:47
-                            </div>
-                            <div class="card-text">
-                                heyjod aipfnodsinf ng iagbaiuogbaiu ghsuoghofghfioghfsgh ioagh aiofgh iasfoghsfiohsf iohsfoai
-                            </div>
-                        </div>
-                        <div class="card chatMsg msgOther">
-                            <div class="senderInfo">
-                                Vorname Nachname - Uhrzeit
-                            </div>
-                            <div class="card-text">
-                                heyjod aipfnodsinf ng iagbaiuogbaiu ghsuoghofghfioghfsgh ioagh aiofgh iasfoghsfiohsf iohsfoai
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body sendingField form-group">
-                        <input type="text" class="form-control col-lg chatMsgInput" id="newChatMessage">
-                        <button class="btn btn-success chatSendBtn" onclick="sendMessage()"><i class="bi bi-send"></i></button>
-                    </div>
-                </div>
-            </div>
+<div id="chat-main-body" class="card" style="background-color: #E2D9F3">
+    <div class="ps-container" id="chatContent">
+        <div id="textsField">
+            <!-- Messages go here -->
         </div>
     </div>
+    <form class="card-body sendingField form-group" onsubmit="return sendMessage(event)">
+        <input type="text" class="form-control col-lg chatMsgInput" id="newChatMessage">
+        <button type="submit" class="btn chatSendBtn"><i class="bi bi-send"></i></button>
+    </form>
 </div>
