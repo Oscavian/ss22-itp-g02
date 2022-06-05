@@ -59,21 +59,25 @@ class MainLogic {
             case "getAssignmentById":
                 return Hub::Assignments()->getAssignmentById();
             case "downloadAssignmentFile":
-                return Hub::Assignments()->downloadAssignmentFile();
+                Hub::Assignments()->downloadAssignmentFile();
+                break;
             case "createAssignment":
                 return Hub::Assignments()->createAssignment();
             case "getSubmissions":
                 return Hub::Assignments()->getSubmissions();
             case "downloadSubmissionFile":
-                return Hub::Assignments()->downloadSubmissionFile();
+                Hub::Assignments()->downloadSubmissionFile();
+                break;
             case "addSubmission":
                 return Hub::Assignments()->addSubmission();
 
             /* CHATS */
             case "getMessages":
-                break;
+                return Hub::Chats()->getMessages();
             case "sendMessage":
-                break;
+                return Hub::Chats()->sendMessage();
+            case "deleteMessage":
+                return Hub::Chats()->deleteMessage();
             default:
                 return null;
         }

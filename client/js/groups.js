@@ -29,8 +29,8 @@ function getUserGroups() {
                 else {
                     $.each(response["groups"], (i, g) => {
                         $("#group-main-body").append("" +
-                        "<section style='background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px' onclick='loadPage(`gruppe`, " + g['groupId'] + ");'>" + 
-                        "   <div class='container group-details-container p-4'>" + 
+                        "<section style='overflow: hidden; background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px' onclick='loadPage(`gruppe`, " + g['groupId'] + ");'>" + 
+                        "   <div class='container group-details-container p-4' style='overflow: hidden;' >" + 
                         "       <div class='col-lg-12'>" + 
                         "           <div id='groupTitleAndTeacherDiv' style='display: flex; align-items: center;'>" + 
                         "               <div style='font-weight: bold; font-size: 2em;' id='groupTitle'>Gruppe " + g['groupName'] + "</div>" + 
@@ -53,6 +53,9 @@ function getUserGroups() {
     });
 
     $("#group-main-body").attr("style", "block");
+    if(isTeacher === true){
+    $("#showNewGroupForm").attr("style", "block");
+    }
 }
 
 function showNewGroupForm(){

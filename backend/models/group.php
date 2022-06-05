@@ -82,8 +82,9 @@ class Group {
     public function storeNewGroup($groupName){
         
         //TODO: create chat as part of chat class
-        $newChatId = Database::insert("INSERT INTO chat (name) VALUES (?)", [$groupName], "s");
-        $this->group_id = Database::insert("INSERT INTO `groups` (name, fk_chat_id) VALUES (?, ?)", [$groupName, $newChatId], "si");
+        $chat = Hub::Chat();
+        $chat->storeNewChat("Chat: " . $groupName);
+        $this->group_id = Database::insert("INSERT INTO `groups` (name, fk_chat_id) VALUES (?, ?)", [$groupName, $chat->getChatId()], "si");
     }
 
     /**
