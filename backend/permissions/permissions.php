@@ -70,4 +70,20 @@ class Permissions {
             throw new Exception("No Permission - You're not in any group with this user!");
         }
     }
+
+    //checks if user is in any group with the other user
+    public static function checkIsInGroupWith(User $user, User $otherUser) {
+
+        if(!$user->exists()){
+            throw new Exception("The user with the requested ID does not exist!");
+        }
+
+        if(!$otherUser->exists()){
+            throw new Exception("The user with the requested ID does not exist!");
+        }
+
+        if(!$user->isInGroupWith($otherUser)){
+            throw new Exception("No Permission - You're not in any group with this user!");
+        }
+    }
 }

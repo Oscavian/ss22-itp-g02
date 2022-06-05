@@ -1,92 +1,149 @@
+//makes all ajax-calls async
+$.ajaxPrefilter(function( options, original_Options, jqXHR ) {
+    options.async = true;
+});
+
 //load navbar and footer
-$("navbar").load("client/html-includes/navbar.html");
-$("footer").load("client/html-includes/footer.html");
+$("#indexNavbar").load("client/html-includes/navbar.html");
+$("#indexFooter").load("client/html-includes/footer.html");
 
-//Maybe load different page when user is allready logged in?
-loadPageWithAnimation("client/pages/basic/home.html");
+//-----------------Pages-----------------//
 
-//--------------Pages--------------//
+const pages = {
+    home: {
+        title: "Home",
+        path: "client/pages/basic/home.html"
+        },
+    registrieren: {
+        title: "Registrieren",
+        path: "client/pages/user/register.html"
+        },
+    hilfe: {
+        title: "Hilfe",
+        path: "client/pages/basic/help.html"
+        },
+    impressum: {
+        title: "Impressum",
+        path: "client/pages/basic/imprint.html"
+        },
+    kontakt: {
+        title: "Kontakt",
+        path: "client/pages/basic/contact.html"
+        },
+    account: {
+        title: "Mein Account",
+        path: "client/pages/user/account-info.html"
+        },
+    gruppen: {
+        title: "Gruppenübersicht",
+        path: "client/pages/groups/groups-overview.html"
+        },
+    accountErstellen: {
+        title: "SchülerInnenaccount erstellen",
+        path: "client/pages/user/create-student-account.html"
+        },
+    aufgabe: {
+        title: null, //title is set to assignment name later
+        path: "client/pages/tasks/task-details.html"
+        },
+    aufgabeMitAbgaben: {
+        title: null, //title is set to assignment name later
+        path: "client/pages/tasks/tasks-teacher-view/submitted-tasks.html"
+        },
+    gruppe: {
+        title: null, //title is set to group name later
+        path: "client/pages/groups/group-details.html"
+        },
+    neueAufgabe: {
+        title: "Neue Aufgabe erstellen",
+        path: "client/pages/tasks/create-task.html"
+        },
+    seiteNichtGefunden: {
+        title: "Seite nicht gefunden",
+        path: "client/pages/basic/pageNotFound.html"
+        },
 
-function loadPageHome(){
-    title = "Home";
-    path = "client/pages/basic/home.html";
-    loadPage(title, path);
+        //add more pages here
 }
 
-function loadPageRegister(){
-    title = "Registrieren";
-    path = "client/pages/user/register.html";
-    loadPage(title, path);
-}
+//----------------First Page Load Handler-----------------//
 
-function loadPageHelp(){
-    title = "Hilfe";
-    path = "client/pages/basic/help.html";
-    loadPage(title, path);
+pageName = new URLSearchParams(window.location.search).get("seite");
+if(!pageName){
+    loadPageWithAnimation(pages["home"].path);
+    $("title").text(pages["home"].title);
+} else {
+    page = pages[pageName];    
+    if(page){
+        loadPageWithAnimation(page.path);
+        if(page.title){
+            $("title").text(page.title);
+        }
+    } else {
+        loadPageWithAnimation(pages["seiteNichtGefunden"].path);
+        $("title").text(pages["seiteNichtGefunden"].title);
+    }    
 }
-
-function loadPageImprint(){
-    title = "Impressum";
-    path = "client/pages/basic/imprint.html";
-    loadPage(title, path);
-}
-
-function loadPageContact(){
-    title = "Kontakt";
-    path = "client/pages/basic/contact.html";
-    loadPage(title, path);
-}
-
-function loadPageUserDetails(){
-    title = "Mein Account";
-    path = "client/pages/user/account-info.html";
-    loadPage(title, path);
-}
-
-function loadPageGroupOverview() {
-    title = "Gruppenübersicht";
-    path = "client/pages/groups/groups-overview.html";
-    loadPage(title, path);
-}
-
-function loadPageCreateStudent(){
-    title = "SchülerInnenaccount erstellen"
-    path = "client/pages/user/create-student-account.html";
-    loadPage(title, path);
-}
-
-//add more pages here
 
 //----------------Functions-----------------//
 
-function loadPage(title, path){
-    $("title").text(title);
-    loadPageWithAnimation(path);
-    addState(title, path);
+function loadPage(pageName, id = null){
+    page = pages[pageName];
+
+    if(!page){
+        console.log("Error - requested page does not exist!");
+    }
+    
+    if(page.title){
+        $("title").text(page.title);
+    }
+
+    if(id){
+        id = 'id=' + id;
+    }
+
+    loadPageWithAnimation(page.path);
+    addState(pageName, id);
 }
 
 function loadPageWithAnimation(path){
-    $("footer").fadeOut("fast");
-    $("#main-div").fadeOut("fast", function(){
-        $("#main-div").load(path, function(){
-            $("#main-div").fadeIn("fast");
-            $("footer").fadeIn("fast");
+    $("#indexContent").find("*").off(); //removes all current eventHandlers in content div
+    $("#indexContent").fadeOut("fast", function(){
+        $("#indexContent").load(path, function(){
+            $("#indexContent").fadeIn("fast");
         })
     });
 }
 
-function addState(title, path){
-    stateObject = {"pagePath": path, "pageTitle": title};
-    window.history.pushState(stateObject, "");
+function addState(pageName, id = null){
+    urlInfo = "?seite=" + pageName;
+    if(id){
+        urlInfo += "&" + id;
+    }
+    window.history.pushState(null, "", urlInfo);
 }
+
+//----------------Page Forward/Back Handler-----------------//
 
 window.onpopstate = function(event) {
     $('.modal').modal('hide');
-    if(event.state == null){
-        loadPageWithAnimation("client/pages/basic/home.html");
-        $("title").text("Home");
+    
+    pageName = new URLSearchParams(window.location.search).get("seite");
+
+    if(!pageName){
+        loadPageWithAnimation(pages["home"].path);
+        $("title").text(pages["home"].title);
         return;
     }
-    loadPageWithAnimation(event.state.pagePath);
-    $("title").text(event.state.pageTitle);
+    
+    page = pages[pageName];
+    if(page){
+        loadPageWithAnimation(page.path);
+        if(page.title){
+            $("title").text(page.title);
+        }
+    } else {
+        loadPageWithAnimation(pages["seiteNichtGefunden"].path);
+        $("title").text(pages["seiteNichtGefunden"].title);
+    } 
 }

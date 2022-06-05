@@ -82,8 +82,9 @@ class Group {
     public function storeNewGroup($groupName){
         
         //TODO: create chat as part of chat class
-        $newChatId = Database::insert("INSERT INTO chat (name) VALUES (?)", [$groupName], "s");
-        $this->group_id = Database::insert("INSERT INTO `groups` (name, fk_chat_id) VALUES (?, ?)", [$groupName, $newChatId], "si");
+        $chat = Hub::Chat();
+        $chat->storeNewChat("Chat: " . $groupName);
+        $this->group_id = Database::insert("INSERT INTO `groups` (name, fk_chat_id) VALUES (?, ?)", [$groupName, $chat->getChatId()], "si");
     }
 
     /**
@@ -96,11 +97,25 @@ class Group {
             return $this->assignments;
         }
 
-        $result = Database::select("SELECT pk_assignment_id as assignment_id FROM assignment WHERE fk_group_id = ?", [$this->group_id], "i");
+        $result = Database::select("SELECT pk_assignment_id as assignment_id FROM assignment WHERE fk_group_id = ? ORDER BY due_time DESC", [$this->group_id], "i");
         foreach ($result as $item) {
             $this->assignments[] = Hub::Assignment($item["assignment_id"]);
         }
         return $this->assignments;
+    }
+    
+    /**
+     * returns first user found in group that is a teacher
+     * @return user
+     */
+    public function getTeacher() {
+
+        foreach($this->getMembers() as $member){          
+            if($member->getUserType() == 1){
+                return $member;
+            }
+        }
+        throw new Exception("No teacher found in group!");
     }
 
 }

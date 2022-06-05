@@ -1,1 +1,54 @@
-<!--description of task, includes upload for students and edit for teachers-->
+<!--description of task, includes upload for students-->
+
+
+<script src="client/js/task-details.js" defer></script>
+
+<style>
+     @media (max-width: 992px){
+        #task-details-main-container{
+        padding: 0 !important;
+        }
+
+        #teacherAndTimeContainer{
+            display: block !important;
+        }
+    } 
+</style>
+
+<div class="container text-dark">
+    <section style="background-color: #eee; margin-bottom: 20px; margin-top: 20px; border-radius: 5px;">
+        <div class="container p-4" id="task-details-main-container">
+            <div class="col-lg-12">
+                <div class="card">
+                  <div class="card-body">
+                        <div id="teacherAndTimeContainer" style="display: flex; justify-content: space-between; flex-wrap: wrap; overflow: hidden;">
+                            <div style="font-weight: bold; font-size:2em;" id="taskTitle" ></div>
+                            <div style="font-weight: 500; font-size: 1em;">
+                                <span id="taskAuthor"></span><span> - </span><span id="taskTime"></span>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 0; font-style: oblique; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;" id="taskDeadline"></div>
+                        <div style="margin-top: 10px;">Status: <span id="TaskStatus"></span></div>  
+                   
+                        <h6 style="margin-top: 20px;">Beschreibung:</h6>
+                        <div style=" margin-top: 10px; text-align: justify;" id="taskDescription">
+                        </div>
+                        <button type="button" id="taskDescriptionFile" style="display: none; margin-top: 20px; background-color: #eee;" class="btn btn-light"> <i style="color: purple;" class="bi bi-file-earmark-text"></i> <span id="taskDescriptionFileName"></span></button>
+                        <span id="addSubmissionFormSpan" style="display: none;">
+                            <div style="display: flex; margin-top: 20px; flex-wrap: wrap; gap: 10px;">
+                                <div style="width: max-content;">
+                                    <label class="form-label" for="customFile">Abgabe hinzufügen:</label>
+                                    <input type="file" class="form-control" id="submissionFileUploadInput" placeholder="lt"/>
+                                </div>
+                                <div style="align-self: flex-end;">
+                                    <button onclick="uploadSubmission()" type="button" id="taskSubmitFile" style="margin-top: 20px; background-color: #eee;" class="btn btn-light"><i style="color: purple;" class="bi bi-file-earmark-arrow-up"></i> Hochladen</button>
+                                </div>
+                            </div>
+                            <p style="color: red; display: none;" id="noFileError" class="mb-0">Bitte wähle eine Datei für den Upload aus!</p>
+                        </span>
+                  </div>
+                </div>
+        </div>
+      </section>
+</div>

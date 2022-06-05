@@ -1,6 +1,6 @@
 <script src="client/js/register.js" defer></script>
 
-<div id="main-body" class="container text-white">
+<div id="register-main-body">
   <h1 class="text-center">Registrierung</h1>
   <h5>Please fill out the form below</h5>
   <h5>All fields are mandatory</h5>
@@ -59,9 +59,8 @@
       <label for="user" class="col-sm-2 col-form-label col-form-label-lg"></label>
         <div class="col-sm-10">
           <button type="button" class="btn btn-lg btn-warning" id="submitRegistry" name="submit" value="submit" onclick="checkRegisterInput()">Submit</button>
+          <h5 style="display: inline; margin-left: 10px; vertical-align: middle;" id="post-response"></h5>
         </div>
     </div>
   </form>
-  <br>
-  <div id="post-response"></div>
 </div>

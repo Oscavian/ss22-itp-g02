@@ -70,6 +70,11 @@ class Users {
             $item["groupName"] = $group->getName();
             $item["groupId"] = $group->getId();
             $item["groupChatId"] = $group->getChat();
+
+            $teacher = $group->getTeacher();
+            $item["teacherFirstName"] = $teacher->getFirstName();
+            $item["teacherLastName"] = $teacher->getLastName();
+
             $resultGroups[] = $item;
         }
         
@@ -145,15 +150,19 @@ class Users {
      *                          "last_name": "...",
      *                      }
      *                  ]
+     * group_id: int
      * @return array
      * @throws Exception
      */
     public function registerStudents(): array {
-        if (empty($_POST["students"])){
+        if (empty($_POST["students"]) || empty($_POST["group_id"])){
             throw new Exception("Invalid Parameters!");
         }
-
+     
+        $group = Hub::Group($_POST["group_id"]);
+        
         Permissions::checkIsTeacher();
+        Permissions::checkIsInGroup($group);
 
         $students = json_decode($_POST["students"]);
 
@@ -183,7 +192,8 @@ class Users {
                 $username = strtolower($student->last_name . "." .  $student->first_name);
             }
 
-            $password = strtolower(substr($student->first_name, 0, 2) . substr($student->last_name, 0 ,2) . random_int(1000, 9999));
+            $length = 10;
+            $password = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1, $length);
 
             $student_data->username = $username;
             $student_data->password = $password;
@@ -195,14 +205,14 @@ class Users {
 
         //create accounts
         foreach ($new_students_data as $key => $student_data){
-            if ($this->isUsernameNameTaken($student_data->username)) {
+            
+            do{
                 $student_data->username .= random_int(100, 999);
-                if ($this->isUsernameNameTaken($student_data->username)){
-                    throw new Exception("Too many duplicate names!");
-                }
-            }
+            } while($this->isUsernameNameTaken($student_data->username));
+            
             $user = Hub::User();
             $user->storeNewUser($student_data->username, $student_data->password, $student_data->first_name, $student_data->last_name, 2);
+            $group->addMember($user);
             $student_data->user_id = $user->getId();
         }
 
@@ -319,5 +329,45 @@ class Users {
             return true;
         }
         return false;
+    }
+
+    /**
+     * generates new password for resetting student password
+     * 
+     * method: generateNewStudentPassword
+     * @return array|null
+     */
+    public function generateNewStudentPassword(){     
+        $length = 10;
+        $generatedPassword = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1, $length);
+
+        return ["success" => true, "generatedPassword" => $generatedPassword];
+    }
+
+    /**
+     * method: setNewStudentPassword
+     * new_password: string
+     * user_id: int //student user id
+     * @return array|null
+     */
+    public function setNewStudentPassword(){
+        if (empty($_POST["user_id"]) || empty($_POST["new_password"])) {
+            throw new Exception("Invalid Parameters");
+        }
+
+        Permissions::checkIsTeacher();
+        
+        $teacher = Hub::User($_SESSION['userId']);
+        $student = Hub::User($_POST["user_id"]);
+        
+        Permissions::checkIsInGroupWith($teacher, $student);
+
+        if (strlen($_POST["new_password"]) < 6) {
+            throw new Exception("Invalid password");
+        }
+
+        $student->changePassword($_POST["new_password"]);
+
+        return ["success" => true];
     }
 }

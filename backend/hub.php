@@ -63,4 +63,14 @@ class Hub {
         require_once "models/group.php";
         return new Group($id);
     }
+
+    public static function Submission($id = null): Submission {
+        require_once "models/submission.php";
+        return new Submission($id);
+    }
+
+    public static function Message($id = null): Message {
+        require_once "models/message.php";
+        return new Message($id);
+    }
 }

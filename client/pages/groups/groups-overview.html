@@ -1,34 +1,51 @@
 <script src="client/js/groups.js" defer></script>
+<style>
+    section{
+        transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+        cursor: pointer;
+    }
+    section:hover{
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(128,0,128,.14), 0 4px 8px rgba(128,0,128,.08);
+    }
+
+    /* For mobile view */
+    @media (max-width: 992px){
+  
+      #groupTitle{
+        text-align: center;
+        width: 100%
+      }
+  
+      #groupTeacher{
+        width: 100%;
+        text-align: center !important;
+      }
+      
+      #groupTitleAndTeacherDiv{
+        flex-wrap: wrap;
+      }
+  
+    }
+</style>
+
 <h1>Gruppenübersicht</h1>
-<div class="row">
-    <div class="col"></div>
-    <div class="col-sm-8 col-md-8">
-        <table class="table table-hover text-white" id="allGroupsTable">
-            <thead class="fw-bold">
-                <tr>
-                    <td>Gruppen ID</td>
-                    <td>Gruppenname</td>
-                    <td>zum Chat</td>
-                </tr>
-            </thead>
-            <tbody id="group-list-table-body" class="showAllGroupsTable">
-
-            </tbody>
-        </table>
-        <table class="table table-hover text-white" id="oneGroupTable">
-            <div id='backToGroupList' onclick='getUserGroups()'>zurück</div>
-            <thead class="fw-bold">
-                <tr>
-                    <td>User ID</td>
-                    <td>Vorname</td>
-                    <td>Nachname</td>
-                    <td>Username</td>
-                </tr>
-            </thead>
-            <tbody id="group-list-table-body" class="showStudentsOfGroup">
-
-            </tbody>
-        </table>
-    </div>
-    <div class="col"></div>
+<div id="showNewGroupForm" class="container" style="display: none">
+    <button type="button" class="btn btn-warning" id="buttonNewGroup" onclick="showNewGroupForm()"><i class="bi bi-clipboard2-plus"></i>&nbsp;neue Gruppe erstellen</button>
 </div>
+<div id="groupAddResponse" class="mt-3 container"></div>
+<div id="new-group-body" class="container text-dark" style="display: none">
+    <div style="background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px">
+        <div class="container group-details-container p-4">
+            <h3>neue Gruppe erstellen</h3>
+            <div class="col-lg-12">
+                <div id="groupTitleAndTeacherDiv" style="display: flex; align-items: center;">
+                    <input type="text" class="form-control form-control" style="font-weight: bold; font-size: 2em;" id="newGroupTitle" placeholder="Gruppenname">
+                </div>
+                <div id="newNameError" style="color: red; font-weight: bold;">Sie müssen einen gültigen Gruppennamen eingeben!</div>
+                <button type="button" class="btn btn-lg btn-warning mt-3" onclick="addNewGroup()" required>erstellen</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="group-main-body" class="container text-dark" style="display: none"></div>
