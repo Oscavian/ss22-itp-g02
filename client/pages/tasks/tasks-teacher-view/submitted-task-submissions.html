@@ -8,7 +8,7 @@
     }
 </style>
 
-<h5 style="margin-bottom: -14px;"><i class="bi bi-folder-check" style="margin-right: 5px; font-size: 20px; vertical-align: bottom;"></i>Abgaben</i></h5>
+<h5 style="margin-bottom: -14px;"><i class="bi bi-folder-check" style="margin-right: 5px; font-size: 20px; vertical-align: bottom;">Abgaben</i></h5>
 <hr size="4" style="color: purple; opacity: 80%;">
 
 <h4 id="noSubmissionsMessage" class="text-muted" style="display: none; text-align: center; margin-top: 2em; margin-bottom: 2rem;">Keine Abgaben</h4>
@@ -33,15 +33,15 @@
 
     function displaySubmission(submission) {
 
-        creationTime = new Date(submission["creation_time"]);
-        creationTimeYear = creationTime.getFullYear() % 2000;
-        creationTimeMonth = new String(creationTime.getMonth() + 1).padStart(2, '0');
-        creationTimeDay = new String(creationTime.getDate()).padStart(2, '0');
-        creationTimeHours = new String(creationTime.getHours()).padStart(2, '0');
-        creationTimeMinutes = new String(creationTime.getMinutes()).padStart(2, '0');
-        creationTimeString = creationTimeDay + "." + creationTimeMonth + "." + creationTimeYear + " - " + creationTimeHours + ":" + creationTimeMinutes;
+        let creationTime = new Date(submission["creation_time"]);
+        let creationTimeYear = creationTime.getFullYear() % 2000;
+        let creationTimeMonth = new String(creationTime.getMonth() + 1).padStart(2, '0');
+        let creationTimeDay = new String(creationTime.getDate()).padStart(2, '0');
+        let creationTimeHours = new String(creationTime.getHours()).padStart(2, '0');
+        let creationTimeMinutes = new String(creationTime.getMinutes()).padStart(2, '0');
+        let creationTimeString = creationTimeDay + "." + creationTimeMonth + "." + creationTimeYear + " - " + creationTimeHours + ":" + creationTimeMinutes;
 
-        tableEntry = document.createElement("tr");
+        let tableEntry = document.createElement("tr");
         $(tableEntry).html(`
             <td><div style="display: flex; align-items: center;"><i class="bi bi-person-circle text-muted" style="font-size: 2rem; margin-bottom: -25px; margin-top: -21.5px;"></i>
                     <span style="vertical-align: middle; margin: 1px 0 0 7px;">
@@ -62,7 +62,7 @@
 
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "getSubmissions", assignment_id: assignmentId},
         cache: false,
         dataType: "json",
@@ -82,7 +82,7 @@
 
         },
         error: function(error){
-            console.log("AJAX-Request error: " + error);
+            console.log(error);
         }
     });
 

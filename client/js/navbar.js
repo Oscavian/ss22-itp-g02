@@ -5,14 +5,14 @@ var isTeacher; //global Variable, used for showing/hiding elements later, set in
 function checkLoginStatus() {
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "getLoginStatus"},
         cache: false,
         dataType: "json",
         success: function (response) {
             $("#log-stat").empty();
             if(response["isLoggedIn"]){
-                if(response["userType"] == 1){isTeacher = true;} else {isTeacher = false;}
+                isTeacher = response["userType"] === 1;
                 $("#log-stat").append("<li class='nav-item mb-1'><div type='button' class='btn btn-outline-warning me-2 fs-5' onclick='loadPage(`account`);'>" + response["username"] + "</div></li>");
                 $("#log-stat").append("<li class='nav-item mb-1'><div type='button' id='logoutButton' class='btn btn-outline-warning me-2 fs-5' onclick='logout()'>Logout</div></li>");
                 $("#myGroupsNavButton").show();
@@ -22,18 +22,18 @@ function checkLoginStatus() {
             $("#log-stat").append("<li class='nav-item mb-1'><div type='button' id='loginButton' class='btn btn-outline-warning me-2 fs-5' data-bs-toggle='modal' data-bs-target='#loginModal'>Login</div></li>");
             //login-modal and login-js is only loaded if user is not logged in
             $("login-modal").load("client/html-includes/login-modal.html");
-      },
-      error: function(error){
-            console.log("AJAX-Request error: " + error);
+        },
+        error: function (error) {
+            console.log(error);
             alert("Error checking login status!");
-                }
+        }
     });
 }
 
-function logout(){
+function logout() {
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "logout"},
         cache: false,
         dataType: "json",
@@ -48,8 +48,8 @@ function logout(){
             $("#createStudentNavButton").hide();
             loadPage('home');
         },
-        error: function(error){
-            console.log("AJAX-Request error: " + error);
+        error: function (error) {
+            console.log(error);
         }
     });
 }

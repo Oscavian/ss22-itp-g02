@@ -1,11 +1,19 @@
 //makes all ajax-calls async
-$.ajaxPrefilter(function( options, original_Options, jqXHR ) {
+$.ajaxPrefilter(function(options) {
     options.async = true;
 });
 
 //load navbar and footer
 $("#indexNavbar").load("client/html-includes/navbar.html");
 $("#indexFooter").load("client/html-includes/footer.html");
+
+/**
+ * The projects' root path used to specify a sub-folder, the app resides in
+ *
+ * primarily used for AJAX requests
+  * @type {string}
+ */
+const rootPath = "http://localhost/ss22-itp-g02"
 
 //-----------------Pages-----------------//
 

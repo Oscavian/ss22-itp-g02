@@ -3,7 +3,7 @@ checkLoginForLanding();
 function checkLoginForLanding() {
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "getLoginStatus"},
         cache: false,
         dataType: "json",
@@ -32,7 +32,7 @@ function checkLoginForLanding() {
             }
       },
       error: function(error){
-        console.log("AJAX-Request error: " + error);
+        console.log(error);
         alert("Error checking login status!");
         }
     });
