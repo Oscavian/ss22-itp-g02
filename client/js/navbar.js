@@ -1,3 +1,4 @@
+/*
 checkLoginStatus();
 
 var isTeacher; //global Variable, used for showing/hiding elements later, set in checkLoginStatus()
@@ -13,7 +14,9 @@ function checkLoginStatus() {
             $("#log-stat").empty();
             if(response["isLoggedIn"]){
                 if(response["userType"] == 1){isTeacher = true;} else {isTeacher = false;}
+                //own account, move to footer
                 $("#log-stat").append("<li class='nav-item mb-1'><div type='button' class='btn btn-outline-warning me-2 fs-5' onclick='loadPage(`account`);'>" + response["username"] + "</div></li>");
+                //logout, move to footer if logged in
                 $("#log-stat").append("<li class='nav-item mb-1'><div type='button' id='logoutButton' class='btn btn-outline-warning me-2 fs-5' onclick='logout()'>Logout</div></li>");
                 $("#homeworkNavButton").show();
                 $("#chatNavButton").show();
@@ -21,6 +24,8 @@ function checkLoginStatus() {
                 $("#createStudentNavButton").show();
                 return;
             }
+            //#### this moved to landing page
+            //first is register - write only for teachers?
             $("#log-stat").append("<li class='nav-item mb-1'><div type='button' id='loginButton' class='btn btn-outline-warning me-2 fs-5' onclick='loadPage(`registrieren`)'>Registrieren</div></li>");
             $("#log-stat").append("<li class='nav-item mb-1'><div type='button' id='loginButton' class='btn btn-outline-warning me-2 fs-5' data-bs-toggle='modal' data-bs-target='#loginModal'>Login</div></li>");
             //login-modal and login-js is only loaded if user is not logged in
@@ -56,3 +61,4 @@ function logout(){
         }
     });
 }
+*/

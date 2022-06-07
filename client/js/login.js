@@ -27,11 +27,11 @@ function checkIfAlphanumericLogin(allIsOk){
     var password = $("#login-modal-password").val();
     if(!/^[a-zA-Z0-9.]+$/.test(user)){
         allOk = false;
-        $("#login-modal-user-error").text("Username must consist of letters and numbers only <br>");
+        $("#login-modal-user-error").text("Username must consist of letters and numbers only");
     }
     if(!/^[a-zA-Z0-9]+$/.test(password)){
         allOk = false;
-        $("#login-modal-password-error").text("Password must consist of letters and numbers only <br>");
+        $("#login-modal-password-error").text("Password must consist of letters and numbers only");
     }
     return allOk;
 }
@@ -40,11 +40,11 @@ function checkIfEmptyLogin(allIsOk) {
     var allOk = allIsOk;
     if($("#login-modal-user").val() === ""){
         allOk = false;
-        $("#login-modal-user-error").text("Please enter a username <br>");
+        $("#login-modal-user-error").text("Please enter a username");
     }
     if($("#login-modal-password").val() === ""){
         allOk = false;
-        $("#login-modal-password-error").text("Please enter a password <br>");
+        $("#login-modal-password-error").text("Please enter a password");
     }
     return allOk;
 }
@@ -53,11 +53,11 @@ function checkLengthLogin(allIsOk){
     var allOk = allIsOk;
     if($("#login-modal-user").val().length < 6 || $("#login-modal-user").val().length > 50){
         allOk = false;
-        $("#login-modal-user-error").text("Username must be between 6 to 50 characters long <br>");
+        $("#login-modal-user-error").text("Username must be between 6 to 50 characters long");
     }
     if($("#login-modal-password").val().length < 6 || $("#login-modal-password").val().length > 50){
         allOk = false;
-        $("#login-modal-password-error").text("Password must be between 6 to 50 characters long <br>");
+        $("#login-modal-password-error").text("Password must be between 6 to 50 characters long");
     }
     return allOk;
 }
@@ -74,7 +74,7 @@ function submitLoginInput() {
                 $('#login-form')[0].reset();
                 emptyLoginErrors();
                 $("#loginModal").modal("hide");
-                checkLoginStatus();
+               checkLoginStatus("login");
                 return;
             }
 

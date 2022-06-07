@@ -10,25 +10,48 @@ function checkLoginForLanding() {
         success: function (response) {
             if(response["isLoggedIn"]){
                 if(response["userType"] === 1){
-                    $("#landingHeadline").html("Willkommen Herr/Frau " + response["lastName"] + "!");
-                    $("#landingContent").html("<h3>Neuigkeiten: </h3><ul class='list-group list-group-flush'>" + 
-                    "<li><h4>Website Änderungen</h4>Unsere Website wurde überarbeitet. Unter anderem sorgt das für Sie für ein angenehmeres Erlebnis auf unserer Seite.</li>" + 
-                    "<li><h4>Reperaturen im Lehrerzimmer fertiggestellt</h4></li></ul>" + 
-                    "<h3 class='mt-3'>Essensplan: </h3><ul class='list-group list-group-flush'><li><h4>Heute gibt es Tomatenspaghetti und Schnitzel mit Salat</h4>Wir wünschen einen Guten Appetit</li>");
+                    //load group overview
+                    loadPage('gruppen');
                 }
                 else if(response["userType"] === 2){
-                    $("#landingHeadline").html("Willkommen liebe/r Schüler/in!");
-                    $("#landingContent").html("<h3>Neuigkeiten:</h3><ul class='list-group list-group-flush'>" + 
-                    "<li><h4>Website Änderungen</h4>Unsere Website wurde überarbeitet. Unter anderem sorgt das für dich für ein angenehmeres Erlebnis auf unserer Seite.</li>" + 
-                    "<li><h4>Neuer Beamer</h4>Im Raum 102 der Klasse 1C gibt es nun einen neue Beamer, nachdem der alte kaputt gegangen ist.</li></ul>" + 
-                    "<h3 class='mt-3'>Essensplan:</h3><ul class='list-group list-group-flush'><li><h4>Heute gibt es Tomatenspaghetti und Schnitzel mit Salat</h4>Wir wünschen einen Guten Appetit</li>");
+                   //load group detail view
+                   getStudentGroupId();
                 }
             }
             else{
-                $("#landingHeadline").html("Willkommen!");
-                $("#landingContent").html("<h3>Neuigkeiten: </h3><ul class='list-group list-group-flush'>" + 
-                    "<li><h4>Website Änderungen</h4>Unsere Website wurde überarbeitet. Unter anderem sorgt das für Sie für ein angenehmeres Erlebnis auf unserer Seite.</li>" + 
-                    "<h3 class='mt-3'>Essensplan: </h3><ul class='list-group list-group-flush'><li><h4>Heute gibt es Tomatenspaghetti und Schnitzel mit Salat</h4>Wir wünschen einen Guten Appetit</li>");
+                $("#landingHeadline").html("Willkommen auf der ... Seite!");
+                $("#landingContent").html("\
+                <section style='background-color: #eee; border-radius: 5px; width: 75%; margin-left: auto; margin-right: auto;'>\
+                    <div class='container p-4 text-dark'>\
+                        <div class='text-center'><div id='mid-heading'>Die Nr.1 Plattform für Volksschulen!</div>\
+                            <div class='card'>\
+                                <div class='card-body text-center'><div class= 'sm-heading'> Hab alles im Überblick durch: </div><br>\
+                                    <div class='row' id='overview'>\
+                                        <div class='col-sm-4'>Klassenverwaltung</div>\
+                                        <div class='col-sm-4'>Übungsabgaben</div>\
+                                        <div class='col-sm-4'>Chatfunktion</div>\
+                                    </div>\
+                                    <div class='row'>\
+                                        <div class='col-sm-4'><img src='client/assets/img/notebook.png' alt='klassenverwaltung-icon'></div>\
+                                        <div class='col-sm-4'><img src='client/assets/img/exam.png' alt='übungsabgaben-icon'></div>\
+                                        <div class='col-sm-4'><img src='client/assets/img/talk.png' alt='chatfunktion-icon'></div>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div><br>\
+                        <div class='card'>\
+                            <div class='card-body text-center'><div class='sm-heading'>Gleich loslegen und ... nutzen?</div><br>\
+                                Einfach hier klicken zum Einloggen:<br><br>\
+                                <div type='button' id='loginButton' class='glow-on-hover' data-bs-toggle='modal' data-bs-target='#loginModal'>Login</div><br>\
+                                <img src='client/assets/img/thunder.png' id='hit-button-img' alt='hit-button-icon'><br><br><br><hr class='hrclass'>\
+                                <div>Sie sind Lehrer*in und haben noch keinen Account?</div>\
+                                <div>Registrieren Sie sich <a href='#' id='register-link' onclick='loadPage(`registrieren`)'>HIER</a></div>\
+                            </div>\
+                        </div>\
+                    </div>\
+                </section>");
+                $("login-modal").load("client/html-includes/login-modal.html");
+                //btn btn-warning me-2 fs-5 button classes
             }
       },
       error: function(error){

@@ -4,7 +4,8 @@ $.ajaxPrefilter(function( options, original_Options, jqXHR ) {
 });
 
 //load navbar and footer
-$("#indexNavbar").load("client/html-includes/navbar.html");
+//remove navbar
+//$("#indexNavbar").load("client/html-includes/navbar.html");
 $("#indexFooter").load("client/html-includes/footer.html");
 
 //-----------------Pages-----------------//
