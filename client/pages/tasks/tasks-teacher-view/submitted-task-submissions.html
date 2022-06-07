@@ -28,17 +28,17 @@
 <script>
 
     function downloadSubmissionFile(submissionId) {
-        window.location = "/ss22-itp-g02/backend/requestHandler.php?method=downloadSubmissionFile&submission_id=" + submissionId;
+        window.location = rootPath + "/backend/requestHandler.php?method=downloadSubmissionFile&submission_id=" + submissionId;
     }
 
     function displaySubmission(submission) {
 
         let creationTime = new Date(submission["creation_time"]);
         let creationTimeYear = creationTime.getFullYear() % 2000;
-        let creationTimeMonth = new String(creationTime.getMonth() + 1).padStart(2, '0');
-        let creationTimeDay = new String(creationTime.getDate()).padStart(2, '0');
-        let creationTimeHours = new String(creationTime.getHours()).padStart(2, '0');
-        let creationTimeMinutes = new String(creationTime.getMinutes()).padStart(2, '0');
+        let creationTimeMonth = String(creationTime.getMonth() + 1).padStart(2, '0');
+        let creationTimeDay = String(creationTime.getDate()).padStart(2, '0');
+        let creationTimeHours = String(creationTime.getHours()).padStart(2, '0');
+        let creationTimeMinutes = String(creationTime.getMinutes()).padStart(2, '0');
         let creationTimeString = creationTimeDay + "." + creationTimeMonth + "." + creationTimeYear + " - " + creationTimeHours + ":" + creationTimeMinutes;
 
         let tableEntry = document.createElement("tr");

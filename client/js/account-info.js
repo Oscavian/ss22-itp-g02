@@ -1,5 +1,7 @@
 loadUserInfo();
 
+$("#account-info-avatar").attr("src", rootPath + "/client/assets/img/blank-profile-picture.png");
+
 function loadUserInfo() {
     $.ajax({
         type: "POST",
