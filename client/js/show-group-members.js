@@ -5,7 +5,7 @@ async function getGroupMembers() {
     let isTeacher = await checkIsTeacher();
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "getGroupMembers", group_id: groupId},
         cache: false,
         dataType: "json",
@@ -55,7 +55,7 @@ async function getGroupMembers() {
             }
         },
         error: (error) => {
-            console.log("AJAX Request Error: " + error);
+            console.log(error);
         }
     });
 }
@@ -66,7 +66,7 @@ function createStudentTableRow(){
 
     var tablerow = $("<tr class='group-member' style='vertical-align: top;'></tr>");
     tablerow.append(`
-                    <td  onclick="loadPage('accountErstellen', ${groupId}); "style="color: purple;">
+                    <td  onclick="loadPage('accountErstellen', ${groupId}); " style="color: purple;">
                         <div style="display: flex; align-items: center;"><i class="bi bi-person-plus" style=" color: purple; margin-left: 3px; font-size: 2rem; margin-bottom: -25px; margin-top: -21.5px;"></i>
                             <span style="vertical-align: middle; margin: 1px 0 0 7px;">
                                 <div style="margin-left: 3px">Schüler*in hinzufügen</div>
@@ -89,7 +89,7 @@ function getNewPassword(){
 
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "generateNewStudentPassword"},
         cache: false,
         dataType: "json",
@@ -99,7 +99,7 @@ function getNewPassword(){
             }
         },
         error: (error) => {
-            console.log("AJAX Request Error: " + error);
+            console.log(error);
         } 
     });
 }
@@ -125,7 +125,7 @@ function saveNewPassword(){
 
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "setNewStudentPassword", user_id: document.getElementById("modalUserName").dataset.userId, new_password: $("#newPassword").html()},
         cache: false,
         dataType: "json",
@@ -135,7 +135,7 @@ function saveNewPassword(){
             }
         },
         error: (error) => {
-            console.log("AJAX Request Error: " + error);
+            console.log(error);
         } 
     }); 
 }

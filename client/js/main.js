@@ -1,7 +1,15 @@
 //makes all ajax-calls async
-$.ajaxPrefilter(function( options, original_Options, jqXHR ) {
+$.ajaxPrefilter(function(options) {
     options.async = true;
 });
+
+/**
+ * The projects' root path used to specify a sub-folder, the app resides in
+ *
+ * primarily used for AJAX requests
+  * @type {string}
+ */
+const rootPath = "http://localhost/ss22-itp-g02"
 
 //-----------------Pages-----------------//
 
@@ -140,7 +148,7 @@ function checkIsTeacher() {
     return new Promise(function(resolve, reject) {
         $.ajax({
             type: "POST",
-            url: "/ss22-itp-g02/backend/requestHandler.php",
+            url: rootPath + "/backend/requestHandler.php",
             data: {method: "getLoginStatus"},
             cache: false,
             dataType: "json",
@@ -169,7 +177,7 @@ function checkIsLoggedIn() {
     return new Promise(function(resolve, reject) {
         $.ajax({
             type: "POST",
-            url: "/ss22-itp-g02/backend/requestHandler.php",
+            url: rootPath + "/backend/requestHandler.php",
             data: {method: "getLoginStatus"},
             cache: false,
             dataType: "json",
@@ -194,7 +202,7 @@ function getFirstUserGroupId() {
     return new Promise(function(resolve, reject) {
         $.ajax({
             type: "POST",
-            url: "/ss22-itp-g02/backend/requestHandler.php",
+            url: rootPath + "/backend/requestHandler.php",
             data: {method: "getUserGroups"},
             cache: false,
             dataType: "json",

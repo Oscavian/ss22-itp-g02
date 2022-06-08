@@ -7,7 +7,7 @@ async function loadTaskOverview(groupId) {
     isTeacher = await checkIsTeacher();
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "getGroupAssignments", group_id: groupId},
         cache: false,
         dataType: "json",
@@ -55,23 +55,23 @@ async function loadTaskOverview(groupId) {
             } else {
                 $("#noOldTasksMessage").show();
             }
-;
+
             if(!$("#group-main-body").is(":visible")){
                 $("#group-main-body").fadeIn("fast");
             }
         },
         error: function(error){
-            console.log("AJAX-Request error: " + error);
+            console.log(error);
         }
     });
 }
 
 function displayCurrentAssignment(assignment){
     
-    dueDate = new Date(assignment.due_time);
-    timeleft = dueDate.getTime() - new Date().getTime();
-    timeleftDays = timeleft / 86400000;
-    timeleftHours = timeleftDays % 1;
+    let dueDate = new Date(assignment.due_time);
+    let timeleft = dueDate.getTime() - new Date().getTime();
+    let timeleftDays = timeleft / 86400000;
+    let timeleftHours = timeleftDays % 1;
     timeleftDays = Math.floor(timeleftDays);
     timeleftHours = timeleftHours * 24;
     timeleftHours= Math.floor(timeleftHours);
@@ -117,22 +117,21 @@ function displayCurrentAssignment(assignment){
 
 function displayPastAssignment(assignment){
     
-    dueDate = new Date(assignment.due_time);
-    timeleft = dueDate.getTime() - new Date().getTime();
-    timeleftDays = timeleft / 86400000;
-    timeleftHours = timeleftDays % 1;
+    let dueDate = new Date(assignment.due_time);
+    let timeleft = dueDate.getTime() - new Date().getTime();
+    let timeleftDays = timeleft / 86400000;
+    let timeleftHours = timeleftDays % 1;
     timeleftDays = Math.floor(timeleftDays);
-    timeleftHours = timeleftHours * 24;
-    timeleftHours= Math.floor(timeleftHours);
+    timeleftHours = Math.floor(timeleftHours * 24);
 
-    dueDateYear = dueDate.getFullYear() % 2000;
-    dueDateMonth = new String(dueDate.getMonth() + 1).padStart(2, '0');
-    dueDateDay = new String(dueDate.getDate()).padStart(2, '0');
-    dueDateHours = new String(dueDate.getHours()).padStart(2, '0');
-    dueDateMinutes = new String(dueDate.getMinutes()).padStart(2, '0');
-    dueDateString = dueDateDay + "." + dueDateMonth + "." + dueDateYear + " - " + dueDateHours + ":" + dueDateMinutes;
+    let dueDateYear = dueDate.getFullYear() % 2000;
+    let dueDateMonth = String(dueDate.getMonth() + 1).padStart(2, '0');
+    let dueDateDay = String(dueDate.getDate()).padStart(2, '0');
+    let dueDateHours = String(dueDate.getHours()).padStart(2, '0');
+    let dueDateMinutes = String(dueDate.getMinutes()).padStart(2, '0');
+    let dueDateString = dueDateDay + "." + dueDateMonth + "." + dueDateYear + " - " + dueDateHours + ":" + dueDateMinutes;
 
-    card = document.createElement("div");
+    let card = document.createElement("div");
     $(card).addClass("card");
     $(card).addClass("assignmentCard");
     $(card).html(`

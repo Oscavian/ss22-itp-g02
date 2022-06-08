@@ -36,7 +36,7 @@ function groupViewShowMembers(){
 function loadGroupDetails(groupId){
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "getGroupName", group_id: groupId},
         cache: false,
         dataType: "json",
@@ -45,13 +45,13 @@ function loadGroupDetails(groupId){
             $("title").text(response["groupName"]);
         },
         error: function(error){
-            console.log("AJAX-Request error: " + error);
+            console.log(error);
         }
     });
 
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "getGroupTeacher", group_id: groupId},
         cache: false,
         dataType: "json",
@@ -59,7 +59,7 @@ function loadGroupDetails(groupId){
             $("#groupTeacher").text("Lehrer*in: " + response["teacherFirstName"] + " " + response["teacherLastName"]);
         },
         error: function(error){
-            console.log("AJAX-Request error: " + error);
+            console.log(error);
         }
     });
 }

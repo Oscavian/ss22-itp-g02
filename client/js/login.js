@@ -1,5 +1,5 @@
 function loginShowHidePw(){
-    if($("#login-modal-password").attr("type") == "password"){
+    if($("#login-modal-password").attr("type") === "password"){
         $("#login-modal-password").attr("type","text");
         $("#login-modal-password-show").attr("class", "bi bi-eye-slash-fill");
         return;
@@ -65,7 +65,7 @@ function checkLengthLogin(allIsOk){
 function submitLoginInput() {
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "login", user: $("#login-modal-user").val(), password: $("#login-modal-password").val()},
         cache: false,
         dataType: "json",
@@ -82,7 +82,7 @@ function submitLoginInput() {
             $("#login-failed-error").show();
         },
         error: function(error){
-            console.log("AJAX-Request error: " + error);
+            console.log(error);
         }
     });
 }

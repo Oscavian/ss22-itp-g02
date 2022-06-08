@@ -3,7 +3,7 @@ checkLoginStatus();
 function checkLoginStatus() {
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "getLoginStatus"},
         cache: false,
         dataType: "json",
@@ -16,16 +16,16 @@ function checkLoginStatus() {
             }
         },
         error: function(error){
-                console.log("AJAX-Request error: " + error);
+                console.log(error);
                 alert("Error checking login status!");
                     }
     });
 }
 
-function logout(){
+function logout() {
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "logout"},
         cache: false,
         dataType: "json",
@@ -34,7 +34,7 @@ function logout(){
             loadPage('home');
         },
         error: function(error){
-            console.log("AJAX-Request error: " + error);
+            console.log(error);
         }
     });
 }

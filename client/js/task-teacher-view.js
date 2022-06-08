@@ -26,7 +26,7 @@ function submittedTasksShowSubmissions(){
 function loadAssignmentDetails(assignmentId){
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "getAssignmentById", assignment_id: assignmentId},
         cache: false,
         dataType: "json",
@@ -36,26 +36,27 @@ function loadAssignmentDetails(assignmentId){
 
             $("#taskAuthor").text(response["creator_first_name"] + " " + response["creator_last_name"]);
             
-            dueDate = new Date(response["due_time"]);
-            date = new Date(response["time"]);
-            dateYear = dueDate.getFullYear() % 2000;
-            dateMonth = new String(dueDate.getMonth() + 1).padStart(2, '0');
-            dateDay = new String(dueDate.getDate()).padStart(2, '0');
-            dateString = dateDay + "." + dateMonth + "." + dateYear;
+            let dueDate = new Date(response["due_time"]);
+            let date = new Date(response["time"]);
+            let dateYear = dueDate.getFullYear() % 2000;
+            let dateMonth = String(dueDate.getMonth() + 1).padStart(2, '0');
+            let dateDay = String(dueDate.getDate()).padStart(2, '0');
+            let dateString = dateDay + "." + dateMonth + "." + dateYear;
             
             $("#taskTime").text(dateString);
 
-            dueDateYear = dueDate.getFullYear() % 2000;
-            dueDateMonth = new String(dueDate.getMonth() + 1).padStart(2, '0');
-            dueDateDay = new String(dueDate.getDate()).padStart(2, '0');
-            dueDateHours = new String(dueDate.getHours()).padStart(2, '0');
-            dueDateMinutes = new String(dueDate.getMinutes()).padStart(2, '0');
-            dueDateString = dueDateDay + "." + dueDateMonth + "." + dueDateYear + " - " + dueDateHours + ":" + dueDateMinutes;
+            let dueDateYear = dueDate.getFullYear() % 2000;
+            let dueDateMonth = String(dueDate.getMonth() + 1).padStart(2, '0');
+            let dueDateDay = String(dueDate.getDate()).padStart(2, '0');
+            let dueDateHours = String(dueDate.getHours()).padStart(2, '0');
+            let dueDateMinutes = String(dueDate.getMinutes()).padStart(2, '0');
+            let dueDateString = dueDateDay + "." + dueDateMonth + "." + dueDateYear + " - " + dueDateHours + ":" + dueDateMinutes;
             
             $("#taskDeadline").text("abzugeben bis " + dueDateString);
         },
         error: function(error){
-            console.log("AJAX-Request error: " + error);
+            console.log(error);
+
         }
     });
 

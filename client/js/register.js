@@ -1,5 +1,5 @@
 function showHidePw(){
-    if($("#password").attr("type") == "password"){
+    if($("#password").attr("type") === "password"){
         $("#password").attr("type","text");
         $("#confirmPassword").attr("type","text");
         $("#showPassword").attr("class", "bi bi-eye-slash-fill");
@@ -120,7 +120,7 @@ function checkPw(allIsOk){
 function submitRegisterInput() {
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data:   {method: "registerTeacher",
                 first_name: $("#first_name").val(),
                 last_name: $("#last_name").val(),
@@ -137,7 +137,7 @@ function submitRegisterInput() {
             checkLoginStatus();
         },
         error: function(error){
-            console.log("AJAX-Request error: " + error);
+            console.log(error);
         }
     });
 }

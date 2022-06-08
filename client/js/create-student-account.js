@@ -24,13 +24,13 @@ function addStudentAccountForm(){
     var tablerow = $("<tr id ='" + counter +"' class = 'student-form' style='vertical-align: top;'></tr>");
     $(tablerow).append("<td class='vornameZeile'>\
                             <label for='firstname' style='font-size: 20px'>Vorname</label>\
-                            <input style='padding-left: 10px; padding-rigth: 5px;' type='text' placeholder='Max' class='form-control form-control-lg' id='firstname" + counter + "' name='firstname'>\
+                            <input style='padding-left: 10px; padding-right: 5px;' type='text' placeholder='Max' class='form-control form-control-lg' id='firstname" + counter + "' name='firstname'>\
                             <div id='firstname_error" + counter + "' style='color: red;'></div>\
                         </td>");
 
     $(tablerow).append("<td style='padding-left: 10px; padding-right: 10px' class='nachnameZeile'>\
                             <label for='lastname' style='font-size: 20px'>Nachname</label>\
-                            <input style='padding-left: 10px; padding-rigth: 5px;' type='text' placeholder='Mustermann' class='form-control form-control-lg' id='lastname" + counter + "' name='lastname'>\
+                            <input style='padding-left: 10px; padding-right: 5px;' type='text' placeholder='Mustermann' class='form-control form-control-lg' id='lastname" + counter + "' name='lastname'>\
                             <div id='lastname_error" + counter + "' style='color: red;'></div>\
                         </td>");
     $(tablerow).append("<td style='width: 1%; white-space: nowrap;'>\
@@ -135,7 +135,7 @@ function emptyStudAccErrors(){
 function submitStudentAccInput(studentInfoList){
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data:   {
                     method: "registerStudents",
                     students: JSON.stringify(studentInfoList),
@@ -149,7 +149,7 @@ function submitStudentAccInput(studentInfoList){
             $("#newStudentAccountListBody").empty();
             $("#createNewStudentsFormDiv").hide();
             $("#newStudentAccountList").show();
-            
+
             $.each(response, function(i, p) {
 
 
@@ -175,7 +175,7 @@ function submitStudentAccInput(studentInfoList){
             $('#student-account')[0].reset();
         },
         error: function(error){
-            console.log("AJAX-Request error: " + error);
+            console.log(error);
         }
     });
 }

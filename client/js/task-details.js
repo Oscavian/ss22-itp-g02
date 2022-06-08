@@ -2,119 +2,120 @@ var assignmentId = new URLSearchParams(window.location.search).get("id");
 loadAssignmentDetails(assignmentId);
 
 function loadAssignmentDetails(assignmentId) {
-  $.ajax({
-    type: "POST",
-    url: "/ss22-itp-g02/backend/requestHandler.php",
-    data: { method: "getAssignmentById", assignment_id: assignmentId },
-    cache: false,
-    dataType: "json",
-    success: function (response) {
-      $("#taskTitle").text(response["title"]);
-      $("title").text(response["title"]);
+    $.ajax({
+        type: "POST",
+        url: rootPath + "/backend/requestHandler.php",
+        data: {method: "getAssignmentById", assignment_id: assignmentId},
+        cache: false,
+        dataType: "json",
+        success: function (response) {
+            $("#taskTitle").text(response["title"]);
+            $("title").text(response["title"]);
 
-      $("#taskAuthor").text(response["creator_first_name"] + " " + response["creator_last_name"]);
+            $("#taskAuthor").text(response["creator_first_name"] + " " + response["creator_last_name"]);
 
-      date = new Date(response["time"]);
-      dateYear = dueDate.getFullYear() % 2000;
-      dateMonth = new String(dueDate.getMonth() + 1).padStart(2, "0");
-      dateDay = new String(dueDate.getDate()).padStart(2, "0");
-      dateString = dateDay + "." + dateMonth + "." + dateYear;
+            let date = new Date(response["time"]);
+            let dueDate = new Date(response["due_time"]);
 
-      $("#taskTime").text(dateString);
+            let dateYear = dueDate.getFullYear() % 2000;
+            let dateMonth = String(dueDate.getMonth() + 1).padStart(2, "0");
+            let dateDay = String(dueDate.getDate()).padStart(2, "0");
 
-      dueDate = new Date(response["due_time"]);
-      dueDateYear = dueDate.getFullYear() % 2000;
-      dueDateMonth = new String(dueDate.getMonth() + 1).padStart(2, "0");
-      dueDateDay = new String(dueDate.getDate()).padStart(2, "0");
-      dueDateHours = new String(dueDate.getHours()).padStart(2, "0");
-      dueDateMinutes = new String(dueDate.getMinutes()).padStart(2, "0");
-      dueDateString = dueDateDay + "." + dueDateMonth + "." + dueDateYear + " - " + dueDateHours + ":" + dueDateMinutes;
+            let dateString = dateDay + "." + dateMonth + "." + dateYear;
 
-      $("#taskDeadline").text("abzugeben bis " + dueDateString);
+            $("#taskTime").text(dateString);
+            let dueDateYear = dueDate.getFullYear() % 2000;
+            let dueDateMonth = String(dueDate.getMonth() + 1).padStart(2, "0");
+            let dueDateDay = String(dueDate.getDate()).padStart(2, "0");
+            let dueDateHours = String(dueDate.getHours()).padStart(2, "0");
+            let dueDateMinutes = String(dueDate.getMinutes()).padStart(2, "0");
+            let dueDateString = dueDateDay + "." + dueDateMonth + "." + dueDateYear + " - " + dueDateHours + ":" + dueDateMinutes;
 
-      $("#taskDescription").text(response["text"]);
+            $("#taskDeadline").text("abzugeben bis " + dueDateString);
 
-      if (response["file_path"]) {
-        fileName = response["file_path"].split("/").pop()
-        $("#taskDescriptionFileName").text(fileName);
-        $("#taskDescriptionFile").show();
-        $("#taskDescriptionFile").off();
-        $("#taskDescriptionFile").click(() => {
-          downloadTaskDescriptionFile(assignmentId);
-        });
-      }
+            $("#taskDescription").text(response["text"]);
 
-      if(response["submitted"]){
+            if (response["file_path"]) {
+              let fileName = response["file_path"].split("/").pop()
+              $("#taskDescriptionFileName").text(fileName);
+              $("#taskDescriptionFile").show();
+              $("#taskDescriptionFile").off();
+              $("#taskDescriptionFile").click(() => {
+                downloadTaskDescriptionFile(assignmentId);
+              });
+            }
 
-        ownSubmissionTime = new Date(response["ownSubmissionTime"]);
-        ownSubmissionYear = ownSubmissionTime.getFullYear() % 2000;
-        ownSubmissionMonth = new String(ownSubmissionTime.getMonth() + 1).padStart(2, "0");
-        ownSubmissionDay = new String(ownSubmissionTime.getDate()).padStart(2, "0");
-        ownSubmissionHours = new String(ownSubmissionTime.getHours()).padStart(2, "0");
-        ownSubmissionMinutes = new String(ownSubmissionTime.getMinutes()).padStart(2, "0");
-        ownSubmissionString = ownSubmissionDay + "." + ownSubmissionMonth + "." + ownSubmissionYear;
-        ownSubmissionString2 = ownSubmissionHours + ":" + ownSubmissionMinutes;  
+            if (response["submitted"]) {
 
-        ownSubmissionFileName = response["ownSubmissionFileName"].split("/").pop();
-        $("#TaskStatus").css("color", "green");
-        $("#TaskStatus").text('"' + ownSubmissionFileName + '" wurde am ' + ownSubmissionString + ' um ' + ownSubmissionString2 + ' abgegeben');
-      
-      } else {
-        timeleft = dueDate.getTime() - new Date().getTime();
-        timeleftDays = timeleft / 86400000;
-        timeleftHours = timeleftDays % 1;
-        timeleftDays = Math.floor(timeleftDays);
-        timeleftHours = timeleftHours * 24;
-        timeleftHours= Math.floor(timeleftHours);    
+                let ownSubmissionTime = new Date(response["ownSubmissionTime"]);
+                let ownSubmissionYear = ownSubmissionTime.getFullYear() % 2000;
+                let ownSubmissionMonth = String(ownSubmissionTime.getMonth() + 1).padStart(2, "0");
+                let ownSubmissionDay = String(ownSubmissionTime.getDate()).padStart(2, "0");
+                let ownSubmissionHours = String(ownSubmissionTime.getHours()).padStart(2, "0");
+                let ownSubmissionMinutes = String(ownSubmissionTime.getMinutes()).padStart(2, "0");
+                let ownSubmissionString = ownSubmissionDay + "." + ownSubmissionMonth + "." + ownSubmissionYear;
+                let ownSubmissionString2 = ownSubmissionHours + ":" + ownSubmissionMinutes;
 
-        $("#TaskStatus").css("color", "purple");
-        $("#TaskStatus").text('Für die Abgabe sind noch ' + timeleftDays + ' Tage und ' + timeleftHours+ ' Stunden Zeit');
+                let ownSubmissionFileName = response["ownSubmissionFileName"].split("/").pop();
+                $("#TaskStatus").css("color", "green");
+                $("#TaskStatus").text('"' + ownSubmissionFileName + '" wurde am ' + ownSubmissionString + ' um ' + ownSubmissionString2 + ' abgegeben');
 
-        $("#addSubmissionFormSpan").show();
-      }
+            } else {
+                let timeleft = dueDate.getTime() - new Date().getTime();
+                let timeleftDays = timeleft / 86400000;
+                let timeleftHours = timeleftDays % 1;
+                timeleftDays = Math.floor(timeleftDays);
+                timeleftHours = timeleftHours * 24;
+                timeleftHours = Math.floor(timeleftHours);
+
+                $("#TaskStatus").css("color", "purple");
+                $("#TaskStatus").text('Für die Abgabe sind noch ' + timeleftDays + ' Tage und ' + timeleftHours + ' Stunden Zeit');
+
+                $("#addSubmissionFormSpan").show();
+            }
 
 
+        },
+        error: function (error) {
+            console.log(error);
 
-    },
-    error: function (error) {
-      console.log("AJAX-Request error: " + error);
-    },
-  });
+        },
+    });
 }
 
 
 function downloadTaskDescriptionFile(assignmentId) {
-  window.location = "/ss22-itp-g02/backend/requestHandler.php?method=downloadAssignmentFile&assignment_id=" + assignmentId;
+    window.location = rootPath + "/backend/requestHandler.php?method=downloadAssignmentFile&assignment_id=" + assignmentId;
 }
 
-function uploadSubmission(){
+function uploadSubmission() {
 
-  file = document.getElementById("submissionFileUploadInput").files[0];
+    let file = document.getElementById("submissionFileUploadInput").files[0];
 
-  if(!file){
-    $("#noFileError").show();
-    return;
-  }
+    if (!file) {
+        $("#noFileError").show();
+        return;
+    }
 
-  formData = new FormData();
-  formData.append("attachment", file, file.name);
-  formData.append("method", "addSubmission");
-  formData.append("assignment_id", assignmentId);
+    let formData = new FormData();
+    formData.append("attachment", file, file.name);
+    formData.append("method", "addSubmission");
+    formData.append("assignment_id", assignmentId);
 
-  $.ajax({
-    type: "POST",
-    url: "/ss22-itp-g02/backend/requestHandler.php",
-    success: function (data) {
-      loadAssignmentDetails(assignmentId);
-      $("#addSubmissionFormSpan").hide();
-    },
-    error: function (error) {
-        console.log("AJAX-Request error: " + error);
-    },
-    async: true,
-    data: formData,
-    cache: false,
-    contentType: false,
-    processData: false,
-});
+    $.ajax({
+        type: "POST",
+        url: rootPath + "/backend/requestHandler.php",
+        success: function (data) {
+            loadAssignmentDetails(assignmentId);
+            $("#addSubmissionFormSpan").hide();
+        },
+        error: function (error) {
+            console.log(error);
+        },
+        async: true,
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+    });
 }
