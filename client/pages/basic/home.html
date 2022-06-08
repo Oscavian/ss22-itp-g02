@@ -1,21 +1,161 @@
-<script src="client/js/landing-page.js" defer></script>
-
-<h1 class="text-center" id="landingHeadline"></h1><br>
-
-<!-- Temporary buttons until new landing page is done -->
-<div style="display: flex; justify-content: center; gap: 5px">
-    <div onclick="loadPage(`registrieren`)" type="button" style="background-color: #eee;" class='btn btn-light'><i class="bi bi-person-plus" style="margin-right: 5px; color: purple;"></i>Registrieren</div>
-    <div data-bs-toggle='modal' data-bs-target='#loginModal' type="button" style="background-color: #eee;" class='btn btn-light'><i class="bi bi-box-arrow-in-right" style="margin-right: 5px; color: purple;"></i>Login</div>
-</div>
-
-
-
-<div id="landingContent">
-    
-</div>
-
-
 <script src="client/js/login.js" defer></script>
+
+<style>
+
+    #landingHeadline{
+        color: linear-gradient(to bottom right, white, rgb(255, 238, 0));
+        text-shadow: 1px 1px 2px black, 0 0 25px yellow, 0 0 5px gold;
+        font-size: 5em;
+    }
+
+    #mid-heading{
+        font-size: 3em;
+        font-weight: bold;
+        text-shadow: -1px 0 gold, 0 1px gold, 1px 0 gold, 0 -1px gold;
+        padding-bottom: 20px;
+    }
+
+    .sm-heading{
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    #register-link{
+        color: rgb(111, 60, 204);
+    }
+
+    #register-link:hover{
+        font-weight: bold;
+        color: rgb(255, 208, 0);
+    }
+
+    #overview{
+        color: rgb(111, 60, 204);
+        font-weight: bold;
+    }
+
+    .hrclass{
+        border: 1px solid rgb(89, 0, 255);
+        border-radius: 3px;
+    }
+
+    .glow-on-hover {
+        width: 100px;
+        height: 50px;
+        border: none;
+        outline: none;
+        color: black;
+        font-size: larger;
+        background: rgb(255, 196, 0);
+        cursor: pointer;
+        position: relative;
+        z-index: 0;
+        border-radius: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 10px;
+    }
+
+    .glow-on-hover:before {
+        content: '';
+        background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+        position: absolute;
+        top: -2px;
+        left:-2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing 20s linear infinite;
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
+        border-radius: 10px;
+    }
+
+    .glow-on-hover:active {
+        color: #000;
+    }
+
+    .glow-on-hover:active:after {
+        /* background: transparent; */
+    }
+
+    .glow-on-hover:hover:before {
+        opacity: 1;
+    }
+
+    .glow-on-hover:after {
+        z-index: -1;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgb(255, 196, 0);;
+        left: 0;
+        top: 0;
+        border-radius: 10px;
+    }
+
+    @keyframes glowing {
+        0% { background-position: 0 0; }
+        50% { background-position: 400% 0; }
+        100% { background-position: 0 0; }
+    }
+        img{
+            height:100px;
+        }
+        /* For mobile view */
+        @media (max-width: 992px){
+            img{
+                height: 60px;
+            }
+            #landingHeadline{
+                font-size: 3em;
+            }
+            #mid-heading{
+                font-size: 30px;
+            }
+        }
+   
+</style>
+
+<h1 class="text-center" id="landingHeadline">Willkommen auf der ... Seite!</h1>
+
+<div class="container text-dark">
+    <section style='background-color: #eee; border-radius: 5px; width: 75%; margin-left: auto; margin-right: auto;'>
+        <div class='container p-4 text-dark'>
+            <div class='text-center'><div id='mid-heading'>Die Nr.1 Plattform für Volksschulen!</div>
+                <div class='card'>
+                    <div class='card-body text-center'><div class= 'sm-heading'> Hab alles im Überblick durch: </div><br>
+                        <div class='row' id='overview'>
+                            <div class='col-sm-4'>Klassenverwaltung</div>
+                            <div class='col-sm-4'>Übungsabgaben</div>
+                            <div class='col-sm-4'>Chatfunktion</div>
+                        </div>
+                        <div class='row'>
+                            <div class='col-sm-4'><img src='client/assets/img/notebook.png' alt='klassenverwaltung-icon'></div>
+                            <div class='col-sm-4'><img src='client/assets/img/exam.png' alt='übungsabgaben-icon'></div>
+                            <div class='col-sm-4'><img src='client/assets/img/talk.png' alt='chatfunktion-icon'></div>
+                        </div>
+                    </div>
+                </div>
+            </div><br>
+            <div class='card'>
+                <div class='card-body text-center'><div class='sm-heading'>Gleich loslegen und ... nutzen?</div><br>
+                    Einfach hier klicken zum Einloggen:<br><br>
+                    <div type='button' id='loginButton' class='glow-on-hover' data-bs-toggle='modal' data-bs-target='#loginModal'>Login</div><br>
+                    <img src='client/assets/img/thunder.png' id='hit-button-img' alt='hit-button-icon'><br><br><br><hr class='hrclass'>
+                    <div>Sie sind Lehrer*in und haben noch keinen Account?</div>
+                    <div>Registrieren Sie sich <a id='register-link' onclick='loadPage(`registrieren`)'>HIER</a></div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+ <!-- Login Modal -->
 
 <div class="modal fade text-dark" id="loginModal">
     <div class="modal-dialog modal-dialog-centered">
@@ -60,3 +200,5 @@
         </div>
     </div>
 </div>
+
+

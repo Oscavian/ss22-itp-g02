@@ -39,7 +39,7 @@ async function getUserGroups() {
                         "           </div>" + 
                         "       <div id='group-details-content-card' class='card group-details-content-card' style='margin-top: 1rem;'>" + 
                         "           <div id='group-details-content' class='card-body'>" + 
-                        "               Content/etc</div></div></div></div></section>");
+                        "               Klicken Sie hier für nähere Informationen</div></div></div></div></section>");
                     })
                 }
             }
