@@ -133,6 +133,7 @@ function submitRegisterInput() {
             //$("#success").append(response);
             $("#post-response").text("Your account was successfully created");
             $('#register-form')[0].reset();
+            loadDefaultPage();
             checkLoginStatus();
         },
         error: function(error){

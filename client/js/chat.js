@@ -4,8 +4,10 @@ loadfirstMessages();
 var messageLoadOffset = 0;
 var currentDate = new Date();
 
-function loadfirstMessages(){
+var isTeacher;
 
+async function loadfirstMessages(){
+    isTeacher = await checkIsTeacher();
     $.ajax({
         type: "POST",
         url: "/ss22-itp-g02/backend/requestHandler.php",

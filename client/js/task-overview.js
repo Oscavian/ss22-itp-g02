@@ -1,7 +1,10 @@
 var groupId = new URLSearchParams(window.location.search).get("id");
 loadTaskOverview(groupId);
 
-function loadTaskOverview(groupId) {
+var isTeacher;
+
+async function loadTaskOverview(groupId) {
+    isTeacher = await checkIsTeacher();
     $.ajax({
         type: "POST",
         url: "/ss22-itp-g02/backend/requestHandler.php",

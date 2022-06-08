@@ -1,8 +1,8 @@
 var groupId = new URLSearchParams(window.location.search).get("id");
 getGroupMembers();
 
-function getGroupMembers() {
-
+async function getGroupMembers() {
+    let isTeacher = await checkIsTeacher();
     $.ajax({
         type: "POST",
         url: "/ss22-itp-g02/backend/requestHandler.php",

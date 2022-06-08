@@ -2,7 +2,8 @@ $("#newNameError").hide();
 $("#groupAddResponse").hide();
 getUserGroups();
 
-function getUserGroups() {
+async function getUserGroups() {
+    let isTeacher = await checkIsTeacher();
     $("#group-main-body").empty();
     $.ajax({
         type: "POST",

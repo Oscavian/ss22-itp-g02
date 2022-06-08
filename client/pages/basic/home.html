@@ -2,6 +2,61 @@
 
 <h1 class="text-center" id="landingHeadline"></h1><br>
 
+<!-- Temporary buttons until new landing page is done -->
+<div style="display: flex; justify-content: center; gap: 5px">
+    <div onclick="loadPage(`registrieren`)" type="button" style="background-color: #eee;" class='btn btn-light'><i class="bi bi-person-plus" style="margin-right: 5px; color: purple;"></i>Registrieren</div>
+    <div data-bs-toggle='modal' data-bs-target='#loginModal' type="button" style="background-color: #eee;" class='btn btn-light'><i class="bi bi-box-arrow-in-right" style="margin-right: 5px; color: purple;"></i>Login</div>
+</div>
+
+
+
 <div id="landingContent">
     
+</div>
+
+
+<script src="client/js/login.js" defer></script>
+
+<div class="modal fade text-dark" id="loginModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Login</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="login-form">
+                    <div class="row mb-3">
+                        <label for="login-modal-user" class="col-sm-2 col-form-label">Username</label>
+                        <div class="col-sm-10">
+                            <input type="text" name="user" placeholder="username1234" class="form-control" id="login-modal-user">
+                            <div id="login-modal-user-error" class="login_error"></div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="login-modal-password" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="password" name="password" class="form-control" id="login-modal-password" \>
+                                <div class="input-group-append">
+                                  <span class="input-group-text" style="border-radius: 0 5px 5px 0" onclick="loginShowHidePw()">
+                                    <i id="login-modal-password-show" class="bi bi-eye-fill"></i>
+                                  </span>
+                                </div>
+                            </div>
+                            <div id="login-modal-password-error" class="login_error"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <!--works as confirmation, activates "leaving" in startTerm-->
+                <div id="login-failed-error" style="color:red; margin-right: 10px; display: none;" class="login_error">Login fehlgeschlagen</div>
+                <button type="button" class="btn btn-warning" id="login-modal-submit-button" name="submit" value="submit" onclick="checkLoginInput()">Log in</button>
+            </div>
+        </div>
+    </div>
 </div>
