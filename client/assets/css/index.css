@@ -28,9 +28,9 @@ body::before {
     /* background-color: rgba(128, 0, 128, 0.2); */
     /* background-color: rgb(125 125 125 / 27%); */
     background-image: url(../img/background.svg);
-    background-size: 600px;
+    background-size: 400px;
     background-repeat: repeat;
-    opacity: 0.3;
+    opacity: 0.15;
     top: 0;
     left: 0;
     position: absolute;
