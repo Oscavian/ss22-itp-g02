@@ -1,6 +1,7 @@
 <script src="client/js/groups.js" defer></script>
 <style>
     section{
+        border: 2px solid purple;
         transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
         cursor: pointer;
     }
@@ -29,13 +30,17 @@
     }
 </style>
 
-<h1>Gruppenübersicht</h1>
+<div class="pageTitle">
+    <h1>Meine Gruppen</h1>
+</div>
+
+<div id="group-main-body" class="container text-dark" style="display: none"></div>
 <div id="showNewGroupForm" class="container" style="display: none">
     <button type="button" class="btn btn-warning" id="buttonNewGroup" onclick="showNewGroupForm()"><i class="bi bi-clipboard2-plus"></i>&nbsp;neue Gruppe erstellen</button>
 </div>
 <div id="groupAddResponse" class="mt-3 container"></div>
-<div id="new-group-body" class="container text-dark" style="display: none">
-    <div style="background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px">
+<div id="new-group-body" class="container text-dark" style="display: none;">
+    <div style="background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px; border: 2px solid purple;">
         <div class="container group-details-container p-4">
             <h3>Neue Gruppe erstellen</h3>
             <div class="col-sm">
@@ -48,4 +53,3 @@
         </div>
     </div>
 </div>
-<div id="group-main-body" class="container text-dark" style="display: none"></div>

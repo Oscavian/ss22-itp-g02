@@ -5,6 +5,11 @@ var isTeacher;
 
 async function loadTaskOverview(groupId) {
     isTeacher = await checkIsTeacher();
+
+    if(isTeacher){
+        $("#pageBackButton").show();
+    }
+
     $.ajax({
         type: "POST",
         url: rootPath + "/backend/requestHandler.php",

@@ -98,23 +98,30 @@ async function loadPage(pageName, id = null, addStateVar = true){
     loadPageWithAnimation(page.path);
 }
 
-async function loadDefaultPage(){
+async function loadDefaultPage(addStateVar = false){
 
     if(await checkIsLoggedIn()){
         
         if(await checkIsTeacher()){
-            loadPage("gruppen", null, false);
+            if (!addStateVar) {
+                replaceState("gruppen");
+            }
+            loadPage("gruppen", null, addStateVar);
             return;
         };
 
         groupId = await getFirstUserGroupId();
-        replaceState("gruppe", groupId);
-        loadPage("gruppe", null, false);
+        if (!addStateVar) {
+            replaceState("gruppe", groupId);
+        }
+        loadPage("gruppe", groupId, addStateVar);
         return;
     };
     
-    replaceState("home", null);
-    loadPage("home", null, false);
+    if (!addStateVar) {
+        replaceState("home", null);
+    }
+    loadPage("home", null, addStateVar);
 }
 
 function loadPageWithAnimation(path){
