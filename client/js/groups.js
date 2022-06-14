@@ -20,7 +20,7 @@ async function getUserGroups() {
                         "   <div class='container group-details-container p-4'>" + 
                         "       <div class='col-lg-12'>" + 
                         "           <div id='groupTitleAndTeacherDiv' style='display: flex; align-items: center;'>" + 
-                        "               <div style='font-weight: bold; font-size: 2em; color: red' id='groupTitle'>Sie befinden sich in keiner Gruppe</div>" + 
+                        "               <div style='font-weight: bold; font-size: 2em; color: purple' id='groupTitle'>Sie befinden sich in keiner Gruppe</div>" + 
                         "               <div style='margin-left: auto; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;' id='groupTeacherId'></div>" + 
                         "           </div>" + 
                         "       <div id='group-details-content-card' class='card group-details-content-card' style='margin-top: 1rem;'>" + 

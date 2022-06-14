@@ -1,4 +1,5 @@
 <script src="client/js/login.js" defer></script>
+<script src="client/js/register.js" defer></script>
 
 <style>
 
@@ -180,7 +181,7 @@
                     <div type='button' id='loginButton' class='glow-on-hover' data-bs-toggle='modal' data-bs-target='#loginModal'>Login</div><br>
                     <img src='client/assets/img/thunder.png' id='hit-button-img' alt='hit-button-icon'><br><br><br><hr class='hrclass'>
                     <div>Sie sind Lehrer*in und haben noch keinen Account?</div>
-                    <div>Registrieren Sie sich <a id='register-link' onclick='loadPage(`registrieren`)'>HIER</a></div>
+                    <div>Registrieren Sie sich <a id='register-link' data-bs-toggle='modal' data-bs-target='#signupModal'>HIER</a></div>
                 </div>
             </div>
         </div>
@@ -201,15 +202,15 @@
             <div class="modal-body">
                 <form id="login-form">
                     <div class="row mb-3">
-                        <label for="login-modal-user" class="col-sm-2 col-form-label">Username</label>
-                        <div class="col-sm-10">
+                        <label for="login-modal-user" class="col-sm-3 col-form-label">Nutzername</label>
+                        <div class="col-sm-9">
                             <input type="text" name="user" placeholder="username1234" class="form-control" id="login-modal-user">
                             <div id="login-modal-user-error" class="login_error"></div>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="login-modal-password" class="col-sm-2 col-form-label">Password</label>
-                        <div class="col-sm-10">
+                        <label for="login-modal-password" class="col-sm-3 col-form-label">Passwort</label>
+                        <div class="col-sm-9">
                             <div class="input-group">
                                 <input type="password" name="password" class="form-control" id="login-modal-password" \>
                                 <div class="input-group-append">
@@ -233,4 +234,89 @@
     </div>
 </div>
 
+ <!-- Signup Modal -->
+
+<div class="modal fade text-dark" id="signupModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Neues Profil anlegen</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <form id="changePasswordForm">
+
+                    <div class="row mb-3">
+                        <label for="singupFirstName" class="col-sm-3 col-form-label">Vorname</label>
+                        <div class="col-sm-9">
+                          <div class="input-group">
+                            <input type="text" name="firstName" class="form-control" id="singupFirstName">
+                          </div>
+                          <div id="singupFirstNameError" style="color: red;" class="login_error"></div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="singupLastName" class="col-sm-3 col-form-label">Nachname</label>
+                        <div class="col-sm-9">
+                          <div class="input-group">
+                            <input type="text" name="lastName" class="form-control" id="singupLastName">
+                          </div>
+                          <div id="singupLastNameError" style="color: red;" class="login_error"></div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="signupUsername" class="col-sm-3 col-form-label">Nutzername</label>
+                        <div class="col-sm-9">
+                          <div class="input-group">
+                            <input type="text" name="lastName" class="form-control" id="signupUsername">
+                          </div>
+                          <div id="signupUsernameError" style="color: red;" class="login_error"></div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="signupNewPassword" class="col-form-label">Neues Passwort</label>
+                        <div class="col-sm-12">
+                          <div class="input-group">
+                            <input type="password" name="newPassword" class="form-control" id="signupNewPassword">
+                            <div class="input-group-append">
+                              <span class="input-group-text" style="border-radius: 0 5px 5px 0" onclick="signupShowHideNewPw()">
+                                <i id="signupNewPasswordShow" class="bi bi-eye-fill"></i>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="signupNewPasswordError" style="color: red;" class="login_error"></div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="signupNewPasswordConfirm" class="col-form-label">Passwort bestätigen</label>
+                        <div class="col-sm-12">
+                          <div class="input-group">
+                            <input type="password" name="newPasswordConfirm" class="form-control" id="signupNewPasswordConfirm">
+                            <div class="input-group-append">
+                              <span class="input-group-text" style="border-radius: 0 5px 5px 0" onclick="signupShowHideNewPw()">
+                                <i id="signupNewPasswordConfirmShow" class="bi bi-eye-fill"></i>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="signupNewPasswordConfirmError" style="color: red;" class="login_error"></div>
+                    </div>
+
+                </form>
+                
+            </div>
+
+            <div class="modal-footer">
+                <div class="btn btn-warning" onclick="checkRegisterInput()">Registrieren</div>
+            </div>
+        </div>
+    </div>
+</div> 
 
