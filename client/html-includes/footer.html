@@ -1,10 +1,109 @@
-<div class="text-center pt-3" id="footer" style="overflow: hidden;">
-  <p class="links">
-    <a class="footer-link" onclick="loadPage('home');">Home</a>
-    <a class="footer-link" onclick="loadPage('hilfe')">Hilfe</a>
-    <a class="footer-link" onclick="loadPage('impressum')">Impressum</a>
-    <a class="footer-link" onclick="loadPage('kontakt')">Kontakt</a>
-  </p>
+<style>
+  #footer {
+    backdrop-filter: invert() grayscale(100%) blur(1px);
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  #footer #copyright {
+    background-color: rgb(0, 0, 0);
+  }
+
+  #copyright {
+      color: gray;
+    }
+
+  .footer-link {
+    text-decoration: underline;
+    cursor: pointer;
+    color: white;
+    margin: 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .footer-link:hover {
+    text-decoration: none;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  @media (min-width: 768px){
+    
+    #footer-main-div {
+      padding: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+  }
+
+  @media (max-width: 768px){
+    
+    #footer {
+    backdrop-filter: invert() grayscale(100%) blur(1px);
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 10px 0 10px 0;
+  }
+  
+    
+    #copyright {
+      display: none;
+    }
+    
+    #footer-main-div {
+      padding: 0px;
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #footerLogoutButton {
+      margin-right: 0 !important;
+    }
+
+    #footer-links{
+      padding: 10px 10px 10px 10px;
+      justify-content: center;
+      width: 100%;
+    }
+
+    #footer-account{
+      padding: 10px 10px 10px 10px;
+      width: 100%;
+    }
+
+    #footer-account-flex{
+      justify-content: center;
+    }
+  }
+
+</style>
+
+<script src="client/js/account-logic.js" defer></script>
+
+<div id="footer" style="overflow: hidden;">
+  <div id="footer-main-div">
+    <div id="footer-links" style="min-height: 38px; display: flex; align-items: center;">
+      <a class="footer-link" onclick="loadDefaultPage(true)">Home</a>
+      <a class="footer-link" onclick="loadPage('hilfe')">Hilfe</a>
+      <a class="footer-link" onclick="loadPage('impressum')">Impressum</a>
+      <a class="footer-link" onclick="loadPage('kontakt')">Kontakt</a>
+    </div>
+    <div id="footer-account" style="display: none;">
+      <div id="footer-account-flex" style="display: flex; align-items: center;">
+          <div class="btn btn-light" onclick="loadPage('account')">
+            <i class="bi bi-person-circle" style="margin-right: 5px; color: purple;"></i>
+            <span id="footerUserName"></span>
+          </div>
+          <div onclick="logout()" id="footerLogoutButton" type="button" style="background-color: #eee; margin-left: 10px; margin-right: 10px;" class='btn btn-light'>Logout<i class="bi bi-box-arrow-right" style="margin-left: 5px; color: purple;"></i></div>
+      </div>
+    </div>
+  </div>
   <div class="text-center p-3" id="copyright">
     ©2022 Copyright | Volksschulsoftware IT-P | All rights reserved
   </div>

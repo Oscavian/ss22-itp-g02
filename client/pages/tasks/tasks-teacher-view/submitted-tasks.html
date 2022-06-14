@@ -43,6 +43,7 @@
     }
 
     .submitted-tasks-nav-item:hover{
+      background-color: #f7f7f7 !important;
       border-color: rgba(128,0,128,.5) !important;
       margin: -1px 1px 1px 0 !important;
       z-index: 10000 !important;
@@ -70,6 +71,7 @@
     }
 
     @media (max-width: 992px){
+
     .submitted-tasks-container{
       padding-left: 0px !important;
       padding-right: 0px !important;
@@ -88,11 +90,33 @@
     }
   }
 
+  @media (min-width: 992px){
+      #submitted-tasks-content-card{
+      border: 2px solid purple;  
+      }
+
+    .submitted-tasks-nav-header {
+      padding: 0 !important;
+      border-bottom: 0px !important;
+      margin: -1px 0 0 -1px !important;
+    }
+
+    .submitted-tasks-nav-item{
+      background-color: rgba(0, 0, 0, 0) !important;
+    }
+   
+  }
+
 </style>
 
+<div class="pageTitle">
+  <div onclick="history.back()"><img src="client/assets/img/left-arrow-purple.png"></div>
+  <h1>Aufgabe</h1>
+</div>
+
 <div id="submitted-tasks-main-body" class="container text-dark">
-  <section style="background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px;">
-      <div class="container submitted-tasks-container p-4">
+  <section style="background-color: white; border-radius: 5px; margin-bottom: 20px; border: 2px solid purple;">
+      <div class="container submitted-tasks-container p-4" style="padding-top: 12px !important;">
           <div class="col-lg-12">
             <div id="submitted-tasks-card-header" style="display: flex; justify-content: space-between; flex-wrap: wrap; overflow: hidden;">
               <div style="font-weight: bold; font-size: 2em;" id="taskTitle" ></div>

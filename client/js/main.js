@@ -1,11 +1,15 @@
 //makes all ajax-calls async
-$.ajaxPrefilter(function( options, original_Options, jqXHR ) {
+$.ajaxPrefilter(function(options) {
     options.async = true;
 });
 
-//load navbar and footer
-$("#indexNavbar").load("client/html-includes/navbar.html");
-$("#indexFooter").load("client/html-includes/footer.html");
+/**
+ * The projects' root path used to specify a sub-folder, the app resides in
+ *
+ * primarily used for AJAX requests
+  * @type {string}
+ */
+const rootPath = "http://localhost/ss22-itp-g02"
 
 //-----------------Pages-----------------//
 
@@ -66,44 +70,58 @@ const pages = {
         //add more pages here
 }
 
-//----------------First Page Load Handler-----------------//
-
-pageName = new URLSearchParams(window.location.search).get("seite");
-if(!pageName){
-    loadPageWithAnimation(pages["home"].path);
-    $("title").text(pages["home"].title);
-} else {
-    page = pages[pageName];    
-    if(page){
-        loadPageWithAnimation(page.path);
-        if(page.title){
-            $("title").text(page.title);
-        }
-    } else {
-        loadPageWithAnimation(pages["seiteNichtGefunden"].path);
-        $("title").text(pages["seiteNichtGefunden"].title);
-    }    
-}
-
 //----------------Functions-----------------//
 
-function loadPage(pageName, id = null){
-    page = pages[pageName];
-
-    if(!page){
-        console.log("Error - requested page does not exist!");
-    }
+async function loadPage(pageName, id = null, addStateVar = true){
     
+    page = pages[pageName];
+    if(!page){
+        loadPageWithAnimation(pages["seiteNichtGefunden"].path);
+        $("title").text(pages["seiteNichtGefunden"].title);
+        return;
+    }
+
+    //redirect to home-page if user is not logged in
+    if(pageName != "home" && pageName != "hilfe" && pageName != "impressum" && pageName != "kontakt" && pageName != "registrieren" && !(await checkIsLoggedIn())){
+        loadDefaultPage();
+        return;
+    }
+        
     if(page.title){
         $("title").text(page.title);
     }
 
-    if(id){
-        id = 'id=' + id;
+    if(addStateVar){
+        addState(pageName, id);
     }
 
     loadPageWithAnimation(page.path);
-    addState(pageName, id);
+}
+
+async function loadDefaultPage(addStateVar = false){
+
+    if(await checkIsLoggedIn()){
+        
+        if(await checkIsTeacher()){
+            if (!addStateVar) {
+                replaceState("gruppen");
+            }
+            loadPage("gruppen", null, addStateVar);
+            return;
+        };
+
+        groupId = await getFirstUserGroupId();
+        if (!addStateVar) {
+            replaceState("gruppe", groupId);
+        }
+        loadPage("gruppe", groupId, addStateVar);
+        return;
+    };
+    
+    if (!addStateVar) {
+        replaceState("home", null);
+    }
+    loadPage("home", null, addStateVar);
 }
 
 function loadPageWithAnimation(path){
@@ -118,9 +136,117 @@ function loadPageWithAnimation(path){
 function addState(pageName, id = null){
     urlInfo = "?seite=" + pageName;
     if(id){
+        id = 'id=' + id;
         urlInfo += "&" + id;
     }
     window.history.pushState(null, "", urlInfo);
+}
+
+function replaceState(pageName, id = null){
+    urlInfo = "?seite=" + pageName;
+    if(id){
+        id = 'id=' + id;
+        urlInfo += "&" + id;
+    }
+    window.history.replaceState(null, null, urlInfo);
+}
+
+function checkIsTeacher() {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            type: "POST",
+            url: rootPath + "/backend/requestHandler.php",
+            data: {method: "getLoginStatus"},
+            cache: false,
+            dataType: "json",
+            success: function (response) {
+                if(!response["isLoggedIn"]){
+                    resolve(false);
+                    return;
+                }
+
+                if(response["userType"] === 1){
+                    resolve(true);
+                    return;
+                }
+
+                resolve(false);           
+            },
+            error: function (error) {
+                console.log(error);
+                alert("Error checking user type!");
+            }
+        });
+    });
+};
+
+function checkIsLoggedIn() {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            type: "POST",
+            url: rootPath + "/backend/requestHandler.php",
+            data: {method: "getLoginStatus"},
+            cache: false,
+            dataType: "json",
+            success: function (response) {
+                if(response["isLoggedIn"]){
+                    resolve(true);
+                    return;
+                }
+
+                resolve(false);
+                return;           
+            },
+            error: function (error) {
+                console.log(error);
+                alert("Error checking login status!");
+            }
+        });
+    });
+};
+
+function getFirstUserGroupId() {
+    return new Promise(function(resolve, reject) {
+        $.ajax({
+            type: "POST",
+            url: rootPath + "/backend/requestHandler.php",
+            data: {method: "getUserGroups"},
+            cache: false,
+            dataType: "json",
+            success: function (response) {
+                if(response["noGroups"]){
+                    alert("Error loading group!");
+                    return;
+                }
+                resolve(response["groups"][0]["groupId"]);
+                return;           
+            },
+            error: function (error) {
+                console.log(error);
+                alert("Error getting group id!");
+            }
+        });
+    });
+};
+
+//----------------Initialize on first load-----------------//
+
+initialize();
+
+async function initialize(){
+
+    //load footer
+    $("#indexFooter").load("client/html-includes/footer.html");
+
+    //----------------First Page Load Handler-----------------//
+
+    pageName = new URLSearchParams(window.location.search).get("seite");
+    if(!pageName || pageName === "home"){
+        loadDefaultPage();
+    } else {
+        loadPage(pageName, null, false);
+    }
+        
 }
 
 //----------------Page Forward/Back Handler-----------------//
@@ -130,20 +256,9 @@ window.onpopstate = function(event) {
     
     pageName = new URLSearchParams(window.location.search).get("seite");
 
-    if(!pageName){
-        loadPageWithAnimation(pages["home"].path);
-        $("title").text(pages["home"].title);
-        return;
-    }
-    
-    page = pages[pageName];
-    if(page){
-        loadPageWithAnimation(page.path);
-        if(page.title){
-            $("title").text(page.title);
-        }
+    if(!pageName || pageName === "home"){
+        loadDefaultPage();
     } else {
-        loadPageWithAnimation(pages["seiteNichtGefunden"].path);
-        $("title").text(pages["seiteNichtGefunden"].title);
-    } 
+        loadPage(pageName, null, false);
+    }
 }

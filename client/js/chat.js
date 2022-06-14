@@ -4,15 +4,19 @@ loadfirstMessages();
 var messageLoadOffset = 0;
 var currentDate = new Date();
 
-function loadfirstMessages(){
+var isTeacher;
 
+async function loadfirstMessages(){
+    isTeacher = await checkIsTeacher();
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "getMessages", group_id: groupId, offset: 0},
         cache: false,
         dataType: "json",
         success: (response) => {
+
+            $("#textsField").empty();
 
             if(!response.length){ //prevents scroll eventlistener from being set when there are no more messages to load
                 return;
@@ -21,9 +25,9 @@ function loadfirstMessages(){
             currentDate = new Date(response[0]["time"]);
             $.each(response, (index, message) => {
 
-                messageDate = new Date(message["time"])
+                let messageDate = new Date(message["time"])
 
-                if(messageDate.getDate() != currentDate.getDate() || ((messageDate - currentDate) / 86400000) > 2){
+                if(messageDate.getDate() !== currentDate.getDate() || ((messageDate - currentDate) / 86400000) > 2){
                     insertDateTag(currentDate);
                     currentDate = messageDate;
                 }
@@ -31,12 +35,12 @@ function loadfirstMessages(){
                 insertMessage(message);
             });
 
-            chatContent = $("#chatContent")
+            let chatContent = $("#chatContent")
             chatContent.animate({ scrollTop: chatContent[0].scrollHeight }, 0);
         
             chatContent.off("scroll");
             chatContent.on("scroll", function() {
-                var pos = chatContent.scrollTop();
+                let pos = chatContent.scrollTop();
                 if (pos < 200) {
                     chatContent.off("scroll");
                     loadMoreMessages();
@@ -57,7 +61,7 @@ function loadMoreMessages(){
 
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "getMessages", group_id: groupId, offset: messageLoadOffset},
         cache: false,
         dataType: "json",
@@ -72,7 +76,7 @@ function loadMoreMessages(){
 
                 messageDate = new Date(message["time"])
 
-                if(messageDate.getDate() != currentDate.getDate() || ((messageDate - currentDate) / 86400000) > 2){
+                if(messageDate.getDate() !== currentDate.getDate() || ((messageDate - currentDate) / 86400000) > 2){
                     insertDateTag(currentDate);
                     currentDate = messageDate;
                 }
@@ -80,10 +84,11 @@ function loadMoreMessages(){
                 insertMessage(message);
             });
         
+            let chatContent = $("#chatContent");
             chatContent.off("scroll");
             chatContent.on("scroll", function() {
                 var pos = chatContent.scrollTop();
-                if (pos < 200) {
+                if (pos < 1000) {
                     chatContent.off("scroll");
                     loadMoreMessages();
                 }
@@ -105,10 +110,10 @@ function insertDateTag(date) {
 
 function insertMessage(message) {
 
-    insertMessageDate = new Date(message["time"])
-    insertMessageDateHours = new String(insertMessageDate.getHours()).padStart(2, "0");
-    insertMessageDateMinutes = new String(insertMessageDate.getMinutes()).padStart(2, "0");
-    insertMessageTimeString = insertMessageDateHours + ":" + insertMessageDateMinutes;
+    let insertMessageDate = new Date(message["time"])
+    let insertMessageDateHours =  String(insertMessageDate.getHours()).padStart(2, "0");
+    let insertMessageDateMinutes = String(insertMessageDate.getMinutes()).padStart(2, "0");
+    let insertMessageTimeString = insertMessageDateHours + ":" + insertMessageDateMinutes;
 
     $("#textsField").prepend(`
     <div id='message${message["pk_message_id"]}' class="${message["isOwnMessage"] ? "ownMessageFlex" : "otherMessageFlex"}">
@@ -122,10 +127,10 @@ function insertMessage(message) {
 
 function insertNewSentMessage(message) {
     
-    insertMessageDate = new Date(message["time"])
-    insertMessageDateHours = new String(insertMessageDate.getHours()).padStart(2, "0");
-    insertMessageDateMinutes = new String(insertMessageDate.getMinutes()).padStart(2, "0");
-    insertMessageTimeString = insertMessageDateHours + ":" + insertMessageDateMinutes;
+    let insertMessageDate = new Date(message["time"])
+    let insertMessageDateHours = String(insertMessageDate.getHours()).padStart(2, "0");
+    let insertMessageDateMinutes = String(insertMessageDate.getMinutes()).padStart(2, "0");
+    let insertMessageTimeString = insertMessageDateHours + ":" + insertMessageDateMinutes;
 
     $("#textsField").append(`
     <div id='message${message["pk_message_id"]}' class="ownMessageFlex">
@@ -141,7 +146,7 @@ function sendMessage(e){
     e.preventDefault();
     let messageText = $("#newChatMessage").val();
 
-    if(messageText == ""){
+    if(messageText === ""){
         return;
     }
 
@@ -149,7 +154,7 @@ function sendMessage(e){
 
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "sendMessage", text: messageText, group_id: groupId},
         cache: false,
         dataType: "json",
@@ -169,14 +174,14 @@ function sendMessage(e){
         }
     });
 
-    chatContent = $("#chatContent")
+    let chatContent = $("#chatContent")
     chatContent.animate({ scrollTop: chatContent[0].scrollHeight }, "fast");
 }
 
 function deleteMessage(msgId){
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "deleteMessage", message_id: msgId},
         cache: false,
         dataType: "json",
@@ -191,3 +196,15 @@ function deleteMessage(msgId){
         }
     });
 }
+
+function adjustTextAreaHeight(element) {
+    element.style.height = "1px";
+    element.style.height = (element.scrollHeight + 2)+"px";
+}
+
+$("#newChatMessage").off();
+$("#newChatMessage").on("keydown", (event)=> {
+    if (event.key === 'Enter') {
+        sendMessage(event);
+    }
+});
