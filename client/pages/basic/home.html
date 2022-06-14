@@ -2,27 +2,6 @@
 
 <style>
 
-    #landingHeadline{
-        /* color: linear-gradient(to bottom right, white, rgb(255, 238, 0));
-        text-shadow: 1px 1px 2px black, 0 0 25px yellow, 0 0 5px gold; */
-        font-size: 5em;
-        color: purple;
-        border-radius: 20px;
-        backdrop-filter: blur(2px);
-    }
-
-    #mid-heading{
-        font-size: 3em;
-        font-weight: bold;
-        /* text-shadow: -1px 0 gold, 0 1px gold, 1px 0 gold, 0 -1px gold; */
-        padding-bottom: 20px;
-    }
-
-    .sm-heading{
-        font-size: 20px;
-        font-weight: bold;
-    }
-
     #register-link{
         color: rgb(111, 60, 204);
     }
@@ -35,11 +14,6 @@
     #overview{
         color: rgb(111, 60, 204);
         font-weight: bold;
-    }
-
-    .hrclass{
-        border: 1px solid rgb(89, 0, 255);
-        border-radius: 3px;
     }
 
     .glow-on-hover {
@@ -101,41 +75,101 @@
         50% { background-position: 400% 0; }
         100% { background-position: 0 0; }
     }
+
+    img{
+        height:130px;
+    }
+
+    #landingHeadline{
+        /* color: linear-gradient(to bottom right, white, rgb(255, 238, 0));
+        text-shadow: 1px 1px 2px black, 0 0 25px yellow, 0 0 5px gold; */
+        font-size: 5em;
+        color: purple;
+        border-radius: 20px;
+        backdrop-filter: blur(2px);
+    }
+
+    #mid-heading{
+        font-size: 3em;
+        font-weight: bold;
+        /* text-shadow: -1px 0 gold, 0 1px gold, 1px 0 gold, 0 -1px gold; */
+        padding-bottom: 20px;
+    }
+
+    .sm-heading{
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .iconsContainer{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        margin-bottom: 10px;
+        gap: 40px;
+    }
+
+    .iconsContainer > div > div{
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    /* For mobile view */
+    @media (max-width: 768px){
         img{
-            height:100px;
+            height: 120px;
         }
-        /* For mobile view */
-        @media (max-width: 992px){
-            img{
-                height: 60px;
-            }
-            #landingHeadline{
-                font-size: 3em;
-            }
-            #mid-heading{
-                font-size: 30px;
-            }
+        #landingHeadline{
+            font-size: 3em;
         }
+        #mid-heading{
+            font-size: 30px;
+        }
+
+        .sm-heading{
+        font-size: 22px;
+        }
+
+        
+
+        .iconsContainer > div > div{
+        font-size: 18px;
+        font-weight: normal;
+        }
+
+        .iconsContainer{
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    }
+
    
 </style>
 
 <h1 class="text-center" id="landingHeadline">Willkommen auf der ... Seite!</h1>
 
-<div class="container text-dark">
-    <section style='background-color: #eee; border-radius: 10px; width: 75%; margin-left: auto; margin-right: auto; border: 4px solid purple;'>
+    <section style='background-color: #eee; border-radius: 10px; border: 4px solid purple; overflow: hidden;'>
         <div class='container p-4 text-dark'>
             <div class='text-center'><div id='mid-heading'>Die Nr.1 Plattform für Volksschulen!</div>
                 <div class='card'>
-                    <div class='card-body text-center'><div class= 'sm-heading'> Hab alles im Überblick durch: </div><br>
-                        <div class='row' id='overview'>
-                            <div class='col-sm-4'>Klassenverwaltung</div>
-                            <div class='col-sm-4'>Übungsabgaben</div>
-                            <div class='col-sm-4'>Chatfunktion</div>
-                        </div>
-                        <div class='row'>
-                            <div class='col-sm-4'><img src='client/assets/img/notebook.png' alt='klassenverwaltung-icon'></div>
-                            <div class='col-sm-4'><img src='client/assets/img/exam.png' alt='übungsabgaben-icon'></div>
-                            <div class='col-sm-4'><img src='client/assets/img/talk.png' alt='chatfunktion-icon'></div>
+                    <div class='card-body text-center'>
+
+                        <div class= 'sm-heading'>Immer alles im Überblick</div>
+                        
+                        <div class="iconsContainer"">
+                            <div>
+                                <h4>Klassenverwaltung</h4>
+                                <img src='client/assets/img/notebook.png' alt='klassenverwaltung-icon'>
+                            </div>
+                            <div>
+                                <h4>Übungsabgaben</h4>
+                                <img src='client/assets/img/exam.png' alt='übungsabgaben-icon'>
+                            </div>
+                            <div>
+                                <h4>Chatfunktion</h4>
+                                <img src='client/assets/img/talk.png' alt='chatfunktion-icon'>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -151,7 +185,6 @@
             </div>
         </div>
     </section>
-</div>
 
 
  <!-- Login Modal -->
