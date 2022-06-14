@@ -11,6 +11,11 @@
     padding-top: 20px
 }
 
+
+section{
+    box-shadow: 0 10px 20px rgba(128,0,128,.14), 0 4px 8px rgba(128,0,128,.08);
+}
+
 html{
     height: 100%;
 }
