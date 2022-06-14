@@ -166,7 +166,7 @@
         </div>
     </div>
     <form class="card-body sendingField form-group" onsubmit="return sendMessage(event)">
-        <input type="text" class="form-control col-lg chatMsgInput" id="newChatMessage">
+        <textarea autofocus rows="1" onkeyup="adjustTextAreaHeight(this)" placeholder="Nachricht" type="text" class="form-control col-lg chatMsgInput" id="newChatMessage"></textarea>
         <button type="submit" class="btn chatSendBtn"><i class="bi bi-send"></i></button>
     </form>
 </div>

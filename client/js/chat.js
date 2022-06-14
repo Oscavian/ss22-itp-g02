@@ -196,3 +196,15 @@ function deleteMessage(msgId){
         }
     });
 }
+
+function adjustTextAreaHeight(element) {
+    element.style.height = "1px";
+    element.style.height = (element.scrollHeight + 2)+"px";
+}
+
+$("#newChatMessage").off();
+$("#newChatMessage").on("keydown", (event)=> {
+    if (event.key === 'Enter') {
+        sendMessage(event);
+    }
+});
