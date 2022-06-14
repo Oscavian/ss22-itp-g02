@@ -5,7 +5,7 @@ var isTeacher;
 function checkLoginStatus(val) {
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "getLoginStatus"},
         cache: false,
         dataType: "json",
@@ -37,7 +37,7 @@ function checkLoginStatus(val) {
 function logout(){
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "logout"},
         cache: false,
         dataType: "json",
@@ -54,7 +54,7 @@ function logout(){
 function getStudentGroupId() {
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "getUserGroups"},
         cache: false,
         dataType: "json",
