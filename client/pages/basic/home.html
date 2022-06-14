@@ -1,7 +1,322 @@
-<script src="client/js/landing-page.js" defer></script>
+<script src="client/js/login.js" defer></script>
+<script src="client/js/register.js" defer></script>
 
-<h1 class="text-center" id="landingHeadline"></h1><br>
+<style>
 
-<div id="landingContent">
-    
+    #register-link{
+        color: rgb(111, 60, 204);
+    }
+
+    #register-link:hover{
+        font-weight: bold;
+        color: rgb(255, 208, 0);
+    }
+
+    #overview{
+        color: rgb(111, 60, 204);
+        font-weight: bold;
+    }
+
+    .glow-on-hover {
+        width: 100px;
+        height: 50px;
+        border: none;
+        outline: none;
+        color: black;
+        font-size: larger;
+        background: rgb(255, 196, 0);
+        cursor: pointer;
+        position: relative;
+        z-index: 0;
+        border-radius: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 10px;
+    }
+
+    .glow-on-hover:before {
+        content: '';
+        background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+        position: absolute;
+        top: -2px;
+        left:-2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing 20s linear infinite;
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
+        border-radius: 10px;
+    }
+
+    .glow-on-hover:active {
+        color: #000;
+    }
+
+    .glow-on-hover:hover:before {
+        opacity: 1;
+    }
+
+    .glow-on-hover:after {
+        z-index: -1;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgb(255, 196, 0);;
+        left: 0;
+        top: 0;
+        border-radius: 10px;
+    }
+
+    @keyframes glowing {
+        0% { background-position: 0 0; }
+        50% { background-position: 400% 0; }
+        100% { background-position: 0 0; }
+    }
+
+    img{
+        height:130px;
+    }
+
+    #landingHeadline{
+        /* color: linear-gradient(to bottom right, white, rgb(255, 238, 0));
+        text-shadow: 1px 1px 2px black, 0 0 25px yellow, 0 0 5px gold; */
+        font-size: 5em;
+        color: purple;
+        border-radius: 20px;
+        backdrop-filter: blur(2px);
+    }
+
+    #mid-heading{
+        font-size: 3em;
+        font-weight: bold;
+        /* text-shadow: -1px 0 gold, 0 1px gold, 1px 0 gold, 0 -1px gold; */
+        padding-bottom: 20px;
+    }
+
+    .sm-heading{
+        font-size: 30px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .iconsContainer{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        margin-bottom: 10px;
+        gap: 40px;
+    }
+
+    .iconsContainer > div > div{
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    /* For mobile view */
+    @media (max-width: 768px){
+        img{
+            height: 120px;
+        }
+        #landingHeadline{
+            font-size: 3em;
+        }
+        #mid-heading{
+            font-size: 30px;
+        }
+
+        .sm-heading{
+        font-size: 22px;
+        }
+
+        
+
+        .iconsContainer > div > div{
+        font-size: 18px;
+        font-weight: normal;
+        }
+
+        .iconsContainer{
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    }
+
+   
+</style>
+
+<h1 class="text-center" id="landingHeadline">Willkommen auf der ... Seite!</h1>
+
+    <section style='background-color: #eee; border-radius: 10px; border: 4px solid purple; overflow: hidden;'>
+        <div class='container p-4 text-dark'>
+            <div class='text-center'><div id='mid-heading'>Die Nr.1 Plattform für Volksschulen!</div>
+                <div class='card'>
+                    <div class='card-body text-center'>
+
+                        <div class= 'sm-heading'>Immer alles im Überblick</div>
+                        
+                        <div class="iconsContainer"">
+                            <div>
+                                <h4>Klassenverwaltung</h4>
+                                <img src='client/assets/img/notebook.png' alt='klassenverwaltung-icon'>
+                            </div>
+                            <div>
+                                <h4>Übungsabgaben</h4>
+                                <img src='client/assets/img/exam.png' alt='übungsabgaben-icon'>
+                            </div>
+                            <div>
+                                <h4>Chatfunktion</h4>
+                                <img src='client/assets/img/talk.png' alt='chatfunktion-icon'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><br>
+            <div class='card'>
+                <div class='card-body text-center'><div class='sm-heading'>Gleich loslegen und ... nutzen?</div><br>
+                    Einfach hier klicken zum Einloggen:<br><br>
+                    <div type='button' id='loginButton' class='glow-on-hover' data-bs-toggle='modal' data-bs-target='#loginModal'>Login</div><br>
+                    <img src='client/assets/img/thunder.png' id='hit-button-img' alt='hit-button-icon'><br><br><br><hr class='hrclass'>
+                    <div>Sie sind Lehrer*in und haben noch keinen Account?</div>
+                    <div>Registrieren Sie sich <a id='register-link' data-bs-toggle='modal' data-bs-target='#signupModal'>HIER</a></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+ <!-- Login Modal -->
+
+<div class="modal fade text-dark" id="loginModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Login</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="login-form">
+                    <div class="row mb-3">
+                        <label for="login-modal-user" class="col-sm-3 col-form-label">Nutzername</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="user" placeholder="username1234" class="form-control" id="login-modal-user">
+                            <div id="login-modal-user-error" class="login_error"></div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="login-modal-password" class="col-sm-3 col-form-label">Passwort</label>
+                        <div class="col-sm-9">
+                            <div class="input-group">
+                                <input type="password" name="password" class="form-control" id="login-modal-password" \>
+                                <div class="input-group-append">
+                                  <span class="input-group-text" style="border-radius: 0 5px 5px 0" onclick="loginShowHidePw()">
+                                    <i id="login-modal-password-show" class="bi bi-eye-fill"></i>
+                                  </span>
+                                </div>
+                            </div>
+                            <div id="login-modal-password-error" class="login_error"></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <!--works as confirmation, activates "leaving" in startTerm-->
+                <div id="login-failed-error" style="color:red; margin-right: 10px; display: none;" class="login_error">Login fehlgeschlagen</div>
+                <button type="button" class="btn btn-warning" id="login-modal-submit-button" name="submit" value="submit" onclick="checkLoginInput()">Log in</button>
+            </div>
+        </div>
+    </div>
 </div>
+
+ <!-- Signup Modal -->
+
+<div class="modal fade text-dark" id="signupModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">Neues Profil anlegen</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <form id="changePasswordForm">
+
+                    <div class="row mb-3">
+                        <label for="singupFirstName" class="col-sm-3 col-form-label">Vorname</label>
+                        <div class="col-sm-9">
+                          <div class="input-group">
+                            <input type="text" name="firstName" class="form-control" id="singupFirstName">
+                          </div>
+                          <div id="singupFirstNameError" style="color: red;" class="login_error"></div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="singupLastName" class="col-sm-3 col-form-label">Nachname</label>
+                        <div class="col-sm-9">
+                          <div class="input-group">
+                            <input type="text" name="lastName" class="form-control" id="singupLastName">
+                          </div>
+                          <div id="singupLastNameError" style="color: red;" class="login_error"></div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="signupUsername" class="col-sm-3 col-form-label">Nutzername</label>
+                        <div class="col-sm-9">
+                          <div class="input-group">
+                            <input type="text" name="lastName" class="form-control" id="signupUsername">
+                          </div>
+                          <div id="signupUsernameError" style="color: red;" class="login_error"></div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="signupNewPassword" class="col-form-label">Neues Passwort</label>
+                        <div class="col-sm-12">
+                          <div class="input-group">
+                            <input type="password" name="newPassword" class="form-control" id="signupNewPassword">
+                            <div class="input-group-append">
+                              <span class="input-group-text" style="border-radius: 0 5px 5px 0" onclick="signupShowHideNewPw()">
+                                <i id="signupNewPasswordShow" class="bi bi-eye-fill"></i>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="signupNewPasswordError" style="color: red;" class="login_error"></div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="signupNewPasswordConfirm" class="col-form-label">Passwort bestätigen</label>
+                        <div class="col-sm-12">
+                          <div class="input-group">
+                            <input type="password" name="newPasswordConfirm" class="form-control" id="signupNewPasswordConfirm">
+                            <div class="input-group-append">
+                              <span class="input-group-text" style="border-radius: 0 5px 5px 0" onclick="signupShowHideNewPw()">
+                                <i id="signupNewPasswordConfirmShow" class="bi bi-eye-fill"></i>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="signupNewPasswordConfirmError" style="color: red;" class="login_error"></div>
+                    </div>
+
+                </form>
+                
+            </div>
+
+            <div class="modal-footer">
+                <div class="btn btn-warning" onclick="checkRegisterInput()">Registrieren</div>
+            </div>
+        </div>
+    </div>
+</div> 
+

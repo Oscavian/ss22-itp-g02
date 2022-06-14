@@ -7,44 +7,57 @@
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(128,0,128, 0.6);
 }
 
-#navbar {
-    background-color: purple;
-    margin-bottom: 1.5rem;
+#indexContentFlex{
+    padding-top: 20px
+}
+
+
+section{
+    box-shadow: 0 10px 20px rgba(128,0,128,.14), 0 4px 8px rgba(128,0,128,.08);
+}
+
+html{
+    height: 100%;
 }
 
 body{
-    background-color: #3B1C75;
-    font-family: Nunito, sans-serif;
+    min-height: 100%;
+    position: relative;
+}
+
+body::before {
+    height: 100%;
+    width: 100%;
+    content: "";
+    background-color: rgba(128, 0, 128, 0.067);
+    /* background-color: rgba(128, 0, 128, 0.2); */
+    /* background-color: rgb(125 125 125 / 27%); */
+    background-image: url(../img/background.svg);
+    background-size: 400px;
+    background-repeat: repeat;
+    opacity: 0.15;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: -1;   
+}
+
+#backgroundPatternDiv{
+        height: 100%;
+
+        
+        position:absolute;
+        top:0;
+        bottom:0;
+        right:0;
+        left:0;
+        z-index:-1; 
 }
 
 body h1 {
     font-weight: 500;
     text-align: center;
     padding-bottom: 1.5rem;
-}
-
-#footer {
-    background-color: grey;
-}
-
-#footer .links a {
-    color: rgba(255, 255, 255, 0.6);
-    margin: 0 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-#footer #copyright {
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-.footer-link {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
-.footer-link:hover {
-    text-decoration: none;
 }
 
 #indexFlexWrapper {
@@ -66,4 +79,105 @@ body h1 {
 
 tbody tr:hover {
     background-color: grey;
+}
+
+/* For desktop view */
+@media (min-width: 768px){
+
+    .pageTitle{
+        display: grid;
+        grid-template-columns: 1fr 5fr 1fr;
+        grid-column-gap: 10px;
+        position: relative;
+        padding-left: 12px;
+        padding-right: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .pageTitle > h1 {
+        grid-column: 2;
+        margin: 0;
+        margin-left: auto;
+        margin-right: auto;
+        border: 2px solid purple;
+        color: rgb(149, 46, 149);
+        background-color: #eeeeee;
+        padding: 5px 10px 5px 10px;
+        border-radius: 10px;
+    }
+    
+    .pageTitle > div {
+        margin: 0;
+        height: 61px;
+        margin-right: auto;
+        border: 2px solid purple;
+        color: rgb(149, 46, 149);
+        background-color: #eeeeee;
+        padding: 5px 10px 5px 10px;
+        border-radius: 10px;
+        transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+        cursor: pointer;
+    }
+    
+    .pageTitle > div:hover{
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(128,0,128,.14), 0 4px 8px rgba(128,0,128,.08);
+    }
+    
+    .pageTitle > div > img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+}
+
+
+
+/* For mobile view */
+@media (max-width: 768px){
+
+    .pageTitle{
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        padding-left: 12px;
+        padding-right: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .pageTitle > h1 {
+        grid-column: 2;
+        margin: 0;
+        margin-left: auto;
+        margin-right: auto;
+        border: 2px solid purple;
+        color: rgb(149, 46, 149);
+        background-color: #eeeeee;
+        padding: 5px 10px 5px 10px;
+        border-radius: 10px;
+    }
+    
+    .pageTitle > div {
+        margin: 0;
+        height: 48px;
+        width: 56px;
+        border: 2px solid purple;
+        color: rgb(149, 46, 149);
+        background-color: #eeeeee;
+        padding: 5px 10px 5px 10px;
+        border-radius: 10px;
+        transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+        cursor: pointer;
+    }
+    
+    .pageTitle > div:hover{
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(128,0,128,.14), 0 4px 8px rgba(128,0,128,.08);
+    }
+    
+    .pageTitle > div > img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
 }

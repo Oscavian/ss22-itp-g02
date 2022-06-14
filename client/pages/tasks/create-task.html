@@ -10,31 +10,40 @@
    } 
 </style>
 
+
+
 <div class="row justify-content-lg-center">
+
+    
     <div class="col col-lg-8">
-        <section class="text-dark" style="background-color: #eee; border-radius: 5px;">
+
+        <div style="padding: 0;" class="pageTitle">
+            <div onclick="history.back()"><img src="client/assets/img/left-arrow-purple.png"></div>
+            <h1>Aufgabe erstellen</h1>
+        </div>
+
+        <section class="text-dark" style="background-color: #eee; border-radius: 5px; border: 2px solid purple;">
             <div id="create-task-main-container" class="container p-4">
                 <div class="card" style="overflow: hidden;">
                     <div class="card-body">
-                        <h4>Neue Aufgabe erstellen</h4>
                         <form>
-                        <div style="margin-top: 10px;">
-                                <label for="exampleFormControlInput1">Titel:</label>
+                        <div>
+                                <label for="newAssignmentTitle">Titel:</label>
                                 <input type="text" class="form-control" id="newAssignmentTitle">
                                 <p style="color: red; display: none;" id="noTitleError" class="mb-0">Ein Titel ist erforderlich!</p>
                             </div>
                         <div style="margin-top: 10px;">
-                                <label for="exampleFormControlTextarea1">Beschreibung:</label>
+                                <label for="newAssignmentDescription">Beschreibung:</label>
                                 <textarea class="form-control" id="newAssignmentDescription" rows="3"></textarea>
                                 <p style="color: red; display: none;" id="noDescriptionError" class="mb-0">Eine Beschreibung ist erforderlich!</p>
                             </div>
                         <div style="margin-top: 10px;">
-                                <label class="form-label" for="customFile">Angabe hinzufügen:</label>
+                                <label class="form-label" for="newAssignmentFile">Angabe hinzufügen:</label>
                                 <input type="file" class="form-control" id="newAssignmentFile" />
                             </div>
                         <div style="display: flex; margin-top: 20px; justify-content: space-between; flex-wrap: wrap; gap: 10px">
                             <div style="width: max-content;">
-                                <label class="form-label" for="customFile">Abgabefrist:</label>
+                                <label class="form-label" for="newAssignmentTime">Abgabefrist:</label>
                                 <input id="newAssignmentTime" type="datetime-local" class="form-control"/>
                                 <p style="color: red; display: none;" id="noTimeError" class="mb-0">Eine Abgabefrist ist erforderlich!</p>
                             </div>

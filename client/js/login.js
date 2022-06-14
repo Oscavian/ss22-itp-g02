@@ -1,5 +1,5 @@
 function loginShowHidePw(){
-    if($("#login-modal-password").attr("type") == "password"){
+    if($("#login-modal-password").attr("type") === "password"){
         $("#login-modal-password").attr("type","text");
         $("#login-modal-password-show").attr("class", "bi bi-eye-slash-fill");
         return;
@@ -27,11 +27,11 @@ function checkIfAlphanumericLogin(allIsOk){
     var password = $("#login-modal-password").val();
     if(!/^[a-zA-Z0-9.]+$/.test(user)){
         allOk = false;
-        $("#login-modal-user-error").text("Username must consist of letters and numbers only <br>");
+        $("#login-modal-user-error").text("Username must consist of letters and numbers only");
     }
     if(!/^[a-zA-Z0-9]+$/.test(password)){
         allOk = false;
-        $("#login-modal-password-error").text("Password must consist of letters and numbers only <br>");
+        $("#login-modal-password-error").text("Password must consist of letters and numbers only");
     }
     return allOk;
 }
@@ -40,11 +40,11 @@ function checkIfEmptyLogin(allIsOk) {
     var allOk = allIsOk;
     if($("#login-modal-user").val() === ""){
         allOk = false;
-        $("#login-modal-user-error").text("Please enter a username <br>");
+        $("#login-modal-user-error").text("Please enter a username");
     }
     if($("#login-modal-password").val() === ""){
         allOk = false;
-        $("#login-modal-password-error").text("Please enter a password <br>");
+        $("#login-modal-password-error").text("Please enter a password");
     }
     return allOk;
 }
@@ -53,11 +53,11 @@ function checkLengthLogin(allIsOk){
     var allOk = allIsOk;
     if($("#login-modal-user").val().length < 6 || $("#login-modal-user").val().length > 50){
         allOk = false;
-        $("#login-modal-user-error").text("Username must be between 6 to 50 characters long <br>");
+        $("#login-modal-user-error").text("Username must be between 6 to 50 characters long");
     }
     if($("#login-modal-password").val().length < 6 || $("#login-modal-password").val().length > 50){
         allOk = false;
-        $("#login-modal-password-error").text("Password must be between 6 to 50 characters long <br>");
+        $("#login-modal-password-error").text("Password must be between 6 to 50 characters long");
     }
     return allOk;
 }
@@ -65,7 +65,7 @@ function checkLengthLogin(allIsOk){
 function submitLoginInput() {
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "login", user: $("#login-modal-user").val(), password: $("#login-modal-password").val()},
         cache: false,
         dataType: "json",
@@ -75,13 +75,14 @@ function submitLoginInput() {
                 emptyLoginErrors();
                 $("#loginModal").modal("hide");
                 checkLoginStatus();
+                loadDefaultPage();
                 return;
             }
 
             $("#login-failed-error").show();
         },
         error: function(error){
-            console.log("AJAX-Request error: " + error);
+            console.log(error);
         }
     });
 }

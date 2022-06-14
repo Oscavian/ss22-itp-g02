@@ -52,7 +52,7 @@ function submitNewTask(){
     
     $.ajax({
       type: "POST",
-      url: "/ss22-itp-g02/backend/requestHandler.php",
+      url: rootPath + "/backend/requestHandler.php",
       success: function (data) {
         loadPage('gruppe', groupId);
       },

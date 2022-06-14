@@ -2,11 +2,12 @@ $("#newNameError").hide();
 $("#groupAddResponse").hide();
 getUserGroups();
 
-function getUserGroups() {
+async function getUserGroups() {
+    let isTeacher = await checkIsTeacher();
     $("#group-main-body").empty();
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "getUserGroups"},
         cache: false,
         dataType: "json",
@@ -19,7 +20,7 @@ function getUserGroups() {
                         "   <div class='container group-details-container p-4'>" + 
                         "       <div class='col-lg-12'>" + 
                         "           <div id='groupTitleAndTeacherDiv' style='display: flex; align-items: center;'>" + 
-                        "               <div style='font-weight: bold; font-size: 2em; color: red' id='groupTitle'>Sie befinden sich in keiner Gruppe</div>" + 
+                        "               <div style='font-weight: bold; font-size: 2em; color: purple' id='groupTitle'>Sie befinden sich in keiner Gruppe</div>" + 
                         "               <div style='margin-left: auto; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;' id='groupTeacherId'></div>" + 
                         "           </div>" + 
                         "       <div id='group-details-content-card' class='card group-details-content-card' style='margin-top: 1rem;'>" + 
@@ -29,26 +30,26 @@ function getUserGroups() {
                 else {
                     $.each(response["groups"], (i, g) => {
                         $("#group-main-body").append("" +
-                        "<section style='overflow: hidden; background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px' onclick='loadPage(`gruppe`, " + g['groupId'] + ");'>" + 
-                        "   <div class='container group-details-container p-4' style='overflow: hidden;' >" + 
+                        "<section style='overflow: hidden; background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px' onclick='loadPage(`gruppe`, " + g['groupId'] + ");'>" +
+                        "   <div class='container group-details-container p-4' style='overflow: hidden;' >" +
                         "       <div class='col-lg-12'>" + 
                         "           <div id='groupTitleAndTeacherDiv' style='display: flex; align-items: center;'>" + 
                         "               <div style='font-weight: bold; font-size: 2em;' id='groupTitle'>Gruppe " + g['groupName'] + "</div>" + 
-                        "               <div style='margin-left: auto; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;' id='groupTeacher'>Lehrer*in: " + g['teacherFirstName'] + " " + g['teacherLastName'] + "</div>" + 
+                        "               <div style='margin-left: auto; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;' id='groupTeacher'>Lehrer*in: " + g['teacherFirstName'] + " " + g['teacherLastName'] + "</div>" +
                         "           </div>" + 
                         "       <div id='group-details-content-card' class='card group-details-content-card' style='margin-top: 1rem;'>" + 
                         "           <div id='group-details-content' class='card-body'>" + 
-                        "               Content/etc</div></div></div></div></section>");
+                        "               Klicken Sie hier für nähere Informationen</div></div></div></div></section>");
                     })
                 }
             }
-            
+
             if(isTeacher){
                 $("#showNewGroupForm").show();
-            }  
+            }
         },
         error: (error) => {
-            console.log("AJAX Request Error: " + error);
+            console.log(error);
         }
     });
 
@@ -74,7 +75,7 @@ function addNewGroup(){
     $('#newGroupTitle').val('');
     $.ajax({
         type: "POST",
-        url: "/ss22-itp-g02/backend/requestHandler.php",
+        url: rootPath + "/backend/requestHandler.php",
         data: {method: "createGroup", group_name: newGroupName},
         cache: false,
         dataType: "json",
@@ -82,7 +83,7 @@ function addNewGroup(){
             $("#groupAddResponse").text("Die Gruppe " + newGroupName + " wurde erfolgreich angelegt!");
             $("#groupAddResponse").attr("style", "font-weight: bold");
         },
-        error: (e) => {
+        error: () => {
             $("#groupAddResponse").text("Die Gruppe konnte nicht angelegt werden!");
             $("#groupAddResponse").attr("style", "color: red; font-weight: bold");
         },
