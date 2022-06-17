@@ -32,23 +32,23 @@ function checkIfEmpty(allIsOk) {
     var allOk = allIsOk;
     if($("#singupFirstName").val() === ""){
         allOk = false;
-        $("#singupFirstNameError").text("Please enter a first name <br>");
+        $("#singupFirstNameError").text("Bitte geben Sie einen Vornamen ein");
     }
     if ($("#singupLastName").val() === ""){
         allOk = false;
-        $("#singupLastNameError").text("Please enter a last name <br>");
+        $("#singupLastNameError").text("Bitte geben Sie einen Nachnamen ein");
     }
     if($("#signupUsername").val() === ""){
         allOk = false;
-        $("#signupUsernameError").text("Please enter a username <br>");
+        $("#signupUsernameError").text("Bitte geben Sie einen Benutzernamen ein");
     }
     if($("#signupNewPassword").val() === ""){
         allOk = false;
-        $("#signupNewPasswordError").text("Please enter a password <br>");
+        $("#signupNewPasswordError").text("Bitte geben Sie ein Passwort ein");
     }
     if($("#signupNewPasswordConfirm").val() === ""){
         allOk = false;
-        $("#signupNewPasswordConfirmError").text("Please confirm your password <br>");
+        $("#signupNewPasswordConfirmError").text("Bitte bestätigen Sie das Passwort");
     }
     return allOk;
 }
@@ -60,11 +60,11 @@ function checkIfAlphabet(allIsOk){
     var lastName = $("#singupLastName").val();
     if(!/^[A-Za-zäöüÄÖÜß\s]*$/.test(firstName)){
         allOk = false;
-        $("#singupFirstNameError").text("First name must consist of letters only <br>");
+        $("#singupFirstNameError").text("Der Vorname darf nur Buchstaben enthalten");
     }
     if(!/^[A-Za-zäöüÄÖÜß\s]*$/.test(lastName)){
         allOk = false;
-        $("#singupLastNameError").text("Last name must consist of letters only <br>");
+        $("#singupLastNameError").text("Der Nachname darf nur Buchstaben enthalten");
     }
     return allOk;
 }
@@ -75,11 +75,11 @@ function checkIfAlphanumeric(allIsOk){
     var password = $("#signupNewPassword").val();
     if(!/^[a-zA-Z0-9äöüÄÖÜß\.]+$/.test(user)){
         allOk = false;
-        $("#signupUsernameError").text("Username must consist of letters and numbers only <br>");
+        $("#signupUsernameError").text("Der Benutzername darf keine Sonderzeichen enthalten");
     }
     if(/[\s\\]+$/.test(password)){
         allOk = false;
-        $("#signupNewPasswordError").text("Das Passwort darf kein '\\' oder Leerzeichen enthalten!");
+        $("#signupNewPasswordError").text("Das Passwort darf kein '\\' oder Leerzeichen enthalten");
     }
     return allOk;
 }
@@ -88,19 +88,19 @@ function checkLength(allIsOk){
     var allOk = allIsOk;
     if($("#singupFirstName").val().length > 50){
         allOk = false;
-        $("#singupFirstNameError").text("Only a maximum of 50 characters allowed <br>");
+        $("#singupFirstNameError").text("Der Vorname darf nicht mehr als 50 Zeichen haben");
     }
     if($("#singupLastName").val().length > 50){
         allOk = false;
-        $("#singupLastNameError").text("Only a maximum of 50 characters allowed <br>");
+        $("#singupLastNameError").text("Der Nachname darf nicht mehr als 50 Zeichen haben");
     }
     if($("#signupUsername").val().length < 6 || $("#signupUsername").val().length > 50){
         allOk = false;
-        $("#signupUsernameError").text("Username must be between 6 to 50 characters long <br>");
+        $("#signupUsernameError").text("Der Benutzername muss zwischen 6 und 50 Zeichen lang sein");
     }
     if($("#signupNewPassword").val().length < 6 || $("#signupNewPassword").val().length > 50){
         allOk = false;
-        $("#signupNewPasswordError").text("Password must be between 6 to 50 characters long <br>");
+        $("#signupNewPasswordError").text("Das Passwort muss zwischen 6 und 50 Zeichen lang sein");
     }
     return allOk;
 }
@@ -111,7 +111,7 @@ function checkPw(allIsOk){
     var pw = $("#signupNewPassword").val();
     var cpw = $("#signupNewPasswordConfirm").val();
     if(pw !== cpw){
-        $("#signupNewPasswordConfirmError").text("Password and its confirmation must match <br>");
+        $("#signupNewPasswordConfirmError").text("Die Passwörter stimmen nicht überein");
         allOk = false;
     }
     return allOk;
@@ -130,7 +130,7 @@ function checkUserNameAvailable(){
                 submitRegisterInput();
                 return;
             }
-            $("#signupUsernameError").text("Dieser Username ist bereits vergeben!");
+            $("#signupUsernameError").text("Dieser Benutzername ist bereits vergeben");
             
         },
         error: function (error) {

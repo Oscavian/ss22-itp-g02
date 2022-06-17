@@ -79,7 +79,7 @@ function createStudentAccounts(){
         studentInfoList = [];
     }
     else if(counter === 0){
-        $("#post-response-stdacc").append("Es muss mindestens ein Formular korrekt ausgefüllt sein.<br>");
+        $("#post-response-stdacc").append("Es muss mindestens ein Formular korrekt ausgefüllt sein");
     }
 }
 
