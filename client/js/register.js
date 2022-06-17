@@ -58,11 +58,11 @@ function checkIfAlphabet(allIsOk){
     var allOk = allIsOk;
     var firstName = $("#singupFirstName").val();
     var lastName = $("#singupLastName").val();
-    if(!/^[A-Za-z\s]*$/.test(firstName)){
+    if(!/^[A-Za-zäöüÄÖÜß\s]*$/.test(firstName)){
         allOk = false;
         $("#singupFirstNameError").text("First name must consist of letters only <br>");
     }
-    if(!/^[A-Za-z\s]*$/.test(lastName)){
+    if(!/^[A-Za-zäöüÄÖÜß\s]*$/.test(lastName)){
         allOk = false;
         $("#singupLastNameError").text("Last name must consist of letters only <br>");
     }
@@ -73,13 +73,13 @@ function checkIfAlphanumeric(allIsOk){
     var allOk = allIsOk;
     var user = $("#signupUsername").val();
     var password = $("#signupNewPassword").val();
-    if(!/^[a-zA-Z0-9]+$/.test(user)){
+    if(!/^[a-zA-Z0-9äöüÄÖÜß\.]+$/.test(user)){
         allOk = false;
         $("#signupUsernameError").text("Username must consist of letters and numbers only <br>");
     }
-    if(!/^[a-zA-Z0-9]+$/.test(password)){
+    if(/[\s\\]+$/.test(password)){
         allOk = false;
-        $("#signupNewPasswordError").text("Password must consist of letters and numbers only <br>");
+        $("#signupNewPasswordError").text("Das Passwort darf kein '\\' oder Leerzeichen enthalten!");
     }
     return allOk;
 }

@@ -71,7 +71,7 @@ function enableEditUsername(){
 function checkFirstName() {
     let firstName = $(this).val();
 
-    if (!/^[A-Za-z\s]*$/.test(firstName)) {
+    if (!/^[A-Za-zäöüÄÖÜß\s]*$/.test(firstName)) {
         $("#firstNameError").show();
         $("#firstNameEditActive").css("color", "red");
         $("#firstNameEditActive").unbind();
@@ -94,7 +94,7 @@ function checkFirstName() {
 function checkLastName() {
     let lastName = $(this).val();
 
-    if (!/^[A-Za-z\s]*$/.test(lastName)) {
+    if (!/^[A-Za-zäöüÄÖÜß\s]*$/.test(lastName)) {
         $("#lastNameError").show();
         $("#lastNameEditActive").css("color", "red");
         $("#lastNameEditActive").unbind();
@@ -128,7 +128,7 @@ function checkUsername() {
         return;
     }
 
-    if (!/^[a-zA-Z0-9]+$/.test(username)) {
+    if (!/^[a-zA-Z0-9äöüÄÖÜß\.]+$/.test(username)) {
         $("#usernameUnavailable").hide();
         $("#usernameAvailable").hide();
         $("#usernameError").hide();

@@ -25,13 +25,9 @@ function checkIfAlphanumericLogin(allIsOk){
     var allOk = allIsOk;
     var user = $("#login-modal-user").val();
     var password = $("#login-modal-password").val();
-    if(!/^[a-zA-Z0-9.]+$/.test(user)){
+    if(!/^[a-zA-Z0-9äöüÄÖÜß\.]+$/.test(user)){
         allOk = false;
         $("#login-modal-user-error").text("Username must consist of letters and numbers only");
-    }
-    if(!/^[a-zA-Z0-9]+$/.test(password)){
-        allOk = false;
-        $("#login-modal-password-error").text("Password must consist of letters and numbers only");
     }
     return allOk;
 }

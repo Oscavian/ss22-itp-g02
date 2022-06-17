@@ -101,11 +101,11 @@ function checkIfAlphabetStudAcc(allIsOk, id){
     var allOk = allIsOk;
     var firstName = $("#firstname"+id).val();
     var lastName = $("#lastname"+id).val();
-    if(!/^[A-Za-z\s]*$/.test(firstName)){
+    if(!/^[A-Za-zäöüÄÖÜß\s]*$/.test(firstName)){
         allOk = false;
         $("#firstname_error"+id).append("Der Vorname darf nur aus Buchstaben bestehen");
     }
-    if(!/^[A-Za-z\s]*$/.test(lastName)){
+    if(!/^[A-Za-zäöüÄÖÜß\s]*$/.test(lastName)){
         allOk = false;
         $("#lastname_error"+id).append("Der Nachname darf nur aus Buchstaben bestehen");
     }
