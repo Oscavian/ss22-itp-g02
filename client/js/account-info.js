@@ -207,7 +207,7 @@ function sendChangedInfoToServer(type, data) {
         cache: false,
         dataType: "json",
         success: function (response) {
-
+            notyf.success('Änderung erfolgreich!');
         },
         error: function (error) {
             console.log(error);
@@ -289,7 +289,8 @@ function sendPasswordChangeToServer(oldPassword, newPassword) {
         cache: false,
         dataType: "json",
         success: function (response) {
-            if (response["success"]) {
+            if (response["success"]) {      
+                notyf.success('Passwort erfolgreich geändert!');
                 $("#changePasswordModal").modal("hide");
                 $('#changePasswordForm')[0].reset();
                 $('#passwordChangeSuccess').css("display", "inline");

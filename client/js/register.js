@@ -155,6 +155,7 @@ function submitRegisterInput() {
         success: function (response) {
             //$("#success").append(response);
             $("#signupModal").modal("hide");
+            notyf.success('Registrierung erfolgreich<br>Willkommen!');
             loadDefaultPage();
             checkLoginStatus();
         },

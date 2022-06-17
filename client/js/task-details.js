@@ -85,6 +85,7 @@ function loadAssignmentDetails(assignmentId) {
 
 
 function downloadTaskDescriptionFile(assignmentId) {
+    notyf.success('Die Datei wird heruntergeladen!');
     window.location = rootPath + "/backend/requestHandler.php?method=downloadAssignmentFile&assignment_id=" + assignmentId;
 }
 
@@ -106,6 +107,7 @@ function uploadSubmission() {
         type: "POST",
         url: rootPath + "/backend/requestHandler.php",
         success: function (data) {
+            notyf.success('Die Datei wurde abgegeben!');
             loadAssignmentDetails(assignmentId);
             $("#addSubmissionFormSpan").hide();
         },

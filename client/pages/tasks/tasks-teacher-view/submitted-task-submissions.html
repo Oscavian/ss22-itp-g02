@@ -28,6 +28,7 @@
 <script>
 
     function downloadSubmissionFile(submissionId) {
+        notyf.success('Die Datei wird heruntergeladen!');
         window.location = rootPath + "/backend/requestHandler.php?method=downloadSubmissionFile&submission_id=" + submissionId;
     }
 

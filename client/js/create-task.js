@@ -54,6 +54,7 @@ function submitNewTask(){
       type: "POST",
       url: rootPath + "/backend/requestHandler.php",
       success: function (data) {
+        notyf.success('Aufgabe "' + formData.get("title") + '" wurde erstellt!');
         loadPage('gruppe', groupId);
       },
       error: function (error) {

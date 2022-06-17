@@ -70,6 +70,7 @@ function submitLoginInput() {
                 $('#login-form')[0].reset();
                 emptyLoginErrors();
                 $("#loginModal").modal("hide");
+                notyf.success('Login erfolgreich!<br>Willkommen!');
                 checkLoginStatus();
                 loadDefaultPage();
                 return;

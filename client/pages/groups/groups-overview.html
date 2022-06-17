@@ -1,13 +1,22 @@
 <script src="client/js/groups.js" defer></script>
 <style>
-    section{
+    .groupOverviewElement{
         border: 2px solid purple;
         transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
         cursor: pointer;
     }
-    section:hover{
+    .groupOverviewElement:hover{
         transform: scale(1.05);
         box-shadow: 0 10px 20px rgba(128,0,128,.14), 0 4px 8px rgba(128,0,128,.08);
+    }
+
+    .buttonNewGroup{
+      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+      cursor: pointer;
+    }
+    .buttonNewGroup:hover{
+      transform: scale(1.05);
+      box-shadow: 0 10px 20px rgba(128,0,128,.14), 0 4px 8px rgba(128,0,128,.08);
     }
 
     /* For mobile view */
@@ -36,19 +45,20 @@
 
 <div id="group-main-body" class="container text-dark" style="display: none"></div>
 <div id="showNewGroupForm" class="container" style="display: none">
-    <button type="button" class="btn btn-warning" id="buttonNewGroup" onclick="showNewGroupForm()"><i class="bi bi-clipboard2-plus"></i>&nbsp;neue Gruppe erstellen</button>
+    <div id="buttonNewGroup" type="button" onclick="showNewGroupForm()" style="background-color: #eee; border: 2px solid purple" class='btn btn-light buttonNewGroup'><i class="bi bi-clipboard2-plus" style="margin-right: 5px; color: purple;"></i>Neue Gruppe erstellen</div>
 </div>
 <div id="groupAddResponse" class="mt-3 container"></div>
 <div id="new-group-body" class="container text-dark" style="display: none;">
-    <div style="background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px; border: 2px solid purple;">
+    <div class="groupOverviewElement" style="background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px; border: 2px solid purple;">
         <div class="container group-details-container p-4">
             <h3>Neue Gruppe erstellen</h3>
             <div class="col-sm">
-                <div id="groupTitleAndTeacherDiv" style="display: flex; align-items: center;">
+                <div id="groupTitleAndTeacherDiv" style="display: flex; align-items: center; margin-top: 16px;">
                     <input type="text" class="form-control form-control" style="font-weight: bold;" id="newGroupTitle" placeholder="Gruppenname">
                 </div>
                 <div id="newNameError" style="color: red; font-weight: bold;">Sie müssen einen gültigen Gruppennamen eingeben!</div>
-                <button type="button" class="btn btn-md btn-warning mt-3" onclick="addNewGroup()" required>Erstellen</button>
+                <div type="button" onclick="addNewGroup()" style="background-color: white; border: 2px solid purple; margin-top: 16px;" class='btn btn-light buttonNewGroup'><i class="bi bi-clipboard2-plus" style="margin-right: 5px; color: purple;"></i>Erstellen</div>
+
             </div>
         </div>
     </div>

@@ -3,6 +3,24 @@ $.ajaxPrefilter(function(options) {
     options.async = true;
 });
 
+//settings for toast notifications
+const notyf = new Notyf({
+    duration: 1000,
+    position: {
+      x: 'left',
+      y: 'top',
+    },
+    types: [
+      {
+        type: 'success',
+        background: 'purple',
+        duration: 3000,
+        ripple: true,
+        className: "notificationClass",
+      },
+    ]
+});
+
 /**
  * The projects' root path used to specify a sub-folder, the app resides in
  *

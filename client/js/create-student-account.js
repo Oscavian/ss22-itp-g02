@@ -144,6 +144,7 @@ function submitStudentAccInput(studentInfoList){
         cache: false,
         dataType: "json",
         success: function (response) {
+            notyf.success('Die Accounts wurden erfolgreich erstellt!');
             //$("#success").append(response);
             $("#post-response-stdacc").append("Die SchülerInnen-Accounts sind erfolgreich angelegt worden<br>");
             $("#newStudentAccountListBody").empty();
