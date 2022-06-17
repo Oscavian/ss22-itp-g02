@@ -60,6 +60,14 @@ function loadAssignmentDetails(assignmentId) {
                 $("#TaskStatus").css("color", "green");
                 $("#TaskStatus").text('"' + ownSubmissionFileName + '" wurde am ' + ownSubmissionString + ' um ' + ownSubmissionString2 + ' abgegeben');
 
+            } else if (new Date().getTime() > dueDate.getTime()) {
+                let timeleft = dueDate.getTime() - new Date().getTime();
+                let timeleftDays = timeleft / 86400000;
+                let timeleftHours = timeleftDays % 1;
+                timeleftDays = Math.floor(timeleftDays);
+                timeleftHours = timeleftHours * 24;
+                timeleftHours = Math.floor(timeleftHours);
+                $("#TaskStatus").html('<span style="color: red;">Die Abgabefrist endete vor ' + -timeleftDays + ' Tagen und ' + -timeleftHours + ' Stunden</span>');
             } else {
                 let timeleft = dueDate.getTime() - new Date().getTime();
                 let timeleftDays = timeleft / 86400000;
@@ -73,7 +81,6 @@ function loadAssignmentDetails(assignmentId) {
 
                 $("#addSubmissionFormSpan").show();
             }
-
 
         },
         error: function (error) {
