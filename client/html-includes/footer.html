@@ -29,6 +29,10 @@
     text-transform: uppercase;
     letter-spacing: 1px;
   }
+  .btn-pc{
+    width: 25px;
+    padding-bottom: 5px;
+  }
 
   @media (min-width: 768px){
     
@@ -97,10 +101,11 @@
     <div id="footer-account" style="display: none;">
       <div id="footer-account-flex" style="display: flex; align-items: center;">
           <div class="btn btn-light" onclick="loadPage('account')">
-            <i class="bi bi-person-circle" style="margin-right: 5px; color: purple;"></i>
+            <!--<i class="bi bi-person-circle" style="margin-right: 5px; color: purple;"></i>-->
+            <img src="client/assets/img/id-card-big.png" class="btn-pc" alt="id-card">
             <span id="footerUserName"></span>
           </div>
-          <div onclick="logout()" id="footerLogoutButton" type="button" style="background-color: #eee; margin-left: 10px; margin-right: 10px;" class='btn btn-light'>Logout<i class="bi bi-box-arrow-right" style="margin-left: 5px; color: purple;"></i></div>
+          <div onclick="logout()" id="footerLogoutButton" type="button" style="background-color: #eee; margin-left: 10px; margin-right: 10px;" class='btn btn-light'>Logout <img src="client/assets/img/door-big.png" class="btn-pc" alt="door"> <!--<i class="bi bi-box-arrow-right" style="margin-left: 5px; color: purple;"></i>--></div>
       </div>
     </div>
   </div>

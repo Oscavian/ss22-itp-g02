@@ -32,23 +32,23 @@ function checkIfEmpty(allIsOk) {
     var allOk = allIsOk;
     if($("#singupFirstName").val() === ""){
         allOk = false;
-        $("#singupFirstNameError").text("Please enter a first name <br>");
+        $("#singupFirstNameError").text("Please enter a first name");
     }
     if ($("#singupLastName").val() === ""){
         allOk = false;
-        $("#singupLastNameError").text("Please enter a last name <br>");
+        $("#singupLastNameError").text("Please enter a last name");
     }
     if($("#signupUsername").val() === ""){
         allOk = false;
-        $("#signupUsernameError").text("Please enter a username <br>");
+        $("#signupUsernameError").text("Please enter a username");
     }
     if($("#signupNewPassword").val() === ""){
         allOk = false;
-        $("#signupNewPasswordError").text("Please enter a password <br>");
+        $("#signupNewPasswordError").text("Please enter a password");
     }
     if($("#signupNewPasswordConfirm").val() === ""){
         allOk = false;
-        $("#signupNewPasswordConfirmError").text("Please confirm your password <br>");
+        $("#signupNewPasswordConfirmError").text("Please confirm your password");
     }
     return allOk;
 }
@@ -60,11 +60,11 @@ function checkIfAlphabet(allIsOk){
     var lastName = $("#singupLastName").val();
     if(!/^[A-Za-z\s]*$/.test(firstName)){
         allOk = false;
-        $("#singupFirstNameError").text("First name must consist of letters only <br>");
+        $("#singupFirstNameError").text("First name must consist of letters only");
     }
     if(!/^[A-Za-z\s]*$/.test(lastName)){
         allOk = false;
-        $("#singupLastNameError").text("Last name must consist of letters only <br>");
+        $("#singupLastNameError").text("Last name must consist of letters only");
     }
     return allOk;
 }
@@ -75,11 +75,11 @@ function checkIfAlphanumeric(allIsOk){
     var password = $("#signupNewPassword").val();
     if(!/^[a-zA-Z0-9]+$/.test(user)){
         allOk = false;
-        $("#signupUsernameError").text("Username must consist of letters and numbers only <br>");
+        $("#signupUsernameError").text("Username must consist of letters and numbers only");
     }
     if(!/^[a-zA-Z0-9]+$/.test(password)){
         allOk = false;
-        $("#signupNewPasswordError").text("Password must consist of letters and numbers only <br>");
+        $("#signupNewPasswordError").text("Password must consist of letters and numbers only");
     }
     return allOk;
 }
@@ -88,19 +88,19 @@ function checkLength(allIsOk){
     var allOk = allIsOk;
     if($("#singupFirstName").val().length > 50){
         allOk = false;
-        $("#singupFirstNameError").text("Only a maximum of 50 characters allowed <br>");
+        $("#singupFirstNameError").text("Only a maximum of 50 characters allowed");
     }
     if($("#singupLastName").val().length > 50){
         allOk = false;
-        $("#singupLastNameError").text("Only a maximum of 50 characters allowed <br>");
+        $("#singupLastNameError").text("Only a maximum of 50 characters allowed");
     }
     if($("#signupUsername").val().length < 6 || $("#signupUsername").val().length > 50){
         allOk = false;
-        $("#signupUsernameError").text("Username must be between 6 to 50 characters long <br>");
+        $("#signupUsernameError").text("Username must be between 6 to 50 characters long");
     }
     if($("#signupNewPassword").val().length < 6 || $("#signupNewPassword").val().length > 50){
         allOk = false;
-        $("#signupNewPasswordError").text("Password must be between 6 to 50 characters long <br>");
+        $("#signupNewPasswordError").text("Password must be between 6 to 50 characters long");
     }
     return allOk;
 }
@@ -111,7 +111,7 @@ function checkPw(allIsOk){
     var pw = $("#signupNewPassword").val();
     var cpw = $("#signupNewPasswordConfirm").val();
     if(pw !== cpw){
-        $("#signupNewPasswordConfirmError").text("Password and its confirmation must match <br>");
+        $("#signupNewPasswordConfirmError").text("Password and its confirmation must match");
         allOk = false;
     }
     return allOk;

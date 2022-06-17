@@ -9,11 +9,76 @@
       transform: scale(1.05);
       box-shadow: 0 10px 20px rgba(128,0,128,.14), 0 4px 8px rgba(128,0,128,.08);
   }
+  .glow-on-hover {
+        
+        border: none;
+        outline: none;
+        color: black;
+        background: rgb(255, 196, 0);
+        cursor: pointer;
+        position: relative;
+        z-index: 0;
+        border-radius: 5px;
+        margin-left: auto;
+        margin-top: 7px;
+        margin-right: auto; 
+        padding-top: 7px;;
+        height: 40px;
+        width: 80px;
+        text-align: center; 
+    }
+
+    .glow-on-hover:before {
+        content: '';
+        background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+        position: absolute;
+        top: -2px;
+        left:-2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing 20s linear infinite;
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
+        border-radius: 5px;
+    }
+
+    .glow-on-hover:active {
+        color: #000;
+    }
+
+    .glow-on-hover:hover:before {
+        opacity: 1;
+    }
+
+    .glow-on-hover:after {
+        z-index: -1;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgb(255, 196, 0);;
+        left: 0;
+        top: 0;
+        border-radius: 5px;
+    }
+
+    @keyframes glowing {
+        0% { background-position: 0 0; }
+        50% { background-position: 400% 0; }
+        100% { background-position: 0 0; }
+    }
 
   @media (max-width: 900px){
         .new-students-container{
         padding: 0 !important;
         }
+        .person-img{
+        height: 40px;
+        padding-bottom: 7px;
+      }
     }
 
 
@@ -42,7 +107,7 @@
   <div style="max-width: 900px;" class="container text-dark">
     <div style="padding: 0" class="pageTitle">
       <div onclick="history.back()"><img src="client/assets/img/left-arrow-purple.png"></div>
-      <h1>Neue SchülerInnen-Accounts</h1>
+      <h1>Neue SchülerInnen-Accounts <img src="client/assets/img/superhero.png" style=" height: 60px; padding-bottom: 8px;" class="person-img"></h1>
     </div>
     <section style="background-color: #eee; border-radius: 5px; margin-bottom: 20px; border: 2px solid purple;">
       <div style="overflow: hidden;" class="container new-students-container p-4">
@@ -54,7 +119,7 @@
               <table style="max-width: 900px; overflow: hidden; white-space: nowrap; display: block; overflow-x: auto;" class="table table-responsive table-sm" id="form-list"></table>
             </form>
               <div id="add-form" type="button" style="background-color: #eee;" class='btn btn-light'><i class="bi bi-person-plus" style="margin-right: 5px; color: purple;"></i>Weitere Schüler*in</div>
-              <div type="button" class="btn btn-md btn-warning float-end" id="submit-student-accounts" name="submit-student-accounts">Erstellen</div>
+              <div type="button" class="glow-on-hover float-end" id="submit-student-accounts" name="submit-student-accounts">Erstellen</div>
             </div>
           </div>
           
@@ -78,7 +143,7 @@
                   </table>
               </div>
 
-            <div type="button" onclick="history.back()" class="btn btn-md btn-warning float-end">Zurück zur Gruppe</div>
+            <div type="button" onclick="history.back()" style="width: 150px;" class="glow-on-hover float-end">Zurück zur Gruppe</div>
             </div>
           </div>
           

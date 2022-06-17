@@ -3,10 +3,81 @@
 <script src="client/js/create-task.js" defer></script>
 
 <style>
+    .titleImg{
+        height: 45px;
+        padding-bottom: 8px;
+    }
+    .formTitle{
+        font-weight: bold;
+        color: purple;
+
+    }
+    .glow-on-hover {
+        
+        border: none;
+        outline: none;
+        color: black;
+        background: rgb(255, 196, 0);
+        cursor: pointer;
+        position: relative;
+        z-index: 0;
+        border-radius: 5px;
+        margin-left: auto;
+        margin-top: 7px;
+        margin-right: auto; 
+        height: 40px; 
+    }
+
+    .glow-on-hover:before {
+        content: '';
+        background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+        position: absolute;
+        top: -2px;
+        left:-2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing 20s linear infinite;
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
+        border-radius: 5px;
+    }
+
+    .glow-on-hover:active {
+        color: #000;
+    }
+
+    .glow-on-hover:hover:before {
+        opacity: 1;
+    }
+
+    .glow-on-hover:after {
+        z-index: -1;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgb(255, 196, 0);;
+        left: 0;
+        top: 0;
+        border-radius: 5px;
+    }
+
+    @keyframes glowing {
+        0% { background-position: 0 0; }
+        50% { background-position: 400% 0; }
+        100% { background-position: 0 0; }
+    }
     @media (max-width: 576px){
        #create-task-main-container{
        padding: 0 !important;
        }
+       .titleImg{
+        height: 35px;
+        padding-bottom: 5px;
+    }
    } 
 </style>
 
@@ -19,7 +90,7 @@
 
         <div style="padding: 0;" class="pageTitle">
             <div onclick="history.back()"><img src="client/assets/img/left-arrow-purple.png"></div>
-            <h1>Aufgabe erstellen</h1>
+            <h1>Aufgabe erstellen <img src="client/assets/img/exam.png" class="titleImg"></h1>
         </div>
 
         <section class="text-dark" style="background-color: #eee; border-radius: 5px; border: 2px solid purple;">
@@ -28,27 +99,27 @@
                     <div class="card-body">
                         <form>
                         <div>
-                                <label for="newAssignmentTitle">Titel:</label>
+                                <label for="newAssignmentTitle" class="formTitle">Titel:</label>
                                 <input type="text" class="form-control" id="newAssignmentTitle">
                                 <p style="color: red; display: none;" id="noTitleError" class="mb-0">Ein Titel ist erforderlich!</p>
                             </div>
                         <div style="margin-top: 10px;">
-                                <label for="newAssignmentDescription">Beschreibung:</label>
+                                <label for="newAssignmentDescription" class="formTitle">Beschreibung:</label>
                                 <textarea class="form-control" id="newAssignmentDescription" rows="3"></textarea>
                                 <p style="color: red; display: none;" id="noDescriptionError" class="mb-0">Eine Beschreibung ist erforderlich!</p>
                             </div>
                         <div style="margin-top: 10px;">
-                                <label class="form-label" for="newAssignmentFile">Angabe hinzufügen:</label>
-                                <input type="file" class="form-control" id="newAssignmentFile" />
+                                <label class="form-label formTitle" for="newAssignmentFile">Angabe hinzufügen:</label>
+                                <input type="file" class="form-control" id="newAssignmentFile"/>
                             </div>
                         <div style="display: flex; margin-top: 20px; justify-content: space-between; flex-wrap: wrap; gap: 10px">
                             <div style="width: max-content;">
-                                <label class="form-label" for="newAssignmentTime">Abgabefrist:</label>
-                                <input id="newAssignmentTime" type="datetime-local" class="form-control"/>
+                                <label class="form-label formTitle" for="newAssignmentTime">Abgabefrist:</label>
+                                <input id="newAssignmentTime" type="datetime-local" class="form-control" style="cursor: pointer"/>
                                 <p style="color: red; display: none;" id="noTimeError" class="mb-0">Eine Abgabefrist ist erforderlich!</p>
                             </div>
                             <div style="align-self: flex-end;">
-                                <button type="button" onclick="submitNewTask()" id="submitTaskBtn" style="background-color: #eee;" class="btn btn-light"><i style="color: purple;" class="bi bi-file-earmark-arrow-up"></i> Erstellen</button>
+                                <button type="button" onclick="submitNewTask()" id="submitTaskBtn" style="background-color: #eee;" class="glow-on-hover">Erstellen <img style="height: 20px;" src="client/assets/img/pen.png"></button>
                             </div>
                         </div>
                         </form>
