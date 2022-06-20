@@ -1,8 +1,78 @@
 <script src="client/js/account-info.js" defer></script>
 
+<style>
+  .id-card-img{
+    height: 50px;
+    padding-bottom: 10px;
+  }
+  .titles{
+    font-weight: bold;
+    color: purple;
+  }
+  .glow-on-hover {
+        
+        border: none;
+        outline: none;
+        color: gold;
+        cursor: pointer;
+        background:purple;
+        position: relative;
+        z-index: 0;
+        border-radius: 5px;
+        margin-left: auto;
+        margin-top: 7px; 
+        padding-top: 5px;
+        text-align: center;
+        height: 40px;
+        width: 130px;
+    }
+
+    .glow-on-hover:before {
+        content: '';
+        background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+        position: absolute;
+        top: -2px;
+        left:-2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing 20s linear infinite;
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
+        border-radius: 5px;
+    }
+
+    .glow-on-hover:active {
+        color: white;
+    }
+
+    .glow-on-hover:hover:before {
+        opacity: 1;
+    }
+
+    .glow-on-hover:after {
+        z-index: -1;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: purple;
+        left: 0;
+        top: 0;
+        border-radius: 5px;
+    }
+
+    @keyframes glowing {
+        0% { background-position: 0 0; }
+        50% { background-position: 400% 0; }
+        100% { background-position: 0 0; }
+    }
+</style>
 <div class="pageTitle">
   <div onclick="this.onclick = ''; history.back()"><img src="client/assets/img/left-arrow-purple.png"></div>
-  <h1>Mein Account</h1>
+  <h1>Mein Account <img src="client/assets/img/id-card-big.png" class="id-card-img"></h1>
 </div>
 
 <div id="account-main-body" class="container text-dark">
@@ -11,9 +81,9 @@
       <div class="container p-4 text-dark">
         <div class="row">
           <div class="col-lg-4">
-            <div class="card">
+            <div class="card" style="background-color:rgba(255, 240, 255, 0.5)">
               <div class="card-body text-center">
-                <img src="" alt="avatar" id="account-info-avatar"
+                <img src="client/assets/img/superhero.png" alt="avatar"
                   class="rounded-circle img-fluid" style="width: 160px;">
                 
                 <h5 class="my-3" id="userFullNameField"></h5>
@@ -26,31 +96,31 @@
               <div class="card-body">
                 <div class="row">
                   <div class="col-sm-3">
-                    <p class="mb-0">Vorname</p>
+                    <p class="mb-0 titles">Vorname</p>
                   </div>
                   <div class="col-sm-9">
-                    <p style="display: inline;" class="text-muted mb-0" id="firstNameField"></p><i id="firstNameEdit" style="color: purple; margin-left: 5px" class="bi bi-pencil-square mb-0"></i>
+                    <p style="display: inline;" class="text-muted mb-0" id="firstNameField"></p><i id="firstNameEdit" style="color: purple; margin-left: 5px; cursor: pointer" class="bi bi-pencil-square mb-0"></i>
                     <p style="color: red; display: none;" id="firstNameError" class="mb-0">Vorname darf nicht länger als 50 Zeichen sein und kann nur aus Buchstaben/Leerzeichen bestehen!</p> 
                   </div>
                 </div>
                 <hr>
                 <div class="row">
                   <div class="col-sm-3">
-                    <p class="mb-0">Nachname</p>
+                    <p class="mb-0 titles">Nachname</p>
                   </div>
                   <div class="col-sm-9">
-                    <p style="display: inline;" class="text-muted mb-0" id="lastNameField"></p><i id="lastNameEdit" style="color: purple; margin-left: 5px" class="bi bi-pencil-square mb-0"></i>
+                    <p style="display: inline;" class="text-muted mb-0" id="lastNameField"></p><i id="lastNameEdit" style="color: purple; margin-left: 5px; cursor: pointer" class="bi bi-pencil-square mb-0"></i>
                     <p style="color: red; display: none;" id="lastNameError" class="mb-0">Nachname darf nicht länger als 50 Zeichen sein und kann nur aus Buchstaben/Leerzeichen bestehen!</p> 
                   </div>
                 </div>
                 <hr>
                 <div class="row">
                   <div class="col-sm-3">
-                    <p class="mb-0">Username</p>
+                    <p class="mb-0 titles">Username</p>
                   </div>
                   <div class="col-sm-9">
-                    <p style="display: inline;" class="text-muted mb-0" id="usernameField"></p><i id="usernameEdit" style="color: purple; margin-left: 5px" class="bi bi-pencil-square mb-0"></i>
-                    <p id="usernameAvailable" style="color: green; display: none;" class="mb-0">Benutzername ist verfügbar!</p>
+                    <p style="display: inline;" class="text-muted mb-0" id="usernameField"></p><i id="usernameEdit" style="color: purple; margin-left: 5px; cursor: pointer" class="bi bi-pencil-square mb-0"></i>
+                    <p id="usernameAvailable" style="color: green; display: none; " class="mb-0">Benutzername ist verfügbar!</p>
                     <p id="usernameUnavailable" style="color: red; display: none;" class="mb-0">Benutzername ist bereits vergeben!</p>
                     <p id="usernameError" style="color: red; display: none;" class="mb-0">Benutzername muss zwischen 6 und 49 Zeichen haben!</p>
                     <p id="usernameError2" style="color: red; display: none;" class="mb-0">Benutzername darf keine Sonderzeichen enthalten!</p>
@@ -58,7 +128,7 @@
                 </div>
               </div>
             </div>
-            <div type="button" style="background-color: purple;" class='btn text-warning me-2 fs-5'  data-bs-toggle='modal' data-bs-target='#changePasswordModal'>Passwort ändern</div>
+            <div type="button" style="background-color: purple;" class='glow-on-hover'  data-bs-toggle='modal' data-bs-target='#changePasswordModal'>Passwort ändern</div>
             <p id="passwordChangeSuccess" style="color: purple; display: none" class="mb-0">Passwortänderung erfolgreich!</p>
           </div>
         </div>
@@ -69,7 +139,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <!-- Modal Header -->
-            <div class="modal-header">
+            <div class="modal-header" style="background-color:rgb(255, 196, 0)">
                 <h4 class="modal-title">Passwort ändern</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
@@ -77,7 +147,7 @@
             <div class="modal-body">
                 <form id="changePasswordForm">
                   <div class="row mb-2 align-items-center">
-                    <label for="oldPassword" class="col-form-label">Altes Passwort</label>
+                    <label for="oldPassword" class="col-form-label titles">Altes Passwort</label>
                     <div class="col-sm-7">
                       <div class="input-group">
                         <input type="password" name="oldPassword" class="form-control" id="oldPassword">
@@ -91,7 +161,7 @@
                     <div id="oldPasswordError" style="color: red; display: none;" class="login_error">Das Passwort ist nicht korrekt!</div>
                   </div>
                     <div class="row mb-2 align-items-center">
-                      <label for="newPassword" class="col-form-label">Neues Passwort</label>
+                      <label for="newPassword" class="col-form-label titles">Neues Passwort</label>
                       <div class="col-sm-7">
                         <div class="input-group">
                           <input type="password" name="newPassword" class="form-control" id="newPassword">
@@ -106,7 +176,7 @@
                       <div id="newPasswordError2" style="color: red; display: none;" class="login_error">Das neue und das alte Passwort können nicht identisch sein!</div>
                     </div>
                     <div class="row mb-2 align-items-center">
-                      <label for="newPasswordConfirm" class="col-form-label">Neues Passwort bestätigen</label>
+                      <label for="newPasswordConfirm" class="col-form-label titles">Neues Passwort bestätigen</label>
                       <div class="col-sm-7">
                         <div class="input-group">
                           <input type="password" name="newPasswordConfirm" class="form-control" id="newPasswordConfirm">
@@ -124,7 +194,7 @@
             <!-- Modal footer -->
             <div class="modal-footer">
                 <!--works as confirmation, activates "leaving" in startTerm-->
-                <div class="btn btn-warning" id="submitPasswordChange" onclick="submitPasswordChange()">Speichern</div>
+                <div class="glow-on-hover" id="submitPasswordChange" onclick="submitPasswordChange()">Speichern</div>
             </div>
         </div>
     </div>

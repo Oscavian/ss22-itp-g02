@@ -21,7 +21,7 @@ async function getUserGroups() {
                                 <div class='col-lg-12'>
                                     <div style='display: flex; flex-direction: column; align-items: center; justify-content: center;'>
                                         <div style='font-weight: bold; font-size: 2em; color: purple' id='groupTitle'>Sie befinden sich in keiner Gruppe</div>
-                                        <div onclick="showNewGroupForm()" type="button" style="background-color: purple; margin-top: 12px" class='btn text-white buttonNewGroup'><i class="bi bi-clipboard2-plus" style="margin-right: 5px;"></i>Neue Gruppe erstellen</div>
+                                        <button type="button" class="glow-on-hover newform-btn buttonNewGroup" onclick="showNewGroupForm()"><img src="client/assets/img/pen.png" style="height: 25px; margin-right: 2px;"> Neue Gruppe erstellen</button>
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +41,7 @@ async function getUserGroups() {
                         "           </div>" + 
                         "       <div id='group-details-content-card' class='card group-details-content-card' style='margin-top: 1rem;'>" + 
                         "           <div id='group-details-content' class='card-body'>" + 
-                        "               Klicken Sie hier für nähere Informationen</div></div></div></div></section>");
+                        "              <img src='client/assets/img/thunder.png' class='click-img' alt='hand smashing button'><br> Klicken Sie hier für nähere Informationen</div></div></div></div></section>");
                     })
                 }
             }

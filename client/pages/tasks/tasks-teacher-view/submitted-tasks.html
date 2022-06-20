@@ -3,6 +3,10 @@
 <script src="client/js/task-teacher-view.js" defer></script>
 
 <style>
+  .exerciseImg{
+      height: 50px;
+      padding-bottom: 7px;
+  }
 
   /* Nav styling */
   
@@ -72,6 +76,11 @@
 
     @media (max-width: 992px){
 
+      .exerciseImg{
+      height: 40px;
+      padding-bottom: 5px;
+  }
+
     .submitted-tasks-container{
       padding-left: 0px !important;
       padding-right: 0px !important;
@@ -111,7 +120,7 @@
 
 <div class="pageTitle">
   <div onclick="this.onclick = ''; history.back()"><img src="client/assets/img/left-arrow-purple.png"></div>
-  <h1>Aufgabe</h1>
+  <h1>Aufgabe <img src="client/assets/img/exam.png" class="exerciseImg"></h1>
 </div>
 
 <div id="submitted-tasks-main-body" class="container text-dark">

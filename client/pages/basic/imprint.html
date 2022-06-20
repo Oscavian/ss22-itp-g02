@@ -1,8 +1,23 @@
 <style>
+    .folder-img{
+        height: 40px;
+        padding-bottom: 5px;
+  }
+  #imprint-content{
+    font-size: 1.1em; 
+    margin-left: 5px; 
+    text-align: justify;
+  }
     @media (max-width: 576px){
        #contact-container{
        padding: 0 !important;
        }
+       .folder-img{
+          height: 35px;
+        }
+        #imprint-content{
+            text-align: center;
+        }
    }
 
     a:link {
@@ -14,7 +29,7 @@
 
 <div class="pageTitle">
     <div id="pageBackButton" onclick="this.onclick = ''; history.back()"><img src="client/assets/img/left-arrow-purple.png"></div>
-    <h1>Impressum</h1>
+    <h1>Impressum  <img src="client/assets/img/dictionary.png" class="folder-img"></h1>
 </div>
 
 <div class="container text-dark">
@@ -23,7 +38,7 @@
                 <div class="card" style="overflow: hidden;">
                     <div class="card-body">
 
-                            <div style="font-size: 1.1em; margin-left: 5px; text-align: justify;">
+                            <div id="imprint-content">
                                 Volksschulsoftware IT-P GmbH<br>
                                 Höchstädtplatz 6,<br>
                                 1200 Wien,<br>

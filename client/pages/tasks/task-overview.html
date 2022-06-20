@@ -15,9 +15,91 @@
         width: 14rem;
     }
 
+    .exercise-img{
+        height: 50px;
+        padding-bottom: 9px;
+    }
+
+    .btn-img{
+        height: 25px;
+        padding-bottom: 3px;
+    }
+    .newform-btn{
+        height:40px;
+        width: 230px;
+    }
+
+    .glow-on-hover {
+        
+        border: none;
+        outline: none;
+        color: white;
+        cursor: pointer;
+        background:purple;
+        position: relative;
+        z-index: 0;
+        border-radius: 5px;
+        margin-left: auto;
+        margin-top: 7px;
+        margin-right: auto;  
+        padding-top: 5px;
+    }
+
+    .glow-on-hover:before {
+        content: '';
+        background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+        position: absolute;
+        top: -2px;
+        left:-2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing 20s linear infinite;
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
+        border-radius: 5px;
+    }
+
+    .glow-on-hover:active {
+        color: white;
+    }
+
+    .glow-on-hover:hover:before {
+        opacity: 1;
+    }
+
+    .glow-on-hover:after {
+        z-index: -1;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: purple;
+        left: 0;
+        top: 0;
+        border-radius: 5px;
+    }
+
+    @keyframes glowing {
+        0% { background-position: 0 0; }
+        50% { background-position: 400% 0; }
+        100% { background-position: 0 0; }
+    }
+
     @media (max-width: 992px){
         .assignmentCard {
             width: 100%;
+        }
+        .exercise-img{
+        height: 40px;
+        padding-bottom: 7px;
+        }
+        .newform-btn{
+            height: 70px;
+            width: 120px;
+            font-size: medium;
         }
     }
 
@@ -49,7 +131,7 @@
 
 </style>
 
-<h3 style="margin-bottom: -14px;"><i class="bi bi-journal-text" style="margin-right: 10px; font-size: 26px; vertical-align: bottom;"></i>Offene Aufgaben</i></h3>
+<h3 style="margin-bottom: -14px;"><img src="client/assets/img/exam.png" class="exercise-img"> Offene Aufgaben</h3>
 <hr size="4" style="color: purple; opacity: 80%;">
 
 
@@ -57,7 +139,7 @@
 
 <div style="display: none; text-align: center;" id="noCurrentTasksMessageTeacher">
     <h4 class="text-muted" style="margin-top: 2em;">Keine offenen Aufgaben</h4>
-    <div id="addNewAssignmentButton" type="button" style="background-color: purple; margin-bottom: 2rem;" class='btn text-white'>Neue Aufgabe hinzufügen<i class="bi bi-journal-plus" style="margin-left: 5px;"></i></div>
+    <div id="addNewAssignmentButton" type="button" class='glow-on-hover newform-btn'>Neue Aufgabe hinzufügen <img src="client/assets/img/pen.png" class="btn-img"></div>
 </div>
 
 <div id="currentAssignmentsContent" class="assignmentCards">
@@ -65,16 +147,16 @@
     <!-- Assignments are loaded here -->
 
     <!-- Only visible to teacher -->
-    <div id="addNewAssignmentCard" class="card assignmentCard" style="display: none; height: 221.4px">
+    <div id="addNewAssignmentCard" class="card assignmentCard" style="display: none; height: 221.4px; background-color:rgba(255, 240, 255, 0.5);">
         <div style="margin: auto; text-align: center;">
-            <i class="bi bi-journal-plus" style="font-size: 50px; color: purple;"></i>
-            <p>Aufgabe hinzufügen</p>
+            <img src="client/assets/img/pen.png"  style="height: 45px;" class="btn-img">
+            <p><strong>Aufgabe hinzufügen</strong></p>
         </div>
     </div>
 
 </div>
 
-<h3 style="margin-bottom: -14px; margin-top: 24px;"><i class="bi bi-journals" style="margin-right: 10px; font-size: 26px; vertical-align: bottom;"></i>Archiv</h3>
+<h3 style="margin-bottom: -14px; margin-top: 24px;"><img src="client/assets/img/binder.png" class="exercise-img"> Archiv</h3>
 <hr size="4" style="color: purple; opacity: 80%;">
 
 

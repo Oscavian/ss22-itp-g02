@@ -16,6 +16,10 @@
         color: rgb(111, 60, 204);
         font-weight: bold;
     }
+    .form-title{
+        font-weight: bold;
+        color: purple;
+    }
 
     .glow-on-hover {
         width: 100px;
@@ -48,7 +52,7 @@
         animation: glowing 20s linear infinite;
         opacity: 0;
         transition: opacity .3s ease-in-out;
-        border-radius: 10px;
+        border-radius: 5px;
     }
 
     .glow-on-hover:active {
@@ -65,10 +69,10 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        background: rgb(255, 196, 0);;
+        background: rgb(255, 196, 0);
         left: 0;
         top: 0;
-        border-radius: 10px;
+        border-radius: 5px;
     }
 
     @keyframes glowing {
@@ -82,18 +86,16 @@
     }
 
     #landingHeadline{
-        /* color: linear-gradient(to bottom right, white, rgb(255, 238, 0));
-        text-shadow: 1px 1px 2px black, 0 0 25px yellow, 0 0 5px gold; */
         font-size: 5em;
         color: purple;
         border-radius: 20px;
         backdrop-filter: blur(2px);
+        background-color: rgba(255, 240, 255, 0.5) !important;
     }
 
     #mid-heading{
         font-size: 3em;
         font-weight: bold;
-        /* text-shadow: -1px 0 gold, 0 1px gold, 1px 0 gold, 0 -1px gold; */
         padding-bottom: 20px;
     }
 
@@ -129,20 +131,18 @@
         }
 
         .sm-heading{
-        font-size: 22px;
+            font-size: 22px;
         }
 
-        
-
         .iconsContainer > div > div{
-        font-size: 18px;
-        font-weight: normal;
+            font-size: 18px;
+            font-weight: normal;
         }
 
         .iconsContainer{
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
     }
 
    
@@ -158,7 +158,7 @@
 
                         <div class= 'sm-heading'>Immer alles im Überblick</div>
                         
-                        <div class="iconsContainer"">
+                        <div class="iconsContainer">
                             <div>
                                 <h4>Klassenverwaltung</h4>
                                 <img src='client/assets/img/notebook.png' alt='klassenverwaltung-icon'>
@@ -181,7 +181,7 @@
                     <div type='button' id='loginButton' class='glow-on-hover' data-bs-toggle='modal' data-bs-target='#loginModal'>Login</div><br>
                     <img src='client/assets/img/thunder.png' id='hit-button-img' alt='hit-button-icon'><br><br><br><hr class='hrclass'>
                     <div>Sie sind Lehrer*in und haben noch keinen Account?</div>
-                    <div>Registrieren Sie sich <a id='register-link' data-bs-toggle='modal' data-bs-target='#signupModal'>HIER</a></div>
+                    <div>Registrieren Sie sich <a id='register-link' data-bs-toggle='modal' data-bs-target='#signupModal' style="cursor: pointer;">HIER</a></div>
                 </div>
             </div>
         </div>
@@ -194,22 +194,22 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Login</h4>
+            <div class="modal-header" style="background-color: rgb(255, 196, 0);">
+                <h4 class="modal-title" style="font-weight: bold;">Login</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
                 <form id="login-form">
                     <div class="row mb-3">
-                        <label for="login-modal-user" class="col-sm-3 col-form-label">Nutzername</label>
+                        <label for="login-modal-user" class="col-sm-3 col-form-label form-title">Nutzername</label>
                         <div class="col-sm-9">
                             <input type="text" name="user" placeholder="username1234" class="form-control" id="login-modal-user">
                             <div id="login-modal-user-error" class="login_error"></div>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="login-modal-password" class="col-sm-3 col-form-label">Passwort</label>
+                        <label for="login-modal-password" class="col-sm-3 col-form-label form-title">Passwort</label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <input type="password" name="password" class="form-control" id="login-modal-password" \>
@@ -228,7 +228,7 @@
             <div class="modal-footer">
                 <!--works as confirmation, activates "leaving" in startTerm-->
                 <div id="login-failed-error" style="color:red; margin-right: 10px; display: none;" class="login_error">Login fehlgeschlagen</div>
-                <button type="button" class="btn btn-warning" id="login-modal-submit-button" name="submit" value="submit" onclick="checkLoginInput()">Log in</button>
+                <button type="button" class="glow-on-hover" style="margin-left: 65%; padding-bottom: 7px; width:30%" id="login-modal-submit-button" name="submit" value="submit" onclick="checkLoginInput()">Log in</button>
             </div>
         </div>
     </div>
@@ -240,8 +240,8 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
-            <div class="modal-header">
-                <h4 class="modal-title">Neues Profil anlegen</h4>
+            <div class="modal-header" style="background-color: rgb(255, 196, 0);">
+                <h4 class="modal-title" style="font-weight: bold;">Neues Profil anlegen</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -250,7 +250,7 @@
                 <form id="changePasswordForm">
 
                     <div class="row mb-3">
-                        <label for="singupFirstName" class="col-sm-3 col-form-label">Vorname</label>
+                        <label for="singupFirstName" class="col-sm-3 col-form-label form-title">Vorname</label>
                         <div class="col-sm-9">
                           <div class="input-group">
                             <input type="text" name="firstName" class="form-control" id="singupFirstName">
@@ -260,7 +260,7 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="singupLastName" class="col-sm-3 col-form-label">Nachname</label>
+                        <label for="singupLastName" class="col-sm-3 col-form-label form-title">Nachname</label>
                         <div class="col-sm-9">
                           <div class="input-group">
                             <input type="text" name="lastName" class="form-control" id="singupLastName">
@@ -270,7 +270,7 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="signupUsername" class="col-sm-3 col-form-label">Nutzername</label>
+                        <label for="signupUsername" class="col-sm-3 col-form-label form-title">Nutzername</label>
                         <div class="col-sm-9">
                           <div class="input-group">
                             <input type="text" name="lastName" class="form-control" id="signupUsername">
@@ -280,7 +280,7 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="signupNewPassword" class="col-form-label">Neues Passwort</label>
+                        <label for="signupNewPassword" class="col-form-label form-title">Neues Passwort</label>
                         <div class="col-sm-12">
                           <div class="input-group">
                             <input type="password" name="newPassword" class="form-control" id="signupNewPassword">
@@ -295,7 +295,7 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="signupNewPasswordConfirm" class="col-form-label">Passwort bestätigen</label>
+                        <label for="signupNewPasswordConfirm" class="col-form-label form-title">Passwort bestätigen</label>
                         <div class="col-sm-12">
                           <div class="input-group">
                             <input type="password" name="newPasswordConfirm" class="form-control" id="signupNewPasswordConfirm">
@@ -314,7 +314,7 @@
             </div>
 
             <div class="modal-footer">
-                <div class="btn btn-warning" onclick="checkRegisterInput()">Registrieren</div>
+                <div class="glow-on-hover" style="margin-left: 75%; text-align:center; width: 43%" onclick="checkRegisterInput()">Registrieren</div>
             </div>
         </div>
     </div>
