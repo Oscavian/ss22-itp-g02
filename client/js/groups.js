@@ -40,8 +40,8 @@ async function getUserGroups() {
                         "               <div style='margin-left: auto; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;' id='groupTeacher'>Lehrer*in: " + g['teacherFirstName'] + " " + g['teacherLastName'] + "</div>" +
                         "           </div>" + 
                         "       <div id='group-details-content-card' class='card group-details-content-card' style='margin-top: 1rem;'>" + 
-                        "           <div id='group-details-content' class='card-body'>" + 
-                        "              <img src='client/assets/img/thunder.png' class='click-img' alt='hand smashing button'><br> Klicken Sie hier für nähere Informationen</div></div></div></div></section>");
+                        "           <div id='group-details-content' class='card-body' style='display: flex; align-items: center'>" + 
+                        "              <img src='client/assets/img/thunder.png' class='click-img' alt='hand smashing button'><div style='margin-left: 10px'>Klicken Sie hier für nähere Informationen</div></div></div></div></div></section>");
                     })
                 }
             }
