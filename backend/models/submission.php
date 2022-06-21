@@ -49,7 +49,7 @@ class Submission {
 
     public function getAssignmentId() {
         if (empty($this->user_id)) {
-            return $this->assignment_id = Database::select("SELECT fk_assignment_id from student_upload where pk_upload_id = ?", [$this->submission_id], "i", true);
+            return $this->assignment_id = Database::select("SELECT fk_assignment_id from student_upload where pk_upload_id = ?", [$this->submission_id], "i", true)["fk_assignment_id"];
         }
         return $this->assignment_id;
     }
