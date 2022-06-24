@@ -103,6 +103,20 @@ class Group {
         }
         return $this->assignments;
     }
+
+     /**
+     * fetches all Assignments associated with the group and returns them
+     * @return array
+     */
+    public function getLastCreatedAssignment() {
+
+        $result = Database::select("SELECT pk_assignment_id FROM assignment WHERE fk_group_id = ? ORDER BY time DESC LIMIT 5", [$this->group_id], "i", true);
+
+        if(!empty($result)){
+            return Hub::Assignment($result["pk_assignment_id"])->getBaseData();
+        }
+        return null;
+    }
     
     /**
      * returns first user found in group that is a teacher

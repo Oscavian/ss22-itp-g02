@@ -70,6 +70,10 @@ class Users {
             $item["groupName"] = $group->getName();
             $item["groupId"] = $group->getId();
             $item["groupChatId"] = $group->getChat();
+            
+            $item["numberOfMembers"] = count($group->getMembers());
+            $item["lastChatMessage"] = $group->getChat()->getMessages(0)[0];
+            $item["newestAssignment"] = $group->getLastCreatedAssignment();
 
             $teacher = $group->getTeacher();
             $item["teacherFirstName"] = $teacher->getFirstName();

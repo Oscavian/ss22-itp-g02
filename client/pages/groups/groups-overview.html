@@ -23,15 +23,9 @@
       height: 40px;
       margin-top: 20px;
     }
-    .newform-btn{
-      height: 40px;
-      margin-top: 7px;
-      padding-left: 10px;
-      padding-right: 10px;
-    }
 
     .glow-on-hover {
-        
+        padding: 10px 10px 10px 10px;
         border: none;
         outline: none;
         color: black;
@@ -88,8 +82,16 @@
     }
 
     /* For mobile view */
+    @media (max-width: 768px){
+
+      .group-details-content-card{
+          display: none;
+      }
+
+    }
+
     @media (max-width: 992px){
-  
+      
       #groupTitle{
         text-align: center;
         width: 100%
@@ -121,7 +123,7 @@
 
 <div id="group-main-body" class="container text-dark" style="display: none"></div>
 <div id="showNewGroupForm" class="container" style="display: none">
-    <button type="button" class="glow-on-hover newform-btn" id="buttonNewGroup" onclick="showNewGroupForm()"><img src="client/assets/img/pen.png" style="height: 25px; margin-right: 2px;"> Neue Gruppe erstellen</button>
+    <button type="button" class="glow-on-hover" id="buttonNewGroup" onclick="showNewGroupForm()"><img src="client/assets/img/pen.png" style="height: 20px"> Neue Gruppe erstellen</button>
 </div>
 <div id="groupAddResponse" class="mt-3 container"></div>
 <div id="new-group-body" class="container text-dark" style="display: none;">
