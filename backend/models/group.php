@@ -110,7 +110,7 @@ class Group {
      */
     public function getLastCreatedAssignment() {
 
-        $result = Database::select("SELECT pk_assignment_id FROM assignment WHERE fk_group_id = ? ORDER BY time DESC LIMIT 5", [$this->group_id], "i", true);
+        $result = Database::select("SELECT pk_assignment_id FROM assignment WHERE fk_group_id = ? ORDER BY time DESC LIMIT 1", [$this->group_id], "i", true);
 
         if(!empty($result)){
             return Hub::Assignment($result["pk_assignment_id"])->getBaseData();
