@@ -33,9 +33,6 @@
         position: relative;
         z-index: 0;
         border-radius: 10px;
-        margin-left: auto;
-        margin-right: auto;
-        padding-top: 10px;
     }
 
     .glow-on-hover:before {
@@ -176,9 +173,9 @@
                 </div>
             </div><br>
             <div class='card'>
-                <div class='card-body text-center'><div class='sm-heading'>Gleich loslegen und ... nutzen?</div><br>
-                    Einfach hier klicken zum Einloggen:<br><br>
-                    <div type='button' id='loginButton' class='glow-on-hover' data-bs-toggle='modal' data-bs-target='#loginModal'>Login</div><br>
+                <div class='card-body text-center'><div class='sm-heading'>Gleich loslegen und ... nutzen!</div>
+                    <h4>Einfach hier klicken zum Einloggen:</h4><br>
+                    <button type='button' id='loginButton' class='glow-on-hover' style="margin-left: auto; margin-right: auto;" data-bs-toggle='modal' data-bs-target='#loginModal'>Login</button><br><br>
                     <img src='client/assets/img/thunder.png' id='hit-button-img' alt='hit-button-icon'><br><br><br><hr class='hrclass'>
                     <div>Sie sind Lehrer*in und haben noch keinen Account?</div>
                     <div>Registrieren Sie sich <a id='register-link' data-bs-toggle='modal' data-bs-target='#signupModal' style="cursor: pointer;">HIER</a></div>
@@ -192,7 +189,7 @@
 
 <div class="modal fade text-dark" id="loginModal">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content" style="border: 0;">
             <!-- Modal Header -->
             <div class="modal-header" style="background-color: rgb(255, 196, 0);">
                 <h4 class="modal-title" style="font-weight: bold;">Login</h4>
@@ -228,7 +225,7 @@
             <div class="modal-footer">
                 <!--works as confirmation, activates "leaving" in startTerm-->
                 <div id="login-failed-error" style="color:red; margin-right: 10px; display: none;" class="login_error">Login fehlgeschlagen</div>
-                <button type="button" class="glow-on-hover" style="margin-left: 65%; padding-bottom: 7px; width:30%" id="login-modal-submit-button" name="submit" value="submit" onclick="checkLoginInput()">Log in</button>
+                <button type="button" class="glow-on-hover float-end" style="" id="login-modal-submit-button" name="submit" value="submit" onclick="checkLoginInput()">Log in</button>
             </div>
         </div>
     </div>
@@ -238,7 +235,7 @@
 
 <div class="modal fade text-dark" id="signupModal">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content" style="border: 0;">
 
             <div class="modal-header" style="background-color: rgb(255, 196, 0);">
                 <h4 class="modal-title" style="font-weight: bold;">Neues Profil anlegen</h4>
@@ -314,7 +311,7 @@
             </div>
 
             <div class="modal-footer">
-                <div class="glow-on-hover" style="margin-left: 75%; text-align:center; width: 43%" onclick="checkRegisterInput()">Registrieren</div>
+                <button class="glow-on-hover float-end" style="width: auto; padding-left: 15px; padding-right: 15px;" onclick="checkRegisterInput()">Registrieren</button>
             </div>
         </div>
     </div>

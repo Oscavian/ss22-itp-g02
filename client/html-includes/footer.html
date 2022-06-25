@@ -30,8 +30,8 @@
     letter-spacing: 1px;
   }
   .btn-pc{
-    width: 25px;
-    padding-bottom: 5px;
+    height: 25px;
+    margin-left: 7px;
   }
 
   @media (min-width: 768px){
@@ -43,6 +43,29 @@
       align-items: center;
     }
   
+  }
+
+  #footerAccountButton{
+    display: flex;
+    align-items: center;
+  }
+
+  #footerLogoutButton{
+    display: flex;
+    align-items: center;
+  }
+
+  @media (min-width: 768px){
+
+    .btn-pc{
+      height: 30px;
+      margin-left: 10px;
+    }
+    
+    #footerAccountButton, #footerLogoutButton{
+      font-size: 18px;
+    }
+
   }
 
   @media (max-width: 768px){
@@ -100,12 +123,12 @@
     </div>
     <div id="footer-account" style="display: none;">
       <div id="footer-account-flex" style="display: flex; align-items: center;">
-          <div class="btn btn-light" onclick="loadPage('account')">
+          <div class="btn btn-light" id="footerAccountButton" onclick="loadPage('account')">
             <!--<i class="bi bi-person-circle" style="margin-right: 5px; color: purple;"></i>-->
-            <img src="client/assets/img/id-card-big.png" class="btn-pc" alt="id-card">
             <span id="footerUserName"></span>
+            <img src="client/assets/img/id-card-big.png" class="btn-pc" alt="id-card">
           </div>
-          <div onclick="logout()" id="footerLogoutButton" type="button" style="background-color: #eee; margin-left: 10px; margin-right: 10px;" class='btn btn-light'>Logout <img src="client/assets/img/door-big.png" class="btn-pc" alt="door"> <!--<i class="bi bi-box-arrow-right" style="margin-left: 5px; color: purple;"></i>--></div>
+          <div onclick="logout()" id="footerLogoutButton" type="button" style="background-color: #eee; margin-left: 12px; margin-right: 4px;" class='btn btn-light'>Logout <img src="client/assets/img/door-big.png" class="btn-pc" alt="door"> <!--<i class="bi bi-box-arrow-right" style="margin-left: 5px; color: purple;"></i>--></div>
       </div>
     </div>
   </div>
