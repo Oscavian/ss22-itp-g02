@@ -96,7 +96,7 @@
 
 
     #mid-heading{
-        font-size: 3em;
+        font-size: 4em;
         font-weight: bold;
         padding-bottom: 20px;
         color: purple;
@@ -229,12 +229,26 @@
         }
     }
 
+    #logoImage {
+            height: 300px;
+    }
+
+    @media (max-width: 576px){
+
+        #logoImage {
+            height: 200px;
+        }
+    }
+
 </style>
 
-    <br><br><br><br> <h1 class="text-center" id="landingHeadline">Platzhalter</h1>
-    <div class='text-center' id='mid-heading'>Die Nr.1 Plattform für Volksschulen</div>
+    <br><br><br><br> 
+    <div style="width: 100%; display: flex;">
+        <img id="logoImage" style="margin-left: auto; margin-right: auto" src='client/assets/img/logo.png' alt="">
+    </div>
+    <div class='text-center' id='mid-heading' style="font-family: 'Dongle', sans-serif;">Die Nr.1 Plattform für Volksschulen</div>
 
-    <div style="width: 100%; display: flex; position: relative; margin-bottom: -130px; margin-top: 50px; z-index: 100;">
+    <div style="width: 100%; display: flex; position: relative; margin-bottom: -130px; margin-top: 40px; z-index: 100;">
         <button type='button' id='loginButton' class='glow-on-hover' style="margin-left: auto; margin-right: auto; width: 120px; height: 60px; font-size: 32px;" data-bs-toggle='modal' data-bs-target='#loginModal'>Login</button>
     </div>
 
