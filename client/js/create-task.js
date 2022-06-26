@@ -1,6 +1,4 @@
 var groupId = new URLSearchParams(window.location.search).get("id");
-console.log("Loading Group with id: " + groupId);
-
 
 function submitNewTask(){
 
