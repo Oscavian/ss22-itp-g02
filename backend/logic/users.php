@@ -72,7 +72,12 @@ class Users {
             $item["groupChatId"] = $group->getChat();
             
             $item["numberOfMembers"] = count($group->getMembers());
-            $item["lastChatMessage"] = $group->getChat()->getMessages(0)[0];
+            if(!empty($group->getChat()->getMessages(0))){
+                $item["lastChatMessage"] = $group->getChat()->getMessages(0)[0];
+            } else {
+                $item["lastChatMessage"] = null;
+            }
+            
             $item["newestAssignment"] = $group->getLastCreatedAssignment();
 
             $teacher = $group->getTeacher();
