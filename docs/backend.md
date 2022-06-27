@@ -18,7 +18,16 @@ Außerdem wird zuvor auf alle POST-Parameter die Funktionen `trim()` und `strips
 
 ## Session Handling
 
-//TODO
+Die Session wird zum jetzigen Stand ausschließlich über die PHP Session gehandelt.
+Bei jedem Request wird ``session_start()`` aufgerufen, um bei Bedarf eine neue Session zu starten.
+
+In der Methode ``Users::login()`` wird die Session-Variablen neu gesetzt. 
+In der Methode ``Users::logout()`` wird die Session zerstört. 
+
+### Session-Variablen
+ 
+In `$_SESSION['userId']` wird die User-Id des aktuell eingeloggten Nutzers gespeichert.
+Wird verwendet, um Login-Status und die Rolle eines Nutzers zu überprüfen.
 
 ## Hub
 Die Singleton-Klasse Hub stellt Methoden zur Verfügung, die es ermöglichen, effizient auf die Methoden der Logik-Klassen zuzugreifen, sowie einheitlich neue Instanzen von Model-Klassen zu erstellen.
