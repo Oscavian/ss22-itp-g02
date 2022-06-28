@@ -25,13 +25,9 @@ function checkIfAlphanumericLogin(allIsOk){
     var allOk = allIsOk;
     var user = $("#login-modal-user").val();
     var password = $("#login-modal-password").val();
-    if(!/^[a-zA-Z0-9.]+$/.test(user)){
+    if(!/^[a-zA-Z0-9äöüÄÖÜß\.]+$/.test(user)){
         allOk = false;
-        $("#login-modal-user-error").text("Username must consist of letters and numbers only");
-    }
-    if(!/^[a-zA-Z0-9]+$/.test(password)){
-        allOk = false;
-        $("#login-modal-password-error").text("Password must consist of letters and numbers only");
+        $("#login-modal-user-error").text("Der Benutzername darf keine Sonderzeichen enthalten");
     }
     return allOk;
 }
@@ -40,11 +36,11 @@ function checkIfEmptyLogin(allIsOk) {
     var allOk = allIsOk;
     if($("#login-modal-user").val() === ""){
         allOk = false;
-        $("#login-modal-user-error").text("Please enter a username");
+        $("#login-modal-user-error").text("Bitte geben Sie einen Benutzernamen ein");
     }
     if($("#login-modal-password").val() === ""){
         allOk = false;
-        $("#login-modal-password-error").text("Please enter a password");
+        $("#login-modal-password-error").text("Bitte geben Sie ein Passwort ein");
     }
     return allOk;
 }
@@ -53,11 +49,11 @@ function checkLengthLogin(allIsOk){
     var allOk = allIsOk;
     if($("#login-modal-user").val().length < 6 || $("#login-modal-user").val().length > 50){
         allOk = false;
-        $("#login-modal-user-error").text("Username must be between 6 to 50 characters long");
+        $("#login-modal-user-error").text("Der Benutzername muss zwischen 6 und 50 Zeichen lang sein");
     }
     if($("#login-modal-password").val().length < 6 || $("#login-modal-password").val().length > 50){
         allOk = false;
-        $("#login-modal-password-error").text("Password must be between 6 to 50 characters long");
+        $("#login-modal-password-error").text("Das Passwort muss zwischen 6 und 50 Zeichen lang sein");
     }
     return allOk;
 }
@@ -74,6 +70,7 @@ function submitLoginInput() {
                 $('#login-form')[0].reset();
                 emptyLoginErrors();
                 $("#loginModal").modal("hide");
+                notyf.success('Login erfolgreich!<br>Willkommen!');
                 checkLoginStatus();
                 loadDefaultPage();
                 return;

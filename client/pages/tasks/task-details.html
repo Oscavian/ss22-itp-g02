@@ -4,6 +4,72 @@
 <script src="client/js/task-details.js" defer></script>
 
 <style>
+     .exercise-img{
+        height: 50px;
+        padding-bottom: 9px;
+    }
+    .glow-on-hover {
+        
+        border: none;
+        outline: none;
+        color: black;
+        cursor: pointer;
+        background:rgb(255, 196, 0);
+        position: relative;
+        z-index: 0;
+        border-radius: 5px;
+        margin-left: auto;
+        margin-top: 7px;
+        margin-right: auto;  
+        padding-top: 5px;
+        padding-bottom: 5px;
+        height: 40px;
+        width: 120px;
+    }
+
+    .glow-on-hover:before {
+        content: '';
+        background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+        position: absolute;
+        top: -2px;
+        left:-2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing 20s linear infinite;
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
+        border-radius: 5px;
+    }
+
+    .glow-on-hover:active {
+        color: white;
+    }
+
+    .glow-on-hover:hover:before {
+        opacity: 1;
+    }
+
+    .glow-on-hover:after {
+        z-index: -1;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgb(255, 196, 0);
+        left: 0;
+        top: 0;
+        border-radius: 5px;
+    }
+
+    @keyframes glowing {
+        0% { background-position: 0 0; }
+        50% { background-position: 400% 0; }
+        100% { background-position: 0 0; }
+    }
+
     @media (max-width: 992px) {
         #task-details-main-container {
             padding: 0 !important;
@@ -12,12 +78,16 @@
         #teacherAndTimeContainer {
             display: block !important;
         }
+        .exercise-img{
+        height: 40px;
+        padding-bottom: 7px;
+        }
     }
 </style>
 
 <div class="pageTitle">
-    <div onclick="history.back()"><img src="client/assets/img/left-arrow-purple.png"></div>
-    <h1>Aufgabe</h1>
+    <div onclick="this.onclick = ''; history.back()"><img src="client/assets/img/left-arrow-purple.png"></div>
+    <h1>Aufgabe <img src="client/assets/img/exam.png" class="exercise-img"></h1>
 </div>
 
 <div class="container text-dark">
@@ -36,9 +106,9 @@
 
                         <div style="margin-top: 0; font-style: oblique; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;"
                              id="taskDeadline"></div>
-                        <div style="margin-top: 10px;">Status: <span id="TaskStatus"></span></div>
+                        <div style="margin-top: 10px;"><strong>Status: </strong><span id="TaskStatus"></span></div>
 
-                        <h6 style="margin-top: 20px;">Beschreibung:</h6>
+                        <h6 style="margin-top: 20px; font-weight: bold;">Beschreibung:</h6>
                         <div style=" margin-top: 10px; text-align: justify;" id="taskDescription">
                         </div>
                         <button type="button" id="taskDescriptionFile"
@@ -48,15 +118,13 @@
                         <span id="addSubmissionFormSpan" style="display: none;">
                             <div style="display: flex; margin-top: 20px; flex-wrap: wrap; gap: 10px;">
                                 <div style="width: max-content;">
-                                    <label class="form-label" for="submissionFileUploadInput">Abgabe hinzufügen:</label>
-                                    <input type="file" class="form-control" id="submissionFileUploadInput"
-                                           placeholder="lt"/>
+                                    <label class="form-label" for="submissionFileUploadInput" style="font-weight: bold;">Abgabe hinzufügen:</label>
+                                    <input type="file" class="form-control" style="background-color:rgba(255, 240, 255, 0.5)" id="submissionFileUploadInput" placeholder="lt"/>
                                 </div>
+                                <br>
                                 <div style="align-self: flex-end;">
                                     <button onclick="uploadSubmission()" type="button" id="taskSubmitFile"
-                                            style="margin-top: 20px; background-color: #eee;" class="btn btn-light"><i
-                                            style="color: purple;"
-                                            class="bi bi-file-earmark-arrow-up"></i> Hochladen</button>
+                                            style="margin-top: 20px; background-color: #eee;" class="glow-on-hover">Hochladen <img src="client/assets/img/fireworks.png"  style="height: 30px;"></button>
                                 </div>
                             </div>
                             <span style="color: red; display: none;" id="noFileError" class="mb-0">Bitte wähle eine Datei für den Upload aus!</span>

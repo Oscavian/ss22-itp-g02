@@ -187,6 +187,7 @@ function deleteMessage(msgId){
         dataType: "json",
         success: (response) => {
             if(response["success"]){
+                notyf.success('Die Nachricht wurde gelöscht!');
                 $("#message" + msgId).remove();
             }
         },

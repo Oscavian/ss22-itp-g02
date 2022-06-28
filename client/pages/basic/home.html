@@ -3,18 +3,9 @@
 
 <style>
 
-    #register-link{
-        color: rgb(111, 60, 204);
-    }
-
-    #register-link:hover{
+    .form-title{
         font-weight: bold;
-        color: rgb(255, 208, 0);
-    }
-
-    #overview{
-        color: rgb(111, 60, 204);
-        font-weight: bold;
+        color: purple;
     }
 
     .glow-on-hover {
@@ -29,9 +20,6 @@
         position: relative;
         z-index: 0;
         border-radius: 10px;
-        margin-left: auto;
-        margin-right: auto;
-        padding-top: 10px;
     }
 
     .glow-on-hover:before {
@@ -48,7 +36,7 @@
         animation: glowing 20s linear infinite;
         opacity: 0;
         transition: opacity .3s ease-in-out;
-        border-radius: 10px;
+        border-radius: 5px;
     }
 
     .glow-on-hover:active {
@@ -65,10 +53,10 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        background: rgb(255, 196, 0);;
+        background: rgb(255, 196, 0);
         left: 0;
         top: 0;
-        border-radius: 10px;
+        border-radius: 5px;
     }
 
     @keyframes glowing {
@@ -77,47 +65,131 @@
         100% { background-position: 0 0; }
     }
 
+    #indexContent {
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    #landingHeadline{
+        font-size: 5em;
+        color: purple;
+    }
+
+    .wave {
+        width: 100%;
+        overflow: hidden;
+        line-height: 0;
+    }
+
+    .wave svg {
+        position: relative;
+        display: block;
+        width: calc(103% + 1.3px);
+        height: 262px;
+    }
+
     img{
         height:130px;
     }
 
-    #landingHeadline{
-        /* color: linear-gradient(to bottom right, white, rgb(255, 238, 0));
-        text-shadow: 1px 1px 2px black, 0 0 25px yellow, 0 0 5px gold; */
-        font-size: 5em;
-        color: purple;
-        border-radius: 20px;
-        backdrop-filter: blur(2px);
-    }
 
     #mid-heading{
-        font-size: 3em;
+        font-size: 4em;
         font-weight: bold;
-        /* text-shadow: -1px 0 gold, 0 1px gold, 1px 0 gold, 0 -1px gold; */
         padding-bottom: 20px;
+        color: purple;
     }
 
     .sm-heading{
+
         font-size: 30px;
         font-weight: bold;
-        margin-bottom: 20px;
     }
 
-    .iconsContainer{
+    .iconsContainer, .helpIconsContainer{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        margin-bottom: 10px;
         gap: 40px;
     }
 
-    .iconsContainer > div > div{
+    .iconsContainer > div > div {
+        color: black;
+        padding: 65px 65px 65px 65px;
+        margin: 0 auto 0 auto;
+        width: fit-content;
+        background-color: white;
+    }
+
+    .helpIconsContainer > div > div {
+        color: white;
+        padding: 65px 65px 65px 65px;
+        margin: 0 auto 0 auto;
+        width: fit-content;
+        background-color: purple;
+    }
+
+    .helpIconsContainer > div > div > h4 {
+        margin-top: 10px;
+    }
+
+    #helpItem1, #helpItem2, #helpItem3{
+        transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+        cursor: pointer;
+    }
+
+    #helpItem1:hover, #helpItem2:hover, #helpItem3:hover {
+        transform: scale(1.1);
+    }
+
+    #featureItem1, #featureItem2, #featureItem3{
+        transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+    }
+
+    #featureItem1:hover, #featureItem2:hover, #featureItem3:hover {
+        transform: scale(1.1);
+    }
+
+    #featureItem1 {
+        border-radius: 44% 56% 44% 56% / 46% 28% 72% 54%;
+    }
+
+    #featureItem2 {
+        border-radius: 49% 51% 56% 44% / 45% 43% 57% 55%;
+    }
+
+    #featureItem3 {
+        border-radius: 45% 55% 33% 67% / 51% 38% 62% 49%;
+    }
+
+    #helpItem1 {
+        border-radius: 54% 46% 54% 46% / 49% 61% 39% 51%;
+    }
+
+    #helpItem2 {
+        border-radius: 29% 71% 49% 51% / 59% 39% 61% 41%;
+    }
+
+    #helpItem3 {
+        border-radius: 50% 50% 70% 30% / 39% 61% 39% 61%;
+    }
+
+    #registerItem {
+        border-radius: 91% 9% 91% 9% / 25% 81% 19% 75%;
+        padding: 65px 65px 65px 65px;
+        margin: 0 auto 0 auto;
+        width: fit-content;
+        color: black;
+        background-color: white;
+    }
+
+    .register-teacher-heading{
         font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 5px;
     }
 
     /* For mobile view */
-    @media (max-width: 768px){
+    @media (max-width: 1020px){
         img{
             height: 120px;
         }
@@ -129,87 +201,154 @@
         }
 
         .sm-heading{
-        font-size: 22px;
+            font-size: 22px;
         }
 
-        
-
         .iconsContainer > div > div{
-        font-size: 18px;
-        font-weight: normal;
+            font-size: 18px;
+            font-weight: normal;
+        }
+
+        .helpIconsContainer > div > div {
+            font-size: 18px;
         }
 
         .iconsContainer{
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .helpIconsContainer{
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        #registerItem {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
     }
 
-   
+    #logoImage {
+            height: 300px;
+    }
+
+    @media (max-width: 576px){
+
+        #logoImage {
+            height: 200px;
+        }
+    }
+
 </style>
 
-<h1 class="text-center" id="landingHeadline">Willkommen auf der ... Seite!</h1>
+    <br><br><br><br> 
+    <div style="width: 100%; display: flex;">
+        <img id="logoImage" style="margin-left: auto; margin-right: auto" src='client/assets/img/logo.png' alt="">
+    </div>
+    <div class='text-center' id='mid-heading' style="font-family: 'Dongle', sans-serif;">Die Nr.1 Plattform für Volksschulen</div>
 
-    <section style='background-color: #eee; border-radius: 10px; border: 4px solid purple; overflow: hidden;'>
-        <div class='container p-4 text-dark'>
-            <div class='text-center'><div id='mid-heading'>Die Nr.1 Plattform für Volksschulen!</div>
-                <div class='card'>
-                    <div class='card-body text-center'>
+    <div style="width: 100%; display: flex; position: relative; margin-bottom: -130px; margin-top: 40px; z-index: 100;">
+        <button type='button' id='loginButton' class='glow-on-hover' style="margin-left: auto; margin-right: auto; width: 120px; height: 60px; font-size: 32px;" data-bs-toggle='modal' data-bs-target='#loginModal'>Login</button>
+    </div>
 
-                        <div class= 'sm-heading'>Immer alles im Überblick</div>
-                        
-                        <div class="iconsContainer"">
-                            <div>
-                                <h4>Klassenverwaltung</h4>
-                                <img src='client/assets/img/notebook.png' alt='klassenverwaltung-icon'>
-                            </div>
-                            <div>
-                                <h4>Übungsabgaben</h4>
-                                <img src='client/assets/img/exam.png' alt='übungsabgaben-icon'>
-                            </div>
-                            <div>
-                                <h4>Chatfunktion</h4>
-                                <img src='client/assets/img/talk.png' alt='chatfunktion-icon'>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><br>
-            <div class='card'>
-                <div class='card-body text-center'><div class='sm-heading'>Gleich loslegen und ... nutzen?</div><br>
-                    Einfach hier klicken zum Einloggen:<br><br>
-                    <div type='button' id='loginButton' class='glow-on-hover' data-bs-toggle='modal' data-bs-target='#loginModal'>Login</div><br>
-                    <img src='client/assets/img/thunder.png' id='hit-button-img' alt='hit-button-icon'><br><br><br><hr class='hrclass'>
-                    <div>Sie sind Lehrer*in und haben noch keinen Account?</div>
-                    <div>Registrieren Sie sich <a id='register-link' data-bs-toggle='modal' data-bs-target='#signupModal'>HIER</a></div>
-                </div>
+    <div class="wave" style="z-index: -1;">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="#800080" fill-opacity="1" d="M0,256L48,234.7C96,213,192,171,288,170.7C384,171,480,213,576,240C672,267,768,277,864,250.7C960,224,1056,160,1152,122.7C1248,85,1344,75,1392,69.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
+    </div>
+
+    <div class="text-center" style="margin-top: -1px; position:relative; z-index: 1; background-color: rgba(128, 0, 128, 1);">
+        <div class='sm-heading'>Mit Schoala alles im Überblick behalten</div>
+    </div>
+
+    <div class="iconsContainer text-center" style="padding-top: 40px; margin-top: -1px; position:relative; z-index: 2; background-color: rgba(128, 0, 128, 1);">
+        <div>
+            <div id="featureItem1">
+                <h4>Klassenverwaltung</h4>
+                <img src='client/assets/img/notebook.png' alt='klassenverwaltung-icon'>
             </div>
         </div>
-    </section>
+        <div>
+            <div id="featureItem2">
+                <h4>Übungsabgaben</h4>
+                <img src='client/assets/img/exam.png' alt='übungsabgaben-icon'>
+            </div>
+        </div>
+        <div>
+            <div id="featureItem3">
+                <h4>Chatfunktion</h4>
+                <img src='client/assets/img/talk.png' alt='chatfunktion-icon'>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center" style="padding-top: 80px; position:relative; z-index: 1; background-color: rgba(128, 0, 128, 1);">
+        <div id="registerItem">
+            <div class='register-teacher-heading'>Sie sind Lehrer*in und möchten Schoala probieren? Einfach hier registrieren!</div>
+            <div style="width: 100%; display: flex; position: relative; z-index: 100;">
+                <button type='button' id='loginButton' class='glow-on-hover' style="margin: 20px auto -20px auto; width: 140px; height: 50px; font-size: 22px;" data-bs-toggle='modal' data-bs-target='#signupModal'>Registrieren</button>
+            </div>
+        
+        </div>
+    </div>
+
+
+    <div class="wave" style="z-index: -1; margin-top: -50px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+          <path fill="#800080" fill-opacity="1" d="M0,288L80,256C160,224,320,160,480,165.3C640,171,800,245,960,272C1120,299,1280,277,1360,266.7L1440,256L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
+        </svg>
+    </div>
+
+
+    <div class="helpIconsContainer text-center" style="margin: 70px 0 90px 0; position:relative; z-index: 1;">
+        <div>
+            <div id="helpItem1" onclick="loadPage('kontakt')">
+                <img src='client/assets/img/mail-box.png' alt='kontakt-icon'>
+                <h4>Kontakt</h4>
+            </div>
+        </div>
+        <div>
+            <div id="helpItem2" onclick="loadPage('hilfe')">
+                <img src='client/assets/img/thunder.png' alt='hilfe-icon'>
+                <h4>Hilfe benötigt?</h4>
+                <h6>Hier gehts zum FAQ</h6>
+            </div>
+        </div>
+        <div>
+            <div id="helpItem3" onclick="loadPage('impressum')">
+                <img src='client/assets/img/dictionary.png' alt='impressum-icon'>
+                <h4>Impressum</h4>
+            </div>
+        </div>
+    </div>
+
+
+
 
 
  <!-- Login Modal -->
 
 <div class="modal fade text-dark" id="loginModal">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content" style="border: 0;">
             <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">Login</h4>
+            <div class="modal-header" style="background-color: rgb(255, 196, 0);">
+                <h4 class="modal-title" style="font-weight: bold;">Login</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <!-- Modal body -->
             <div class="modal-body">
                 <form id="login-form">
                     <div class="row mb-3">
-                        <label for="login-modal-user" class="col-sm-3 col-form-label">Nutzername</label>
+                        <label for="login-modal-user" class="col-sm-3 col-form-label form-title">Nutzername</label>
                         <div class="col-sm-9">
                             <input type="text" name="user" placeholder="username1234" class="form-control" id="login-modal-user">
                             <div id="login-modal-user-error" class="login_error"></div>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="login-modal-password" class="col-sm-3 col-form-label">Passwort</label>
+                        <label for="login-modal-password" class="col-sm-3 col-form-label form-title">Passwort</label>
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <input type="password" name="password" class="form-control" id="login-modal-password" \>
@@ -228,7 +367,7 @@
             <div class="modal-footer">
                 <!--works as confirmation, activates "leaving" in startTerm-->
                 <div id="login-failed-error" style="color:red; margin-right: 10px; display: none;" class="login_error">Login fehlgeschlagen</div>
-                <button type="button" class="btn btn-warning" id="login-modal-submit-button" name="submit" value="submit" onclick="checkLoginInput()">Log in</button>
+                <button type="button" class="glow-on-hover float-end" id="login-modal-submit-button" name="submit" value="submit" onclick="checkLoginInput()">Login</button>
             </div>
         </div>
     </div>
@@ -238,10 +377,10 @@
 
 <div class="modal fade text-dark" id="signupModal">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+        <div class="modal-content" style="border: 0;">
 
-            <div class="modal-header">
-                <h4 class="modal-title">Neues Profil anlegen</h4>
+            <div class="modal-header" style="background-color: rgb(255, 196, 0);">
+                <h4 class="modal-title" style="font-weight: bold;">Neues Profil anlegen</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -250,7 +389,7 @@
                 <form id="changePasswordForm">
 
                     <div class="row mb-3">
-                        <label for="singupFirstName" class="col-sm-3 col-form-label">Vorname</label>
+                        <label for="singupFirstName" class="col-sm-3 col-form-label form-title">Vorname</label>
                         <div class="col-sm-9">
                           <div class="input-group">
                             <input type="text" name="firstName" class="form-control" id="singupFirstName">
@@ -260,7 +399,7 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="singupLastName" class="col-sm-3 col-form-label">Nachname</label>
+                        <label for="singupLastName" class="col-sm-3 col-form-label form-title">Nachname</label>
                         <div class="col-sm-9">
                           <div class="input-group">
                             <input type="text" name="lastName" class="form-control" id="singupLastName">
@@ -270,7 +409,7 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="signupUsername" class="col-sm-3 col-form-label">Nutzername</label>
+                        <label for="signupUsername" class="col-sm-3 col-form-label form-title">Nutzername</label>
                         <div class="col-sm-9">
                           <div class="input-group">
                             <input type="text" name="lastName" class="form-control" id="signupUsername">
@@ -280,7 +419,7 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="signupNewPassword" class="col-form-label">Neues Passwort</label>
+                        <label for="signupNewPassword" class="col-form-label form-title">Neues Passwort</label>
                         <div class="col-sm-12">
                           <div class="input-group">
                             <input type="password" name="newPassword" class="form-control" id="signupNewPassword">
@@ -295,7 +434,7 @@
                     </div>
 
                     <div class="row mb-3">
-                        <label for="signupNewPasswordConfirm" class="col-form-label">Passwort bestätigen</label>
+                        <label for="signupNewPasswordConfirm" class="col-form-label form-title">Passwort bestätigen</label>
                         <div class="col-sm-12">
                           <div class="input-group">
                             <input type="password" name="newPasswordConfirm" class="form-control" id="signupNewPasswordConfirm">
@@ -314,7 +453,7 @@
             </div>
 
             <div class="modal-footer">
-                <div class="btn btn-warning" onclick="checkRegisterInput()">Registrieren</div>
+                <button class="glow-on-hover float-end" style="width: auto; padding-left: 15px; padding-right: 15px;" onclick="checkRegisterInput()">Registrieren</button>
             </div>
         </div>
     </div>

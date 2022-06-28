@@ -4,6 +4,7 @@ class FileHandler {
 
     /**
      * uploads a file to the 'uploads/' directory
+     * @param string $param
      * @param string $target_dir - e.g. 'assignments/submissions/'
      * @param array|null $file_types - specifies the allowed file types
      * @return string relative path to uploaded file as string, e.g. 'uploads/tasks/img.jpg'

@@ -5,19 +5,8 @@ var counter = 1;
 defaultForms();
 
 function defaultForms(){
-
     $("#form-list").empty();
     addStudentAccountForm();
-
-    $("#add-form").off();
-    $("#add-form").click(function () {
-        addStudentAccountForm();
-    }); 
-
-    $("#submit-student-accounts").off();
-    $("#submit-student-accounts").click(function () {
-        createStudentAccounts();
-    }); 
 }
 
 function addStudentAccountForm(){
@@ -45,6 +34,11 @@ function addStudentAccountForm(){
 
 function deleteForm(id){
     $("#"+id).remove();
+}
+
+function backToGroup(){
+    $("#printContentDiv").empty();
+    history.back();
 }
 
 function createStudentAccounts(){
@@ -79,7 +73,7 @@ function createStudentAccounts(){
         studentInfoList = [];
     }
     else if(counter === 0){
-        $("#post-response-stdacc").append("Es muss mindestens ein Formular korrekt ausgefüllt sein.<br>");
+        $("#post-response-stdacc").append("Es muss mindestens ein Formular korrekt ausgefüllt sein");
     }
 }
 
@@ -101,11 +95,11 @@ function checkIfAlphabetStudAcc(allIsOk, id){
     var allOk = allIsOk;
     var firstName = $("#firstname"+id).val();
     var lastName = $("#lastname"+id).val();
-    if(!/^[A-Za-z\s]*$/.test(firstName)){
+    if(!/^[A-Za-zäöüÄÖÜß\s]*$/.test(firstName)){
         allOk = false;
         $("#firstname_error"+id).append("Der Vorname darf nur aus Buchstaben bestehen");
     }
-    if(!/^[A-Za-z\s]*$/.test(lastName)){
+    if(!/^[A-Za-zäöüÄÖÜß\s]*$/.test(lastName)){
         allOk = false;
         $("#lastname_error"+id).append("Der Nachname darf nur aus Buchstaben bestehen");
     }
@@ -144,16 +138,19 @@ function submitStudentAccInput(studentInfoList){
         cache: false,
         dataType: "json",
         success: function (response) {
+            notyf.success('Die Accounts wurden erfolgreich erstellt!');
             //$("#success").append(response);
             $("#post-response-stdacc").append("Die SchülerInnen-Accounts sind erfolgreich angelegt worden<br>");
             $("#newStudentAccountListBody").empty();
+            $("#printContentDiv").empty();
             $("#createNewStudentsFormDiv").hide();
             $("#newStudentAccountList").show();
+            $("#printContentDiv").append('<hr style="border-top: 2px; border-style: dashed solid;" />');
 
             $.each(response, function(i, p) {
 
 
-                var tablerow = $("<tr class='newStudentAccount' style='vertical-align: top;'></tr>");
+                let tablerow = $("<tr class='newStudentAccount' style='vertical-align: top;'></tr>");
                 tablerow.append(`
                                 <td>
                                     <div style="display: flex; align-items: center;"><i class="bi bi-person-circle text-muted" style="font-size: 2rem; margin-bottom: -25px; margin-top: -21.5px;"></i>
@@ -169,7 +166,33 @@ function submitStudentAccInput(studentInfoList){
 
                 $("#newStudentAccountListBody").append(tablerow);
 
-
+                let printTableRow = $(
+                    `<table class="table table-responsive" style="border: 1px solid black; table-layout: fixed; margin-top: 30px; margin-bottom: 40px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 33%;">SchülerIn</th>
+                                <th style="width: 33%;">Benutzername</th>
+                                <th style="width: 33%;">Passwort</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="newStudentAccount" style="vertical-align: top; border: 0;">
+                                <td>
+                                    <div style="display: flex; align-items: center;"><i class="bi bi-person-circle text-muted" style="font-size: 2rem; margin-bottom: -20px; margin-top: -21.5px;"></i>
+                                        <span style="vertical-align: middle; margin: 1px 0 0 7px;">
+                                            <span style="margin-left: 3px">${p["first_name"]} ${p["last_name"]}</span>
+                                        </span>
+                                    </div>
+                                </td>
+                                <td>${p["username"]}</td>
+                                <td>${p["password"]}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr style="border-top: 2px; border-style: dashed solid;" />
+                    `);
+                    
+                $("#printContentDiv").append(printTableRow);
             });
 
             $('#student-account')[0].reset();

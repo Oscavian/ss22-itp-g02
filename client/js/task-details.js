@@ -60,6 +60,14 @@ function loadAssignmentDetails(assignmentId) {
                 $("#TaskStatus").css("color", "green");
                 $("#TaskStatus").text('"' + ownSubmissionFileName + '" wurde am ' + ownSubmissionString + ' um ' + ownSubmissionString2 + ' abgegeben');
 
+            } else if (new Date().getTime() > dueDate.getTime()) {
+                let timeleft = dueDate.getTime() - new Date().getTime();
+                let timeleftDays = timeleft / 86400000;
+                let timeleftHours = timeleftDays % 1;
+                timeleftDays = Math.floor(timeleftDays);
+                timeleftHours = timeleftHours * 24;
+                timeleftHours = Math.floor(timeleftHours);
+                $("#TaskStatus").html('<span style="color: red;">Die Abgabefrist endete vor ' + -timeleftDays + ' Tagen und ' + -timeleftHours + ' Stunden</span>');
             } else {
                 let timeleft = dueDate.getTime() - new Date().getTime();
                 let timeleftDays = timeleft / 86400000;
@@ -74,7 +82,6 @@ function loadAssignmentDetails(assignmentId) {
                 $("#addSubmissionFormSpan").show();
             }
 
-
         },
         error: function (error) {
             console.log(error);
@@ -85,6 +92,7 @@ function loadAssignmentDetails(assignmentId) {
 
 
 function downloadTaskDescriptionFile(assignmentId) {
+    notyf.success('Die Datei wird heruntergeladen!');
     window.location = rootPath + "/backend/requestHandler.php?method=downloadAssignmentFile&assignment_id=" + assignmentId;
 }
 
@@ -106,6 +114,7 @@ function uploadSubmission() {
         type: "POST",
         url: rootPath + "/backend/requestHandler.php",
         success: function (data) {
+            notyf.success('Die Datei wurde abgegeben!');
             loadAssignmentDetails(assignmentId);
             $("#addSubmissionFormSpan").hide();
         },

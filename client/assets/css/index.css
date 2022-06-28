@@ -1,6 +1,11 @@
 /* buttoncolor #ffbb33 */
 @import url('https://fonts.googleapis.com/css2?family=Nunito');
 
+.notificationClass{
+    font-size: 18px;
+    z-index: 10000 !important;
+}
+
 /* makes input fields glow purple when focused */
 .form-control:focus {
     border-color: purple;

@@ -3,7 +3,6 @@ $("#groupAddResponse").hide();
 getUserGroups();
 
 async function getUserGroups() {
-    let isTeacher = await checkIsTeacher();
     $("#group-main-body").empty();
     $.ajax({
         type: "POST",
@@ -15,37 +14,70 @@ async function getUserGroups() {
             if (response["success"]){
                 $("#group-main-body").empty();
                 if (response["noGroups"]){
-                    $("#group-main-body").append("" +
-                        "<section style='background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px'>" + 
-                        "   <div class='container group-details-container p-4'>" + 
-                        "       <div class='col-lg-12'>" + 
-                        "           <div id='groupTitleAndTeacherDiv' style='display: flex; align-items: center;'>" + 
-                        "               <div style='font-weight: bold; font-size: 2em; color: purple' id='groupTitle'>Sie befinden sich in keiner Gruppe</div>" + 
-                        "               <div style='margin-left: auto; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;' id='groupTeacherId'></div>" + 
-                        "           </div>" + 
-                        "       <div id='group-details-content-card' class='card group-details-content-card' style='margin-top: 1rem;'>" + 
-                        "           <div id='group-details-content' class='card-body'>" + 
-                        "               keine Gruppe vorhanden</div></div></div></div></section>");
+                    $("#showNewGroupForm").hide();
+                    $("#group-main-body").append(`
+                        <section style='background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px; border: 2px solid purple;'>
+                            <div class='container group-details-container p-4'>
+                                <div class='col-lg-12'>
+                                    <div style='display: flex; flex-direction: column; align-items: center; justify-content: center;'>
+                                        <div style='font-weight: bold; font-size: 2em; color: purple' id='groupTitle'>Sie befinden sich in keiner Gruppe</div>
+                                        <button type="button" class="glow-on-hover newform-btn buttonNewGroup" onclick="showNewGroupForm()"><img src="client/assets/img/pen.png" style="height: 25px; margin-right: 2px;"> Neue Gruppe erstellen</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        `);
                 }
                 else {
+                    $("#showNewGroupForm").show();
                     $.each(response["groups"], (i, g) => {
-                        $("#group-main-body").append("" +
-                        "<section style='overflow: hidden; background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px' onclick='loadPage(`gruppe`, " + g['groupId'] + ");'>" +
-                        "   <div class='container group-details-container p-4' style='overflow: hidden;' >" +
-                        "       <div class='col-lg-12'>" + 
-                        "           <div id='groupTitleAndTeacherDiv' style='display: flex; align-items: center;'>" + 
-                        "               <div style='font-weight: bold; font-size: 2em;' id='groupTitle'>Gruppe " + g['groupName'] + "</div>" + 
-                        "               <div style='margin-left: auto; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;' id='groupTeacher'>Lehrer*in: " + g['teacherFirstName'] + " " + g['teacherLastName'] + "</div>" +
-                        "           </div>" + 
-                        "       <div id='group-details-content-card' class='card group-details-content-card' style='margin-top: 1rem;'>" + 
-                        "           <div id='group-details-content' class='card-body'>" + 
-                        "               Klicken Sie hier für nähere Informationen</div></div></div></div></section>");
-                    })
-                }
-            }
+                        let timeFromLastChatString = null;
+                        if(g['lastChatMessage']){
+                            let chatDate = new Date(g['lastChatMessage']["time"]);
+                            let timeFrom = -(chatDate.getTime() - new Date().getTime());
+                            let timeFromDays = timeFrom / 86400000;
+                            let timeFromHours = (timeFromDays % 1) * 24;
+                            let timeFromMinutes = (timeFromHours % 1) * 60;
+    
+                            timeFromDays = Math.floor(timeFromDays);
+                            timeFromHours = Math.floor(timeFromHours);
+                            timeFromMinutes = Math.floor(timeFromMinutes);
+    
+                            if(timeFromDays){
+                                timeFromLastChatString = `Vor ${timeFromDays} Tagen, ${timeFromHours} Stunden`;
+                            } else if (timeFromHours) {
+                                timeFromLastChatString = `Vor ${timeFromHours} Stunden, ${timeFromMinutes} Minuten`;
+                            } else if (timeFromMinutes) {
+                                timeFromLastChatString = `Vor ${timeFromMinutes} Minuten`;
+                            } else {
+                                timeFromLastChatString = `Gerade eben`;
+                            }
+                            
+                        }
 
-            if(isTeacher){
-                $("#showNewGroupForm").show();
+                        $("#group-main-body").append(`
+                        <section class='groupOverviewElement' style='overflow: hidden; background-color: #eee; border-radius: 5px; margin-top: 20px; margin-bottom: 20px' onclick='loadPage("gruppe", ${g['groupId']});'>
+                            <div class='container group-details-container p-4' style='overflow: hidden;' >
+                                <div id='groupTitleAndTeacherDiv' style='display: flex; align-items: center;'>
+                                    <div style='font-weight: bold; font-size: 2em;' id='groupTitle'>${g['groupName']}</div>
+                                    <div style='margin-left: auto; color: rgb(61, 61, 61); font-weight: 500; font-size: 1em;' id='groupTeacher'>Lehrer*in: ${g['teacherFirstName']} ${g['teacherLastName']}</div>
+                                </div>
+                                <div id='group-details-content-card' class='card group-details-content-card' style='margin-top: 1rem;'>
+                                    <div id='group-details-content' class='card-body' style='display: flex; align-items: center'>
+                                        <p style="margin: 0;">
+                                            <strong>Mitglieder:</strong> ${g['numberOfMembers']}
+                                            <br>
+                                            <strong>Neueste Aufgabe:</strong> ${g['newestAssignment'] ? g['newestAssignment']['title'] : "Keine Aufgaben"}
+                                            <br>
+                                            <strong>Letzte Chatnachricht:</strong> ${timeFromLastChatString ? timeFromLastChatString : "Keine Chatnachrichten"}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        `);
+                    });
+                }
             }
         },
         error: (error) => {
@@ -54,9 +86,7 @@ async function getUserGroups() {
     });
 
     $("#group-main-body").attr("style", "block");
-    if(isTeacher === true){
     $("#showNewGroupForm").attr("style", "block");
-    }
 }
 
 function showNewGroupForm(){
@@ -80,12 +110,10 @@ function addNewGroup(){
         cache: false,
         dataType: "json",
         success: (response) => {
-            $("#groupAddResponse").text("Die Gruppe " + newGroupName + " wurde erfolgreich angelegt!");
-            $("#groupAddResponse").attr("style", "font-weight: bold");
+            notyf.success('Die Gruppe "' + newGroupName +'" wurde erstellt!');
         },
-        error: () => {
-            $("#groupAddResponse").text("Die Gruppe konnte nicht angelegt werden!");
-            $("#groupAddResponse").attr("style", "color: red; font-weight: bold");
+        error: (error) => {
+            console.log(error);
         },
     });
     $("#groupAddResponse").show();

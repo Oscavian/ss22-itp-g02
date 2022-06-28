@@ -70,6 +70,15 @@ class Users {
             $item["groupName"] = $group->getName();
             $item["groupId"] = $group->getId();
             $item["groupChatId"] = $group->getChat();
+            
+            $item["numberOfMembers"] = count($group->getMembers());
+            if(!empty($group->getChat()->getMessages(0))){
+                $item["lastChatMessage"] = $group->getChat()->getMessages(0)[0];
+            } else {
+                $item["lastChatMessage"] = null;
+            }
+            
+            $item["newestAssignment"] = $group->getLastCreatedAssignment();
 
             $teacher = $group->getTeacher();
             $item["teacherFirstName"] = $teacher->getFirstName();
@@ -110,11 +119,11 @@ class Users {
 
         $dataOk = true;
         // --- Backend form-validation ---
-        if (!preg_match("/^[a-zA-Z-' ]*$/", $first_name) || strlen($first_name) > 50) {
+        if (!preg_match("/^[äöüÄÖÜßa-zA-Z-' ]*$/", $first_name) || strlen($first_name) > 50) {
             throw new Exception("Invalid fist_name");
         }
 
-        if (!preg_match("/^[a-zA-Z-' ]*$/", $last_name) || strlen($last_name) > 50) {
+        if (!preg_match("/^[äöüÄÖÜßa-zA-Z-' ]*$/", $last_name) || strlen($last_name) > 50) {
             throw new Exception("Invalid last_name");
         }
 
@@ -173,11 +182,11 @@ class Users {
                 throw new Exception("Invalid Payload!");
             }
 
-            if (!preg_match("/^[a-zA-Z-' ]*$/", $student->first_name) || strlen($student->first_name) > 50) {
+            if (!preg_match("/^[äöüÄÖÜßa-zA-Z-' ]*$/", $student->first_name) || strlen($student->first_name) > 50) {
                 throw new Exception("Invalid payload: " . $student->first_name);
             }
 
-            if (!preg_match("/^[a-zA-Z-' ]*$/", $student->last_name) || strlen($student->last_name) > 50) {
+            if (!preg_match("/^[äöüÄÖÜßa-zA-Z-' ]*$/", $student->last_name) || strlen($student->last_name) > 50) {
                 throw new Exception("Invalid payload: " . $student->last_name);
             }
         }
@@ -249,7 +258,7 @@ class Users {
         if($_POST["type"] == "firstName"){
             $first_name = $_POST["data"];
 
-            if (!preg_match("/^[a-zA-Z-' ]*$/", $first_name) || strlen($first_name) > 50) {
+            if (!preg_match("/^[äöüÄÖÜßa-zA-Z-' ]*$/", $first_name) || strlen($first_name) > 50) {
                 throw new Exception("Invalid fist_name");
             }
 
@@ -260,7 +269,7 @@ class Users {
         if($_POST["type"] == "lastName"){
             $last_name = $_POST["data"];
 
-            if (!preg_match("/^[a-zA-Z-' ]*$/", $last_name) || strlen($last_name) > 50) {
+            if (!preg_match("/^[äöüÄÖÜßa-zA-Z-' ]*$/", $last_name) || strlen($last_name) > 50) {
                 throw new Exception("Invalid last_name");
             }
 

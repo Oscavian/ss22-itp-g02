@@ -2,13 +2,16 @@
     td, th{
         border-width: 2px !important;
     }
-
+    .exercise-img{
+        height: 35px;
+        padding-bottom: 11px;
+    }
     tr:hover {
         background-color: white !important;
     }
 </style>
 
-<h5 style="margin-bottom: -14px;"><i class="bi bi-folder-check" style="margin-right: 5px; font-size: 20px; vertical-align: bottom;"></i>Abgaben</h5>
+<h5 style="margin-bottom: -14px;"><img src="client/assets/img/folder.png" class="exercise-img"> Abgaben</h5>
 <hr size="4" style="color: purple; opacity: 80%;">
 
 <h4 id="noSubmissionsMessage" class="text-muted" style="display: none; text-align: center; margin-top: 2em; margin-bottom: 2rem;">Keine Abgaben</h4>
@@ -28,6 +31,7 @@
 <script>
 
     function downloadSubmissionFile(submissionId) {
+        notyf.success('Die Datei wird heruntergeladen!');
         window.location = rootPath + "/backend/requestHandler.php?method=downloadSubmissionFile&submission_id=" + submissionId;
     }
 
@@ -43,7 +47,7 @@
 
         let tableEntry = document.createElement("tr");
         $(tableEntry).html(`
-            <td><div style="display: flex; align-items: center;"><i class="bi bi-person-circle text-muted" style="font-size: 2rem; margin-bottom: -25px; margin-top: -21.5px;"></i>
+            <td><div style="display: flex; align-items: center;"><img src="client/assets/img/superhero.png" class="nav-img" style="margin-bottom: -25px; margin-top: -21.5px; height: 25px">
                     <span style="vertical-align: middle; margin: 1px 0 0 7px;">
                         <span style="font-weight: bold;" id="firstName">${submission["first_name"]}</span>
                         <span style="font-weight: bold;"> </span>
@@ -53,7 +57,7 @@
                 </div>
             </td>
             <td class="text-center">${creationTimeString}</td>
-            <td class="text-center"><button onclick="downloadSubmissionFile(${submission["submission_id"]})" type="button" id="taskDescriptionfile" style="background-color: #eee;" class="btn btn-light"> <i style="color: purple;" class="bi bi-file-earmark-text"></i> Abgabe</button></td>
+            <td class="text-center"><button onclick="downloadSubmissionFile(${submission["submission_id"]})" type="button" id="taskDescriptionfile" style="background-color: rgba(255, 240, 255, 0.5); border-style: solid; border-color: purple;" class="btn btn-light"><img src="client/assets/img/exam.png"  style="height: 25px; padding-bottom: 5px"> Abgabe</button></td>
         `)
     
     $("#submissionsTableContent").prepend(tableEntry);

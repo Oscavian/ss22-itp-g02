@@ -43,7 +43,7 @@ $("#usernameEdit").click(enableEditUsername);
 
 function enableEditFirstName(){
     $("#firstNameEdit").hide();
-    $("#firstNameEdit").after($('<i id="firstNameEditActive" style="color: green; margin-left: 5px" class="bi bi-check2-square mb-0"></i>'));
+    $("#firstNameEdit").after($('<i id="firstNameEditActive" style="color: green; margin-left: 5px; cursor: pointer" class="bi bi-check2-square mb-0"></i>'));
     $("#firstNameField").hide();
     $("#firstNameField").after($('<input id="firstNameEditField" class="text-muted m-0 form-control" style="width: 70%; display: inline" value=' + $("#firstNameField").text() + '>'));
     $("#firstNameEditField").on("input", checkFirstName);
@@ -52,7 +52,7 @@ function enableEditFirstName(){
 
 function enableEditLastName(){
     $("#lastNameEdit").hide();
-    $("#lastNameEdit").after($('<i id="lastNameEditActive" style="color: green; margin-left: 5px" class="bi bi-check2-square mb-0"></i>'));
+    $("#lastNameEdit").after($('<i id="lastNameEditActive" style="color: green; margin-left: 5px; cursor: pointer" class="bi bi-check2-square mb-0"></i>'));
     $("#lastNameField").hide();
     $("#lastNameField").after($('<input id="lastNameEditField" class="text-muted m-0 form-control" style="width: 70%; display: inline" value=' + $("#lastNameField").text() +'>'));
     $("#lastNameEditField").on("input", checkLastName);
@@ -61,7 +61,7 @@ function enableEditLastName(){
 
 function enableEditUsername(){
     $("#usernameEdit").hide();
-    $("#usernameEdit").after($('<i id="usernameEditActive" style="color: green; margin-left: 5px" class="bi bi-check2-square mb-0"></i>'));
+    $("#usernameEdit").after($('<i id="usernameEditActive" style="color: green; margin-left: 5px; cursor: pointer" class="bi bi-check2-square mb-0"></i>'));
     $("#usernameField").hide();
     $("#usernameField").after($('<input id="usernameEditField" class="text-muted m-0 form-control" style="width: 70%; display: inline" value=' + $("#usernameField").text() +'>'));
     $("#usernameEditField").on("input", checkUsername);
@@ -71,7 +71,7 @@ function enableEditUsername(){
 function checkFirstName() {
     let firstName = $(this).val();
 
-    if (!/^[A-Za-z\s]*$/.test(firstName)) {
+    if (!/^[A-Za-zäöüÄÖÜß\s]*$/.test(firstName)) {
         $("#firstNameError").show();
         $("#firstNameEditActive").css("color", "red");
         $("#firstNameEditActive").unbind();
@@ -94,7 +94,7 @@ function checkFirstName() {
 function checkLastName() {
     let lastName = $(this).val();
 
-    if (!/^[A-Za-z\s]*$/.test(lastName)) {
+    if (!/^[A-Za-zäöüÄÖÜß\s]*$/.test(lastName)) {
         $("#lastNameError").show();
         $("#lastNameEditActive").css("color", "red");
         $("#lastNameEditActive").unbind();
@@ -128,7 +128,7 @@ function checkUsername() {
         return;
     }
 
-    if (!/^[a-zA-Z0-9]+$/.test(username)) {
+    if (!/^[a-zA-Z0-9äöüÄÖÜß\.]+$/.test(username)) {
         $("#usernameUnavailable").hide();
         $("#usernameAvailable").hide();
         $("#usernameError").hide();
@@ -207,7 +207,7 @@ function sendChangedInfoToServer(type, data) {
         cache: false,
         dataType: "json",
         success: function (response) {
-
+            notyf.success('Änderung erfolgreich!');
         },
         error: function (error) {
             console.log(error);
@@ -289,7 +289,8 @@ function sendPasswordChangeToServer(oldPassword, newPassword) {
         cache: false,
         dataType: "json",
         success: function (response) {
-            if (response["success"]) {
+            if (response["success"]) {      
+                notyf.success('Passwort erfolgreich geändert!');
                 $("#changePasswordModal").modal("hide");
                 $('#changePasswordForm')[0].reset();
                 $('#passwordChangeSuccess').css("display", "inline");

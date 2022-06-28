@@ -98,11 +98,11 @@ function displayCurrentAssignment(assignment){
     $(card).addClass("assignmentCard");
     $(card).html(`
     <div class="card-body">
-        <h5  class="card-title assignmentCardTitle">${assignment.title}</h5>
+        <h5  class="card-title assignmentCardTitle" style='color: purple;'>${assignment.title}</h5>
         <h6 class="card-subtitle  mb-2 text-muted assignmentCardTime"><i class="bi bi-calendar-event" style="margin-right: 5px; vertical-align:top; font-size: 15px;"></i>${dueDateString}</h6>
         <p class="card-text assignmentCardText">${assignment.text}</p>
         </div>
-    <h6 class="card-footer mb-0 text-muted assignmentCardTimeLeft"><i class="bi bi-alarm-fill" style="color: purple; margin-right: 5px; vertical-align:baseline; font-size: 15px;"></i>${timeleftDays} Tage, ${timeleftHours} Stunden</h6>
+    <h6 class="card-footer mb-0 text-muted assignmentCardTimeLeft"><img src="client/assets/img/alarm-clock.png" style="height: 35px; padding-bottom: 5px"> ${timeleftDays} Tage, ${timeleftHours} Stunden</h6>
     `)
     
     $("#currentAssignmentsContent").prepend(card);
@@ -141,11 +141,11 @@ function displayPastAssignment(assignment){
     $(card).addClass("assignmentCard");
     $(card).html(`
     <div class="card-body">
-        <h5  class="card-title assignmentCardTitle">${assignment.title}</h5>
+        <h5  class="card-title assignmentCardTitle" style='color: purple;'>${assignment.title}</h5>
         <h6 class="card-subtitle  mb-2 text-muted assignmentCardTime"><i class="bi bi-calendar-event" style="margin-right: 5px; vertical-align:top; font-size: 15px;"></i>${dueDateString}</h6>
         <p class="card-text assignmentCardText">${assignment.text}</p>
         </div>
-    <h6 class="card-footer mb-0 text-muted assignmentCardTimeLeft"><i class="bi bi-alarm-fill" style="color: purple; margin-right: 5px; vertical-align:baseline; font-size: 15px;"></i>Vor ${-timeleftDays} Tagen</h6>
+    <h6 class="card-footer mb-0 text-muted assignmentCardTimeLeft"><img src="client/assets/img/alarm-clock.png" style="height: 35px; padding-bottom: 5px"> Vor ${-timeleftDays} Tagen</h6>
     `)
     
     $("#pastAssignmentsContent").prepend(card);

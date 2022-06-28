@@ -29,6 +29,15 @@
 
   }
 
+  #notebook-groups{
+      height: 50px;
+      padding-bottom: 9px;
+    }
+
+    .nav-img{
+      height: 25px;
+      padding-bottom: 3px;
+    }
   /* Nav styling */
   
 
@@ -38,10 +47,18 @@
       margin: 0 !important;
     }
 
-
+.group-details-nav-item:hover {
+  cursor: pointer;
+}
   /* Nav desktop view */
 
   @media (min-width: 992px){
+
+    .nav-img{
+      height: 30px;
+      padding-bottom: 0;
+      margin-right: 7px;
+    }
 
     .group-details-container{
       padding-top: 8px !important;
@@ -58,7 +75,10 @@
       margin-top: -2px;
     }
 
-    .group-details-nav-item {
+    .group-details-nav-item { 
+        display: flex;
+        align-items: center;
+        font-size: 20px !important;
         position: relative !important;
         background-color: rgba(0, 0, 0, 0);
         /* background-color: #f7f7f7 !important; */
@@ -72,7 +92,7 @@
       }
     
       .group-details-nav-item.active {
-        z-index: 10000;
+        z-index: 10;
         border-width: 2px !important;
         border-color: purple !important;
         background-color: #f1eaf1 !important;
@@ -153,13 +173,23 @@
     .lastNavItem{
       border-bottom: 2px solid rgba(128,0,128, 1) !important;
     }
+    #notebook-groups{
+      height: 40px;
+      padding-bottom: 7px;
+    }
+    #title{
+      font-size: 23px;
+    }
+    .pageTitle{
+      margin-left: 0px;
+    }
   }
 
 </style>
 
 <div class="pageTitle">
-  <div id="pageBackButton" style="display: none;" onclick="history.back()"><img src="client/assets/img/left-arrow-purple.png"></div>
-  <h1>Gruppenübersicht</h1>
+  <div id="pageBackButton" style="display: none;" onclick="this.onclick = ''; history.back()"><img src="client/assets/img/left-arrow-purple.png"></div>
+  <h1 id="title">Gruppenübersicht <img src="client/assets/img/notebook.png" id="notebook-groups" alt="notebook"></h1>
 </div>
 
 <div style="display: none" id="group-main-body" class="container text-dark">
@@ -174,13 +204,13 @@
                 <div class="card-header group-details-nav-header" style="border-radius: 0;">
                   <ul id="group-details-nav" class="nav nav-tabs card-header-tabs">
                     <li class="nav-item" onclick="groupViewShowAssignments()">
-                      <a id="group-details-nav-assignments" class="nav-link active group-details-nav-item group-details-first-nav-item"><i class="bi bi-folder navItemIcon"></i>&nbsp;Aufgaben</a>
+                      <a id="group-details-nav-assignments" class="nav-link active group-details-nav-item group-details-first-nav-item"><img src="client/assets/img/exam.png" class="nav-img"> Aufgaben</a>
                     </li>
                     <li class="nav-item" onclick="groupViewShowChat()">
-                      <a id="group-details-nav-chat" class="nav-link group-details-nav-item"><i class="bi bi-chat-text navItemIcon"></i>&nbsp;Chat</a>
+                      <a id="group-details-nav-chat" class="nav-link group-details-nav-item"><img src="client/assets/img/talk.png" class="nav-img"> Chat</a>
                     </li>
                     <li class="nav-item" onclick="groupViewShowMembers()">
-                      <a id="group-details-nav-members" class="nav-link group-details-nav-item lastNavItem"><i class="bi bi-person-lines-fill navItemIcon"></i>&nbsp;Mitglieder</a>
+                      <a id="group-details-nav-members" class="nav-link group-details-nav-item lastNavItem"><img src="client/assets/img/dictionary.png" class="nav-img"> Mitglieder</a>
                     </li>
                   </ul>
                 </div>

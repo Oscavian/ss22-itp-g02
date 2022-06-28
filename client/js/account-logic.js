@@ -30,6 +30,7 @@ function logout() {
         cache: false,
         dataType: "json",
         success: function (response) {
+            notyf.success('Logout erfolgreich!');
             $("#footer-account").hide();
             loadPage('home');
         },

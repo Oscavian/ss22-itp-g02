@@ -1,5 +1,11 @@
+<style>
+    .exercise-img{
+        height: 35px;
+        padding-bottom: 7px;
+    }
+</style>
 
-<h5 style="margin-bottom: -14px;"><i class="bi bi-file-text" style="margin-right: 5px; font-size: 20px; vertical-align: bottom;"></i>Beschreibung</h5>
+<h5 style="margin-bottom: -14px;"><img src="client/assets/img/exam.png" class="exercise-img"> </i>Beschreibung</h5>
 <hr size="4" style="color: purple; opacity: 80%;">
 
 <div style=" margin-top: 10px; text-align: justify;" id="taskDescription">
@@ -11,7 +17,8 @@
 <script>
 
     function downloadTaskDescriptionFile(assignmentId) {
-    window.location = rootPath + "/backend/requestHandler.php?method=downloadAssignmentFile&assignment_id=" + assignmentId;
+        notyf.success('Die Datei wird heruntergeladen!');
+        window.location = rootPath + "/backend/requestHandler.php?method=downloadAssignmentFile&assignment_id=" + assignmentId;
     }
 
     $.ajax({

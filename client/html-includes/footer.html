@@ -29,6 +29,10 @@
     text-transform: uppercase;
     letter-spacing: 1px;
   }
+  .btn-pc{
+    height: 25px;
+    margin-left: 7px;
+  }
 
   @media (min-width: 768px){
     
@@ -39,6 +43,29 @@
       align-items: center;
     }
   
+  }
+
+  #footerAccountButton{
+    display: flex;
+    align-items: center;
+  }
+
+  #footerLogoutButton{
+    display: flex;
+    align-items: center;
+  }
+
+  @media (min-width: 768px){
+
+    .btn-pc{
+      height: 30px;
+      margin-left: 10px;
+    }
+    
+    #footerAccountButton, #footerLogoutButton{
+      font-size: 18px;
+    }
+
   }
 
   @media (max-width: 768px){
@@ -94,17 +121,16 @@
       <a class="footer-link" onclick="loadPage('impressum')">Impressum</a>
       <a class="footer-link" onclick="loadPage('kontakt')">Kontakt</a>
     </div>
+    <img onclick="loadDefaultPage(true)"style="cursor: pointer; height: 35px; margin-right: 7px" src='client/assets/img/logo2.png' alt="">
     <div id="footer-account" style="display: none;">
       <div id="footer-account-flex" style="display: flex; align-items: center;">
-          <div class="btn btn-light" onclick="loadPage('account')">
-            <i class="bi bi-person-circle" style="margin-right: 5px; color: purple;"></i>
+          <div class="btn btn-light" id="footerAccountButton" onclick="loadPage('account')">
+            <!--<i class="bi bi-person-circle" style="margin-right: 5px; color: purple;"></i>-->
             <span id="footerUserName"></span>
+            <img src="client/assets/img/id-card-big.png" class="btn-pc" alt="id-card">
           </div>
-          <div onclick="logout()" id="footerLogoutButton" type="button" style="background-color: #eee; margin-left: 10px; margin-right: 10px;" class='btn btn-light'>Logout<i class="bi bi-box-arrow-right" style="margin-left: 5px; color: purple;"></i></div>
+          <div onclick="logout()" id="footerLogoutButton" type="button" style="background-color: #eee; margin-left: 12px; margin-right: 4px;" class='btn btn-light'>Logout <img src="client/assets/img/door-big.png" class="btn-pc" alt="door"> <!--<i class="bi bi-box-arrow-right" style="margin-left: 5px; color: purple;"></i>--></div>
       </div>
     </div>
-  </div>
-  <div class="text-center p-3" id="copyright">
-    ©2022 Copyright | Volksschulsoftware IT-P | All rights reserved
   </div>
 </div>
