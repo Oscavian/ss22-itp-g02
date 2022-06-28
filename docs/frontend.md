@@ -40,10 +40,10 @@ Um anhand des Seitennamens die richtige Seite laden zu können, gibt es in `main
 `loadDefaultPage()` lädt je nach Login-Status des Users eine andere Seite:
 - Ist der User nicht eingeloggt, wird die Startseite `home.html` geladen
 - Ist der User als Lehrer\*in eingeloggt, wird die Gruppenübersicht `groups.html` geladen.
-- Ist der User als Schüler\*in eingeloggt, ermittelt `loadDefaultPage()` mittels AJAX-request die id der Gruppe des Users und lädt dann die Gruppen-Seite `group-details.hmlt` mit der entsprechenden id.
+- Ist der User als Schüler\*in eingeloggt, ermittelt `loadDefaultPage()` mittels AJAX-request die id der Gruppe des Users und lädt dann die Gruppen-Seite `group-details.html` mit der entsprechenden id.
 
 ### Vor/Zurück-Funktionalität
-Damit man die Vor- und Zurück-Buttons des Browsers benutzen kann, obwohl es eine Single Page Application ist und nie die ganze Seite neu geladen wird, wird in `main.js` bei jedem Seitenwechsel ein state gesetzt. In der URL des states bleibt dann der Seitenname und gegebenenfalls die id gespeichert. In `main.js` gibt es einen Eventlistener, der auf `window.onpopstate` hört und die entsprechende Seite lädt, wenn der Vor-/Zurück-Button gedrückt wurde.
+Damit man die Vor- und Zurück-Buttons des Browsers benutzen kann, obwohl es eine Single Page Application ist und nie die ganze Seite neu geladen wird, wird in `loadPage()` bei jedem Seitenwechsel ein state gesetzt. In der URL des states bleibt dann der Seitenname und gegebenenfalls die id gespeichert. In `main.js` gibt es einen Eventlistener, der auf `window.onpopstate` hört und die entsprechende Seite lädt, wenn der Vor-/Zurück-Button gedrückt wurde.
 
 ### Logik der Seiten
 Wenn eine neue Seite geladen wird, lädt `main.js` mittels AJAX-request zuerst die entsprechende`.html` Datei. In dieser `.html` Datei wird dann wiederum die entsprechende `.js` Datei mit der Logik für die Seite geladen.
