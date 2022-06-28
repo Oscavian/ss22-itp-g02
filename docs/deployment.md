@@ -23,11 +23,16 @@ $ git clone https://github.com/Oscavian/ss22-itp-g02.git
 
 ### 2. Datenbank-Setup
 - neue Datenbank mit beliebigem Namen anlegen
-- das zur Verfügung gestellte SQL-Script importieren
+- das zur Verfügung gestellte SQL-Script `database.sql` importieren
 - die Konstanten aus ``backend/db/dbaccess-template.php`` in ``backend/db/dbaccess.php`` kopieren und entsprechend definieren
 
-**Optional: Demo-Daten importieren**
-//TODO
+#### Optional: Demo-Daten importieren
+
+1. Importieren des SQL-Scripts ``docs/demo/demodata.sql``, ggf. die Fremdschlüsselüberprüfung deaktivieren.
+2. Dateien aus ``docs/demo/attachments.zip`` in `uploads/assignments/attachments/` verschieben
+3. Dateien aus ``docs/demo/submissions.zip`` in `uploads/assignments/submissions/` verschieben
+4. Anmeldedaten aus ``docs/demo/README.md`` verwenden
+
 
 ### 3. Root-Path setzen
 Standardmäßig ist der Pfad `http://localhost/ss22-itp-g02` als App-Root Verzeichnis eingestellt.
@@ -35,7 +40,7 @@ Wenn das Projekt an einem anderen Ort liegt, müssen folgende Variablen angepass
 
 - Unter ``client/js/main.js`` muss die Konstante `rootPath` den vollständigen Pfad zur App beinhalten. 
 Standard: `http://localhost/ss22-itp-g02` 
-- Unter ``backend/logic/fileHandler.php`` muss die Variable `$upload_dir` dem Sub-Folder entsprechend angepasst werden, um das Uploadverzeichnis festzulegen.
+- Unter ``backend/logic/fileHandler.php`` muss die Variable `$upload_dir` dem Sub-Folder entsprechend angepasst werden, um das Upload-Verzeichnis festzulegen.
 Standard: ``$_SERVER["DOCUMENT_ROOT"] . "/ss22-itp-g02/uploads/" . $target_dir;``
 
 ### 4. Fertig!
