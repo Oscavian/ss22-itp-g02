@@ -1,13 +1,19 @@
 
-A Project I developed together with 4 other colleagues from UAS Technikum Wien during summer semester 2022.
-The goal of the project was to develop a **web based chat & assignment app for primary schools**.
+<p style="text-align: center">
+
+<img src="https://cdn.discordapp.com/attachments/946785963701575800/990232907723464754/logo_mit_text.png" width="400" style="text-align: center" alt="Logo">
+</p>
+<p style="text-align: center;"><b>Schoala - a communication platform for primary schools</b></p>
+
+"Schoala" is a Project I developed together with 4 other colleagues from UAS Technikum Wien during summer semester 2022.
+The goal of the project was to develop a simple **web based chat & assignment app for primary schools**.
 
 The application is divided into two main components: A **Remote Procedure Call (RPC) API** written in **PHP** that processes method calls as POST requests and responds respectively.
 The requests are sent by the frontend written in **jQuery** via AJAX calls. The User Interface is written in HTML/CSS using the Bootstrap 5 library and jQuery.
 
 > ### Important Notice
 > This application is explicitly NOT meant for production.
-> It has been written by 5 students as their first collaborative project, thus some security measures may not have been taken care of.
+> It has been written by 5 students as their first collaborative project, thus some security measures and performance issues may not have been taken care of.
 
 ## Features
 _Work in progress_
@@ -24,6 +30,7 @@ _Work in progress_
 - **client/js** - JavaScript files, AJAX calls
 - **client/pages** - HTML templates
 - **uploads/** - user uploads, e.g. submissions for assignments
+- **docs/** - project documentation in german
 
 ## Deployment
 
@@ -41,20 +48,6 @@ _Work in progress_
 - **jQuery** 3.6+ (bundled via CDN)
 - **Bootstrap** 5+ (bundled via CDN)
 
-## Local Setup
+## Setup
 
-### 1. Clone the repository
-Clone the repository into the htdocs folder of your local web server 
-```
-git clone https://github.com/Oscavian/ss22-itp-g02.git 
-```
-
-### 2. Setup the Database
-- create a new database with a name of your choice
-- import the provided SQL script into the database
-- copy the contents of ``backend/db/dbaccess-template.php`` into ``backend/db/dbaccess.php``
-- Fill in your database credentials into the provided constants
-
-### 3. Done!
-- navigate to localhost/ss22-itp-g02
-- register a new teacher account or use the provided default credentials
+_work in progress_
